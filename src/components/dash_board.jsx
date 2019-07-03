@@ -3,6 +3,7 @@ import axios from "axios";
 import Promise from "promise"
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
+import { host } from "./helper";
 class DashBoard extends Component {
     constructor(props) {
         super(props)
@@ -14,7 +15,7 @@ class DashBoard extends Component {
     componentDidMount() {
         let _self = this
         return new Promise(function (resolve) {
-            axios.get("http://localhost:3000/dashboard").then(function (json) {
+            axios.get(host()+"/dashboard").then(function (json) {
                 let obj = {}
                 obj["categories_keys"] = json.data["categories_keys"]
                 obj["categories_data"] = json.data["categories_data"]
@@ -38,7 +39,7 @@ class DashBoard extends Component {
             {Header: '>20', accessor: 'rank_above_twenty'}
         ]
         if (_self.state.data["categories_keys"] && _self.state.data["categories_data"]) {
-            _self.state.data["categories_keys"].map(function (k, i) {
+          _self.state.data["categories_keys"].map(function (k, i) {
                 let v = _self.state.data["categories_data"][k]
                let  table_obj = { catogory_name: k, rank_one_keywords: v["rank_one_keywords"],rank_in_between_two_and_three:v["rank_in_between_two_and_three"],rank_in_between_four_and_ten:v["rank_in_between_four_and_ten"],rank_in_between_ten_and_twenty:v["rank_in_between_ten_and_twenty"],rank_above_twenty:v["rank_above_twenty"]}
                 tData.push(table_obj)

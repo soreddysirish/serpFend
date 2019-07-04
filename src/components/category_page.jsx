@@ -18,9 +18,9 @@ class CategoryPage extends Component {
     handleChange(e, fieldName) {
         let _self = this
         _self.setState({ [fieldName]: e.target.value })
-        setTimeout(function(){
+        setTimeout(function () {
             _self.getCategoryData()
-        },500)
+        }, 500)
     }
     returnOptions = options => {
         return options.map((opt, idx) => {
@@ -67,6 +67,9 @@ class CategoryPage extends Component {
 
     render() {
         const { category_name, category_data } = this.state
+        const options = {
+            clearSearch: true
+          };
         return (
             <div>
                 <label>Select Category</label>
@@ -78,19 +81,16 @@ class CategoryPage extends Component {
                 >
                     {this.returnOptions(catogories_list)}
                 </select>
-               
-
-
-                <BootstrapTable data={category_data["main_obj"]}>
+                <BootstrapTable data={category_data["main_obj"]}  pagination search  options={ options } >
                     <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" isKey>keyword</TableHeaderColumn>
                     <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" >Category</TableHeaderColumn>
                     <TableHeaderColumn row='0' dataField='tags' rowSpan="2" >Tags</TableHeaderColumn>
-                    <TableHeaderColumn row='0' colSpan='2'>Start</TableHeaderColumn>
-                    <TableHeaderColumn  row='1' dataField='smRank' >Mobile</TableHeaderColumn>
-                    <TableHeaderColumn  row='1' dataField='sdRank'>Desktop</TableHeaderColumn>
-                     <TableHeaderColumn row='0' colSpan='2'>Current</TableHeaderColumn>
+                    <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='smRank' >Mobile</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='sdRank'>Desktop</TableHeaderColumn>
+                    <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Current</TableHeaderColumn>
                     <TableHeaderColumn row='1' dataField='cmRank'>Mobile</TableHeaderColumn>
-                    <TableHeaderColumn row='1' dataField='cdRank'>Desktop</TableHeaderColumn> 
+                    <TableHeaderColumn row='1' dataField='cdRank'>Desktop</TableHeaderColumn>
                 </BootstrapTable>
             </div>
         )

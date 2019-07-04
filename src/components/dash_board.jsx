@@ -42,7 +42,7 @@ class DashBoard extends Component {
         if (_self.state.data["categories_keys"] && _self.state.data["categories_data"]) {
             _self.state.data["categories_keys"].map(function (k, i) {
                 let v = _self.state.data["categories_data"][k]
-                let cat_name = "<a href="+window.location.origin+"/category_page/?name="+k.replace(/[^A-Z0-9]/ig,"_").replace("__","_")+ ">" + k + "</a>"
+                let cat_name = "<a href="+window.location.origin+"/category_page/?name="+k.replace(/[^A-Z0-9]/ig,"_").replace("__","")+ ">" + k + "</a>"
                 let table_obj = { catogory_name: ReactHtmlParser(cat_name), rank_one_keywords: v["rank_one_keywords"], rank_in_between_two_and_three: v["rank_in_between_two_and_three"], rank_in_between_four_and_ten: v["rank_in_between_four_and_ten"], rank_in_between_ten_and_twenty: v["rank_in_between_ten_and_twenty"], rank_above_twenty: v["rank_above_twenty"] }
                 tData.push(table_obj)
             })

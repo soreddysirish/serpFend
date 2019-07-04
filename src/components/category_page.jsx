@@ -10,14 +10,15 @@ class CategoryPage extends Component {
         super(props)
         this.state = {
             category_name: '',
-            category_data: [{ headings: [], main_obj: [] }]
+            category_data: [{ headings: [], main_obj: [] }],
+            loading:false
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
     }
     handleChange(e, fieldName) {
         let _self = this
-        _self.setState({ [fieldName]: e.target.value })
+        _self.setState({ [fieldName]: e.target.value,loading:true })
         setTimeout(function () {
             _self.getCategoryData()
         }, 500)
@@ -35,7 +36,8 @@ class CategoryPage extends Component {
         let _self = this
         let parsed = queryString.parse(this.props.location.search);
         _self.setState({
-            category_name: parsed["name"]
+            category_name: parsed["name"],
+            loading:true
         })
         setTimeout(function () {
             if (_self.state.category_name) {
@@ -59,19 +61,21 @@ class CategoryPage extends Component {
                         k["cmRank"] = k["current_date_ranks"]["mobile_rank"]
                     })
                 }
-                _self.setState({ category_data: obj })
+                _self.setState({ category_data: obj,loading:false })
             }).catch(function (err) {
+                _self.setState({loading:false})
             })
         })
     }
 
     render() {
-        const { category_name, category_data } = this.state
+        const { category_name, category_data,loading } = this.state
         const options = {
             clearSearch: true
           };
         return (
             <div>
+                 <div className={loading ? "loading" : ""}></div>
                 <label>Select Category</label>
                 <select
                     disabled={false}

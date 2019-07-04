@@ -10,7 +10,7 @@ class CategoryPage extends Component {
         super(props)
         this.state = {
             category_name: '',
-            category_data: [{ headings: [], main_obj: [] }],
+            category_data: [{ headings: [], category_details_obj: [] }],
             loading:false
         }
         this.handleChange = this.handleChange.bind(this)
@@ -52,9 +52,9 @@ class CategoryPage extends Component {
             axios.get(host() + "/category/" + _self.state.category_name).then(function (json) {
                 let obj = {}
                 obj["headings"] = json.data["headings"]
-                obj["main_obj"] = json.data["main_obj"]
-                if (obj["main_obj"].length > 0) {
-                    obj["main_obj"].map(function (k, v) {
+                obj["category_details_obj"] = json.data["category_details_obj"]
+                if (obj["category_details_obj"].length > 0) {
+                    obj["category_details_obj"].map(function (k, v) {
                         k["sdRank"] = k["start_date_ranks"]["desktop_rank"]
                         k["smRank"] = k["start_date_ranks"]["mobile_rank"]
                         k["cdRank"] = k["current_date_ranks"]["desktop_rank"]
@@ -85,7 +85,7 @@ class CategoryPage extends Component {
                 >
                     {this.returnOptions(catogories_list)}
                 </select>
-                <BootstrapTable data={category_data["main_obj"]}  pagination search  options={ options } >
+                <BootstrapTable data={category_data["category_details_obj"]}  pagination search  options={ options } >
                     <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" isKey>keyword</TableHeaderColumn>
                     <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" >Category</TableHeaderColumn>
                     <TableHeaderColumn row='0' dataField='tags' rowSpan="2" >Tags</TableHeaderColumn>

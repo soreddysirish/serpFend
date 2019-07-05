@@ -85,7 +85,7 @@ class CategoryPage extends Component {
                     <span className="common-title"><b>Dashboard</b></span>
                 </div>
                 <div className="monitor-tale">
-                <span class="excel-download"><img src={excel_icon} alt="" /> Download</span>
+                <span className="excel-download"><img src={excel_icon} alt="" /> Download</span>
                     <div className={page_loading ? "loading" : ""}></div>
                     <select
                         disabled={false}
@@ -106,8 +106,8 @@ class CategoryPage extends Component {
                         <TableHeaderColumn row='1' dataField='cmRank'>Mobile</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='cdRank'>Desktop</TableHeaderColumn>
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='dPersentage'>Mobile</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='mPersentage'>Desktop</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>

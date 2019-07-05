@@ -59,6 +59,8 @@ class CategoryPage extends Component {
                         k["smRank"] = k["start_date_ranks"]["mobile_rank"]
                         k["cdRank"] = k["current_date_ranks"]["desktop_rank"]
                         k["cmRank"] = k["current_date_ranks"]["mobile_rank"]
+                        k["dPersentage"] = k["percentage"]["desktop_rank_percentage"]
+                        k["mPersentage"] = k["percentage"]["mobile_rank_percentage"]
                     })
                 }
                 _self.setState({ category_data: obj, loading: false })
@@ -67,7 +69,10 @@ class CategoryPage extends Component {
             })
         })
     }
-
+     format(cell, row){
+        return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+      }
+      
     render() {
         const { category_name, category_data, loading } = this.state
         const options = {
@@ -86,8 +91,8 @@ class CategoryPage extends Component {
                     {this.returnOptions(catogories_list)}
                 </select>
                 <BootstrapTable data={category_data["category_details_obj"]} pagination search options={options} >
-                    <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" isKey tdStyle={ { whiteSpace: 'normal' } } thStyle={ { 'fontWeight': 'lighter' } } width='90'> keyword</TableHeaderColumn>
-                    <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" >Category</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" isKey  width='90'> keyword</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" width='90'>Category</TableHeaderColumn>
                     <TableHeaderColumn row='0' dataField='tags' rowSpan="2" >Tags</TableHeaderColumn>
                     <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
                     <TableHeaderColumn row='1' dataField='smRank' >Mobile</TableHeaderColumn>
@@ -95,6 +100,9 @@ class CategoryPage extends Component {
                     <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Current</TableHeaderColumn>
                     <TableHeaderColumn row='1' dataField='cmRank'>Mobile</TableHeaderColumn>
                     <TableHeaderColumn row='1' dataField='cdRank'>Desktop</TableHeaderColumn>
+                    <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='dPersentage'>Mobile</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.format}>Desktop</TableHeaderColumn>
                 </BootstrapTable>
             </div>
         )

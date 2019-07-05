@@ -3,6 +3,7 @@ import axios from "axios";
 import Promise from "promise"
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { host } from "./helper";
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 class DashBoard extends Component {
@@ -10,7 +11,8 @@ class DashBoard extends Component {
         super(props)
         this.state = {
             data: [{ categories_keys: [], categories_data: [] }],
-            page_loading: true
+            page_loading: true,
+            catData: []
         }
     }
     componentDidMount() {
@@ -18,46 +20,45 @@ class DashBoard extends Component {
         return new Promise(function (resolve) {
             axios.get(host() + "/dashboard").then(function (json) {
                 let obj = {}
+                let tobj = []
                 obj["categories_keys"] = json.data["categories_keys"]
                 obj["categories_data"] = json.data["categories_data"]
-                _self.setState({ data: obj, page_loading: false })
-
+                _self.setState({ data: obj})
+                if (obj["categories_data"] && obj["categories_keys"]) {
+                    _self.state.data["categories_keys"].map(function (k, i) {
+                        let bObj = {}
+                        let v = _self.state.data["categories_data"][k]
+                        let cat_name = "<a href=" + window.location.origin + "/category_page/?name=" + k.replace(/[^A-Z0-9]/ig, "_").replace("__", "") + ">" + k + "</a>"
+                        bObj["category"] = k
+                        bObj["1"] = v["rank_one_keywords"]
+                        bObj["2-3"] = v["rank_in_between_two_and_three"]
+                        bObj["4-10"] = v["rank_in_between_four_and_ten"]
+                        bObj["10-20"] = v["rank_in_between_ten_and_twenty"]
+                        bObj[">20"] = v["rank_above_twenty"]
+                        tobj.push(bObj)
+                    })
+                    _self.setState({ catData: tobj, page_loading: false  })
+                }
                 return resolve(json)
             }).catch(function (err) {
+                _self.setState({page_loading:false})
                 console.log(err)
             })
         })
     }
+    cellFormatter(cell, row) {
+        let cat_name = "<a href=" + window.location.origin + "/category_page/?name=" + cell.replace(/[^A-Z0-9]/ig, "_").replace("__", "") + ">" + cell + "</a>"
+        return (cat_name);
+    }
     render() {
-        let _self = this
-        const tData = []
-        let columns = [
-            { Header: 'Category', accessor: 'catogory_name' },
-            { Header: '1', accessor: 'rank_one_keywords' },
-            { Header: '2-3', accessor: 'rank_in_between_two_and_three' },
-            { Header: '4-10', accessor: 'rank_in_between_four_and_ten' },
-            { Header: '10-20', accessor: 'rank_in_between_ten_and_twenty' },
-            { Header: '>20', accessor: 'rank_above_twenty' }
-        ]
-        if (_self.state.data["categories_keys"] && _self.state.data["categories_data"]) {
-            _self.state.data["categories_keys"].map(function (k, i) {
-                let v = _self.state.data["categories_data"][k]
-                let cat_name = "<a href="+window.location.origin+"/category_page/?name="+k.replace(/[^A-Z0-9]/ig,"_").replace("__","")+ ">" + k + "</a>"
-                let table_obj = { catogory_name: ReactHtmlParser(cat_name), rank_one_keywords: v["rank_one_keywords"], rank_in_between_two_and_three: v["rank_in_between_two_and_three"], rank_in_between_four_and_ten: v["rank_in_between_four_and_ten"], rank_in_between_ten_and_twenty: v["rank_in_between_ten_and_twenty"], rank_above_twenty: v["rank_above_twenty"] }
-                tData.push(table_obj)
-            })
-        }
+        const { catData,page_loading } = this.state
         return (
             <div>
+                <div className={page_loading  ? "loading" : ""}></div>
                 <h2>DashBoard Home page</h2>
-                <ReactTable
-                    data={tData}
-                    columns={columns}
-                    loading={_self.state.page_loading}
-                    showPaginationTop={true}
-                    showPaginationBottom={false}
-                    sortable={false}
-                />
+                <BootstrapTable data={catData} pagination search >
+                    <TableHeaderColumn row='0' dataField='category' dataFormat={this.cellFormatter} isKey width='90'> category</TableHeaderColumn>
+                </BootstrapTable>
             </div>
         )
     }

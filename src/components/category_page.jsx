@@ -13,15 +13,19 @@ class CategoryPage extends Component {
         this.state = {
             category_name: '',
             category_data: [{ headings: [], category_details_obj: [] }],
-            loading: false
+            page_loading: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
     }
     handleChange(e, fieldName) {
         let _self = this
-        _self.setState({ [fieldName]: e.target.value, loading: true })
+        _self.setState({ [fieldName]: e.target.value, page_loading: true })
         setTimeout(function () {
+            if(window.history.pushState){
+                let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?name='+_self.state.category_name
+                window.history.pushState({path:newurl},'',newurl);
+            }
             _self.getCategoryData()
         }, 500)
     }
@@ -96,9 +100,9 @@ class CategoryPage extends Component {
                         {this.returnOptions(catogories_list)}
                     </select>
                     <BootstrapTable data={category_data["category_details_obj"]} pagination search options={options}>
-                        <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" isKey width='90'> keyword</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" width='90'>Category</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='tags' rowSpan="2" width='90'>Tags</TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='keyword'  isKey rowSpan="2"> keyword</TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='category_name' rowSpan="2">Category</TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='tags'  rowSpan="2">Tags</TableHeaderColumn>
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='smRank' >Mobile</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='sdRank'>Desktop</TableHeaderColumn>

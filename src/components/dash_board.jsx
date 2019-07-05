@@ -29,10 +29,12 @@ class DashBoard extends Component {
                         let tableHeaderAndValues = {}
                         tableHeaderAndValues["category"] = category["category_name"]
                         tableHeaderAndValues["count"] = category["count"]
-                        tableHeaderAndValues["start_top_1"] = category["start_date_kws"]["top_1"]
-                        tableHeaderAndValues["start_top_2_3"] = category["start_date_kws"]["top_2_3"]
-                        tableHeaderAndValues["start_top_4_10"] = category["start_date_kws"]["top_4_10"]
+                        tableHeaderAndValues["start_unranked"] = category["start_date_kws"]["unraked"]
+                        tableHeaderAndValues["start_top_1"] = category["start_date_kws"]["rank_1"]
+                        tableHeaderAndValues["start_top_2_3"] = category["start_date_kws"]["rank_2_3"]
+                        tableHeaderAndValues["start_top_4_10"] = category["start_date_kws"]["rank_4_10"]
                         tableHeaderAndValues["start_rank_above_10"] = category["start_date_kws"]["rank_above_10"]
+                        tableHeaderAndValues["current_unranked"] = category["current_date_kws"]["unranked"]
                         tableHeaderAndValues["current_top_1"] = category["current_date_kws"]["rank_1"]
                         tableHeaderAndValues["current_top_2_3"] = category["current_date_kws"]["rank_2_3"]
                         tableHeaderAndValues["current_top_4_10"] = category["current_date_kws"]["rank_4_10"]
@@ -84,26 +86,30 @@ class DashBoard extends Component {
                             <ExcelColumn label="starting posiotion top 2-3" value="start_top_2_3" />
                             <ExcelColumn label="starting posiotion top 4-10" value="start_top_4_10" />
                             <ExcelColumn label="starting posiotion above 10" value="start_rank_above_10" />
+                            <ExcelColumn label="starting unranked" value="start_untracked" />
                             <ExcelColumn label="current posiotion top 1" value="current_top_1" />
                             <ExcelColumn label="current posiotion top 2-3" value="current_top_2_3" />
                             <ExcelColumn label="current posiotion top 4-10" value="current_top_4_10" />
                             <ExcelColumn label="current posiotion above 10" value="current_rank_above_10" />
+                            <ExcelColumn label="current unranked" value="current_unranked" />
                         </ExcelSheet>
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
                     <BootstrapTable data={catData} pagination search options={options} >
                         <TableHeaderColumn row='0' dataField='category' rowSpan="2" dataFormat={this.cellFormatter} isKey> category</TableHeaderColumn>
                         <TableHeaderColumn row='0' rowSpan="2" dataField='count'>Total keywords</TableHeaderColumn>
-                        <TableHeaderColumn row='0' colSpan="4" headerAlign='center'>starting position</TableHeaderColumn>
+                        <TableHeaderColumn row='0' colSpan="5" headerAlign='center'>starting position</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='start_top_1'>Top 1</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='start_top_2_3'>Top 2-3</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='start_top_4_10'>Top 4-10</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='start_rank_above_10'>>10</TableHeaderColumn>
-                        <TableHeaderColumn row='0' colSpan="4" headerAlign='center'>current position</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='start_unranked'>unranked</TableHeaderColumn>
+                        <TableHeaderColumn row='0' colSpan="5" headerAlign='center'>current position</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='current_top_1'>Top 1</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='current_top_2_3'>Top 2-3</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='current_top_4_10'>Top 4-10</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='current_rank_above_10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='current_unranked'>unranked</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>

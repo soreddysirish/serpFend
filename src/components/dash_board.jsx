@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Promise from "promise"
-import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { host } from "./helper";
@@ -57,7 +56,12 @@ class DashBoard extends Component {
                 <div className={page_loading  ? "loading" : ""}></div>
                 <h2>DashBoard Home page</h2>
                 <BootstrapTable data={catData} pagination search >
-                    <TableHeaderColumn row='0' dataField='category' dataFormat={this.cellFormatter} isKey width='90'> category</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='category' dataFormat={this.cellFormatter} isKey width='80'> category</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='1' width='90'>1</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='2-3' width='90'>2-3</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='4-10' width='90'>4-10</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='10-20' width='90'>10-20</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='>20' width='90'>>20</TableHeaderColumn>
                 </BootstrapTable>
             </div>
         )

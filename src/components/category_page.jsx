@@ -69,9 +69,7 @@ class CategoryPage extends Component {
             })
         })
     }
-     format(cell, row){
-        return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
-      }
+    
       
     render() {
         const { category_name, category_data, loading } = this.state
@@ -93,7 +91,7 @@ class CategoryPage extends Component {
                 <BootstrapTable data={category_data["category_details_obj"]} pagination search options={options} >
                     <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" isKey  width='90'> keyword</TableHeaderColumn>
                     <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" width='90'>Category</TableHeaderColumn>
-                    <TableHeaderColumn row='0' dataField='tags' rowSpan="2" >Tags</TableHeaderColumn>
+                    <TableHeaderColumn row='0' dataField='tags' rowSpan="2" width='90'>Tags</TableHeaderColumn>
                     <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
                     <TableHeaderColumn row='1' dataField='smRank' >Mobile</TableHeaderColumn>
                     <TableHeaderColumn row='1' dataField='sdRank'>Desktop</TableHeaderColumn>
@@ -102,7 +100,7 @@ class CategoryPage extends Component {
                     <TableHeaderColumn row='1' dataField='cdRank'>Desktop</TableHeaderColumn>
                     <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
                     <TableHeaderColumn row='1' dataField='dPersentage'>Mobile</TableHeaderColumn>
-                    <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.format}>Desktop</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='mPersentage'>Desktop</TableHeaderColumn>
                 </BootstrapTable>
             </div>
         )

@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 class App extends Component {
   render() {
-    return (<div className="main">
+    return (<section id="ctbot-wrapper">
       <Router>
         <Layout />
           <Switch>
@@ -17,7 +17,7 @@ class App extends Component {
             <Route exact path="/category_page" component={CategoryPage} />
           </Switch>
       </Router>
-    </div>)
+    </section>)
   }
 }
 export default App

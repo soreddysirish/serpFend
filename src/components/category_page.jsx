@@ -54,7 +54,6 @@ class CategoryPage extends Component {
                 let obj = {}
                 obj["headings"] = json.data["headings"]
                 obj["category_details_obj"] = json.data["category_details_obj"]
-                debugger
                 if (obj["category_details_obj"].length > 0) {
                     obj["category_details_obj"].map(function (k, v) {
                         k["sdRank"] = k["start_date_ranks"]["desktop_rank"]
@@ -75,8 +74,9 @@ class CategoryPage extends Component {
       
     render() {
         const { category_name, category_data, loading } = this.state
-        const options = {
-            clearSearch: true
+        var options = {
+            clearSearch: true,
+            noDataText: (<i className="fa fa-circle-o-notch fa-spin" style={{'fontSize': '24px'}}></i>)
         };
         return (
             <div>

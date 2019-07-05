@@ -11,14 +11,14 @@ class CategoryPage extends Component {
         this.state = {
             category_name: '',
             category_data: [{ headings: [], category_details_obj: [] }],
-            loading:false
+            loading: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
     }
     handleChange(e, fieldName) {
         let _self = this
-        _self.setState({ [fieldName]: e.target.value,loading:true })
+        _self.setState({ [fieldName]: e.target.value, loading: true })
         setTimeout(function () {
             _self.getCategoryData()
         }, 500)
@@ -37,7 +37,7 @@ class CategoryPage extends Component {
         let parsed = queryString.parse(this.props.location.search);
         _self.setState({
             category_name: parsed["name"],
-            loading:true
+            loading: true
         })
         setTimeout(function () {
             if (_self.state.category_name) {
@@ -61,21 +61,21 @@ class CategoryPage extends Component {
                         k["cmRank"] = k["current_date_ranks"]["mobile_rank"]
                     })
                 }
-                _self.setState({ category_data: obj,loading:false })
+                _self.setState({ category_data: obj, loading: false })
             }).catch(function (err) {
-                _self.setState({loading:false})
+                _self.setState({ loading: false })
             })
         })
     }
 
     render() {
-        const { category_name, category_data,loading } = this.state
+        const { category_name, category_data, loading } = this.state
         const options = {
             clearSearch: true
-          };
+        };
         return (
             <div>
-                 <div className={loading ? "loading" : ""}></div>
+                <div className={loading ? "loading" : ""}></div>
                 <label>Select Category</label>
                 <select
                     disabled={false}
@@ -85,8 +85,8 @@ class CategoryPage extends Component {
                 >
                     {this.returnOptions(catogories_list)}
                 </select>
-                <BootstrapTable data={category_data["category_details_obj"]}  pagination search  options={ options } >
-                    <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" isKey>keyword</TableHeaderColumn>
+                <BootstrapTable data={category_data["category_details_obj"]} pagination search options={options} >
+                    <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" isKey tdStyle={ { whiteSpace: 'normal' } } thStyle={ { 'fontWeight': 'lighter' } } width='90'> keyword</TableHeaderColumn>
                     <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" >Category</TableHeaderColumn>
                     <TableHeaderColumn row='0' dataField='tags' rowSpan="2" >Tags</TableHeaderColumn>
                     <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>

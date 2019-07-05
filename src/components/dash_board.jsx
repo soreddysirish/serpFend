@@ -29,7 +29,7 @@ class DashBoard extends Component {
                         let tableHeaderAndValues = {}
                         tableHeaderAndValues["category"] = category["category_name"]
                         tableHeaderAndValues["count"] = category["count"]
-                        tableHeaderAndValues["start_unranked"] = category["start_date_kws"]["unraked"]
+                        tableHeaderAndValues["start_unranked"] = category["start_date_kws"]["unranked"]
                         tableHeaderAndValues["start_top_1"] = category["start_date_kws"]["rank_1"]
                         tableHeaderAndValues["start_top_2_3"] = category["start_date_kws"]["rank_2_3"]
                         tableHeaderAndValues["start_top_4_10"] = category["start_date_kws"]["rank_4_10"]

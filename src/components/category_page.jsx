@@ -3,6 +3,7 @@ import queryString from 'query-string'
 import axios from "axios";
 import Promise from "promise"
 import { host } from "./helper";
+import '../react-bootstrap-table-all.min.css'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 const catogories_list = ["AE Q1 Hotels Keywords", "Emirates - UAE Campaign", "India Flights", "India Hotels", "KSA Q1 Arabic Keywords", "KSA Q1 Keywords", "UAE Q1 Activities", "UAE Q1 Keywords", "Visa"]
 class CategoryPage extends Component {
@@ -53,6 +54,7 @@ class CategoryPage extends Component {
                 let obj = {}
                 obj["headings"] = json.data["headings"]
                 obj["category_details_obj"] = json.data["category_details_obj"]
+                debugger
                 if (obj["category_details_obj"].length > 0) {
                     obj["category_details_obj"].map(function (k, v) {
                         k["sdRank"] = k["start_date_ranks"]["desktop_rank"]

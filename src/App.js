@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './App.css';
+import './react-bootstrap-table-all.min.css'
 import Layout from './components/layout'
 import DashBoard from './components/dash_board'
 import CategoryPage from './components/category_page'

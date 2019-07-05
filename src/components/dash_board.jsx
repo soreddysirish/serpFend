@@ -2,9 +2,40 @@ import React, { Component } from "react";
 import axios from "axios";
 import Promise from "promise"
 import '../react-bootstrap-table-all.min.css'
+import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { host } from "./helper";
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactExport from "react-data-export";
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+const dataSet1 = [
+    {
+        name: "Johson",
+        amount: 30000,
+        sex: 'M',
+        is_married: true
+    },
+    {
+        name: "Monika",
+        amount: 355000,
+        sex: 'F',
+        is_married: false
+    },
+    {
+        name: "John",
+        amount: 250000,
+        sex: 'M',
+        is_married: false
+    },
+    {
+        name: "Josef",
+        amount: 450500,
+        sex: 'M',
+        is_married: true
+    }
+];
 class DashBoard extends Component {
     constructor(props) {
         super(props)
@@ -22,7 +53,6 @@ class DashBoard extends Component {
                 if (json.data && json.data.length > 0) {
                     json.data.map(function (category, i) {
                         let tableHeaderAndValues = {}
-                        debugger
                         tableHeaderAndValues["category"] = category["category_name"]
                         tableHeaderAndValues["count"] = category["count"]
                         tableHeaderAndValues["start_top_1"] = category["start_date_kws"]["top_1"]
@@ -49,11 +79,22 @@ class DashBoard extends Component {
         let cat_name = "<a href=" + window.location.origin + "/category_page/?name=" + cell.replace(/[^A-Z0-9]/ig, "_").replace("__", "") + ">" + cell + "</a>"
         return (cat_name);
     }
+    customExcelRows = options => {
+        if (options.length > 0) {
+            return options.map((opt, idx) => {
+                let columns
+                Object.keys(opt).map((v, k) => {
+                    return (<ExcelColumn label={opt[v]} value={opt[v]} />)
+                })
+            })
+        }
+    }
     render() {
         var options = {
             clearSearch: true,
             noDataText: (<i className="fa fa-circle-o-notch fa-spin" style={{ 'fontSize': '24px' }}></i>)
         };
+
         const { catData, page_loading } = this.state
         return (
             <div className="ctbot-dashboard">
@@ -61,6 +102,12 @@ class DashBoard extends Component {
                     <span className="common-title"><b>Dashboard</b></span>
                 </div>
                 <div className="monitor-tale">
+                    <ExcelFile element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
+                        <ExcelSheet data={catData} name="Employees">
+                            <ExcelColumn label="category" value="category" />
+                            <ExcelColumn label="count" value="count" />
+                        </ExcelSheet>
+                    </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
                     <BootstrapTable data={catData} pagination search options={options} >
                         <TableHeaderColumn row='0' dataField='category' rowSpan="2" dataFormat={this.cellFormatter} isKey> category</TableHeaderColumn>

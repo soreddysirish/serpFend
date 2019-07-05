@@ -10,32 +10,6 @@ import ReactExport from "react-data-export";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-const dataSet1 = [
-    {
-        name: "Johson",
-        amount: 30000,
-        sex: 'M',
-        is_married: true
-    },
-    {
-        name: "Monika",
-        amount: 355000,
-        sex: 'F',
-        is_married: false
-    },
-    {
-        name: "John",
-        amount: 250000,
-        sex: 'M',
-        is_married: false
-    },
-    {
-        name: "Josef",
-        amount: 450500,
-        sex: 'M',
-        is_married: true
-    }
-];
 class DashBoard extends Component {
     constructor(props) {
         super(props)
@@ -106,6 +80,14 @@ class DashBoard extends Component {
                         <ExcelSheet data={catData} name="Employees">
                             <ExcelColumn label="category" value="category" />
                             <ExcelColumn label="count" value="count" />
+                            <ExcelColumn label="starting posiotion top 1" value="start_top_1" />
+                            <ExcelColumn label="starting posiotion top 2-3" value="start_top_2_3" />
+                            <ExcelColumn label="starting posiotion top 4-10" value="start_top_4_10" />
+                            <ExcelColumn label="starting posiotion above 10" value="start_rank_above_10" />
+                            <ExcelColumn label="current posiotion top 1" value="current_top_1" />
+                            <ExcelColumn label="current posiotion top 2-3" value="current_top_2_3" />
+                            <ExcelColumn label="current posiotion top 4-10" value="current_top_4_10" />
+                            <ExcelColumn label="current posiotion above 10" value="current_rank_above_10" />
                         </ExcelSheet>
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>

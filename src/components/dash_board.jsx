@@ -86,7 +86,7 @@ class DashBoard extends Component {
                             <ExcelColumn label="starting posiotion top 2-3" value="start_top_2_3" />
                             <ExcelColumn label="starting posiotion top 4-10" value="start_top_4_10" />
                             <ExcelColumn label="starting posiotion above 10" value="start_rank_above_10" />
-                            <ExcelColumn label="starting unranked" value="start_untracked" />
+                            <ExcelColumn label="starting unranked" value="start_unranked" />
                             <ExcelColumn label="current posiotion top 1" value="current_top_1" />
                             <ExcelColumn label="current posiotion top 2-3" value="current_top_2_3" />
                             <ExcelColumn label="current posiotion top 4-10" value="current_top_4_10" />

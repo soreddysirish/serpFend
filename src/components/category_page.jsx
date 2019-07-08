@@ -65,6 +65,7 @@ class CategoryPage extends Component {
                     json.data["category_details_obj"].map(function (k, v) {
                         let obj={}
                         obj["category_name"]=k["category_name"]
+                        obj["search_volume"] = k["search_volume"]
                         obj["keyword"]=k["keyword"]
                         obj["tags"] = k["tags"]
                         obj["sdRank"] = k["start_date_ranks"]["desktop_rank"]
@@ -98,6 +99,7 @@ class CategoryPage extends Component {
                         <ExcelSheet data={category_data} name="categories data">
                             <ExcelColumn label="category" value="category_name" />  
                             <ExcelColumn label="keyword" value="keyword" />
+                            <ExcelColumn label="search_volume" value="search_volume" />
                             <ExcelColumn label="tags" value="tags" />
                             <ExcelColumn label="start date desktop rank" value="sdRank" />
                             <ExcelColumn label="start date mobile rank" value="smRank" />
@@ -129,6 +131,7 @@ class CategoryPage extends Component {
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2">volume count</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>

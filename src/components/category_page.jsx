@@ -8,6 +8,7 @@ import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import ReactExport from "react-data-export";
 import Moment from 'react-moment';
+import moment from 'moment'
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -18,10 +19,12 @@ class CategoryPage extends Component {
         this.state = {
             category_name: '',
             category_data: [],
-            page_loading: false
+            page_loading: false,
+            key_names:[]
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
+        this.excelColumns = this.excelColumns.bind(this)
     }
     handleChange(e, fieldName) {
         let _self = this
@@ -43,6 +46,14 @@ class CategoryPage extends Component {
             );
         });
     };
+
+    excelColumns = options => {
+        return options.map((opt, idx) => {
+            return (
+                <ExcelColumn label={opt} value={opt} key={idx} />
+            );
+        });
+    }
     componentDidMount() {
         let _self = this
         let parsed = queryString.parse(this.props.location.search);
@@ -64,6 +75,22 @@ class CategoryPage extends Component {
                 let individual_categories = []
                 if (json.data["category_details_obj"].length > 0) {
                     json.data["category_details_obj"].map(function (k, v) {
+                        const dates = [];
+                        const key_names = []
+                        const NUM_OF_DAYS = 30;
+                        for (let i = 0; i < NUM_OF_DAYS; i++) {
+                            let date = moment();
+                            date.subtract(i, 'day').format('DD-MM-YYYY');
+                            dates.push(date);
+                        }
+                        dates.map((v,key) => {
+                            let obj = {}
+                            let key_name = moment(v._d).format("MMM Do")
+                            k[key_name] =  k["google_rank_history"][key]
+                            key_names.push(key_name)
+                        })
+                        k["key_names"] = key_names
+                        _self.setState({key_names:key_names})
                         k["day"] = k["cycle_changes"]["day_change"]
                         k["month"] = k["cycle_changes"]["month_change"]
                         k["week"] = k["cycle_changes"]["week_change"]
@@ -74,15 +101,14 @@ class CategoryPage extends Component {
                         k["cmRank"] = k["current_date_ranks"]["mobile_rank"]
                         k["dPersentage"] = k["percentage"]["desktop_rank_percentage"]
                         k["mPersentage"] = k["percentage"]["mobile_rank_percentage"]
-                        if(k["types"]["desktop_type"] && k["types"]["mobile_type"]){
+                        if (k["types"]["desktop_type"] && k["types"]["mobile_type"]) {
                             k["type"] = "Mobile and Desktop"
-                        }else if(typeof(k["types"]["desktop_type"]) == 'undefined' && k["types"]["mobile_type"]){
+                        } else if (typeof (k["types"]["desktop_type"]) == 'undefined' && k["types"]["mobile_type"]) {
                             k["type"] = "Mobile"
-                        }else if(typeof(k["types"]["mobile_type"]) == 'undefined' && k["types"]["desktop_type"]){
+                        } else if (typeof (k["types"]["mobile_type"]) == 'undefined' && k["types"]["desktop_type"]) {
                             k["type"] = "Desktop"
                         }
-                        debugger
-                        k["google_rank_history"] =  k["google_rank_history"].toString()
+                        k["google_rank_history"] = k["google_rank_history"].toString()
                         individual_categories.push(k)
                     })
                 }
@@ -93,7 +119,7 @@ class CategoryPage extends Component {
         })
     }
     render() {
-        const { category_name, category_data, page_loading } = this.state
+        const { category_name, category_data, page_loading,key_names } = this.state
         var options = {
             clearSearch: true,
             noDataText: 'Loading...'
@@ -104,7 +130,7 @@ class CategoryPage extends Component {
                     <span className="common-title"><b>Dashboard</b></span>
                 </div>
                 <div className="monitor-tale">
-                    <ExcelFile element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
+                    <ExcelFile  filename={category_name} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
                         <ExcelSheet data={category_data} name="categories data">
                             <ExcelColumn label="Domain" value="domain" />
                             <ExcelColumn label="Keyword" value="keyword" />
@@ -125,7 +151,8 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Search volume" value="search_volume" />
                             <ExcelColumn label="Desktop percentage" value="dPersentage" />
                             <ExcelColumn label="Mobile percentage" value="mPersentage" />
-                            <ExcelColumn label="Google rank history" value="google_rank_history" />
+                            {/* <ExcelColumn label="Google rank history" value="google_rank_history" /> */}
+                            {this.excelColumns(key_names)}
                         </ExcelSheet>
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>

@@ -80,6 +80,8 @@ class CategoryPage extends Component {
                         }else if(typeof(k["types"]["mobile_type"]) == 'undefined' && k["types"]["desktop_type"]){
                             k["type"] = "Desktop"
                         }
+                        debugger
+                        k["google_rank_history"] =  k["google_rank_history"].toString()
                         individual_categories.push(k)
                     })
                 }
@@ -119,7 +121,8 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Month" value="month" />
                             <ExcelColumn label="Life" value="life" />
                             <ExcelColumn label="Google ranking url" value="google_ranking_url" />
-                            <ExcelColumn label="search_volume" value="search_volume" />
+                            <ExcelColumn label="Search volume" value="search_volume" />
+                            <ExcelColumn label="Google rank history" value="google_rank_history" />
                         </ExcelSheet>
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>

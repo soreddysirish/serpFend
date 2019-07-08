@@ -471,6 +471,12 @@ ul{
   font-size: 21px;
   font-weight: 500;
 }
+.Dcategory-list{
+  float: left;
+    width: 17%;
+    margin-left: 2%;
+    width: 16%!important;
+}
 
 
 @media screen and (max-height: 450px) {

@@ -79,7 +79,7 @@ class DashBoard extends Component {
                 </div>
                 <div className="monitor-tale">
                     <ExcelFile element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
-                        <ExcelSheet data={catData} name="Employees">
+                        <ExcelSheet data={catData} name="categories data">
                             <ExcelColumn label="category" value="category" />
                             <ExcelColumn label="count" value="count" />
                             <ExcelColumn label="starting posiotion top 1" value="start_top_1" />

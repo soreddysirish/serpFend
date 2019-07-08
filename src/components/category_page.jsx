@@ -6,13 +6,17 @@ import { host } from "./helper";
 import '../react-bootstrap-table-all.min.css'
 import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import ReactExport from "react-data-export";
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const catogories_list = ["AE Q1 Hotels Keywords", "Emirates - UAE Campaign", "India Flights", "India Hotels", "KSA Q1 Arabic Keywords", "KSA Q1 Keywords", "UAE Q1 Activities", "UAE Q1 Keywords", "Visa"]
 class CategoryPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
             category_name: '',
-            category_data: [{ headings: [], category_details_obj: [] }],
+            category_data: [],
             page_loading: false
         }
         this.handleChange = this.handleChange.bind(this)
@@ -56,27 +60,28 @@ class CategoryPage extends Component {
         let _self = this
         return new Promise(function (resolve) {
             axios.get(host() + "/category/" + _self.state.category_name).then(function (json) {
-                let obj = {}
-                obj["headings"] = json.data["headings"]
-                obj["category_details_obj"] = json.data["category_details_obj"]
-                if (obj["category_details_obj"].length > 0) {
-                    obj["category_details_obj"].map(function (k, v) {
-                        k["sdRank"] = k["start_date_ranks"]["desktop_rank"]
-                        k["smRank"] = k["start_date_ranks"]["mobile_rank"]
-                        k["cdRank"] = k["current_date_ranks"]["desktop_rank"]
-                        k["cmRank"] = k["current_date_ranks"]["mobile_rank"]
-                        k["dPersentage"] = k["percentage"]["desktop_rank_percentage"]
-                        k["mPersentage"] = k["percentage"]["mobile_rank_percentage"]
+                let individual_categories = []
+                if ( json.data["category_details_obj"].length > 0) {
+                    json.data["category_details_obj"].map(function (k, v) {
+                        let obj={}
+                        obj["category_name"]=k["category_name"]
+                        obj["keyword"]=k["keyword"]
+                        obj["tags"] = k["tags"]
+                        obj["sdRank"] = k["start_date_ranks"]["desktop_rank"]
+                        obj["smRank"] = k["start_date_ranks"]["mobile_rank"]
+                        obj["cdRank"] = k["current_date_ranks"]["desktop_rank"]
+                        obj["cmRank"] = k["current_date_ranks"]["mobile_rank"]
+                        obj["dPersentage"] = k["percentage"]["desktop_rank_percentage"]
+                        obj["mPersentage"] = k["percentage"]["mobile_rank_percentage"]
+                        individual_categories.push(obj)
                     })
                 }
-                _self.setState({ category_data: obj, page_loading: false })
+                _self.setState({ category_data:individual_categories , page_loading: false })
             }).catch(function (err) {
                 _self.setState({ page_loading: false })
             })
         })
     }
-
-
     render() {
         const { category_name, category_data, page_loading } = this.state
         var options = {
@@ -89,7 +94,19 @@ class CategoryPage extends Component {
                     <span className="common-title"><b>Dashboard</b></span>
                 </div>
                 <div className="monitor-tale">
-                <span className="excel-download"><img src={excel_icon} alt="" /> Download</span>
+                <ExcelFile element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
+                        <ExcelSheet data={category_data} name="categories data">
+                            <ExcelColumn label="category" value="category_name" />  
+                            <ExcelColumn label="keyword" value="keyword" />
+                            <ExcelColumn label="tags" value="tags" />
+                            <ExcelColumn label="start date desktop rank" value="sdRank" />
+                            <ExcelColumn label="start date mobile rank" value="smRank" />
+                            <ExcelColumn label="current date desktop rank" value="cdRank" />
+                            <ExcelColumn label="current date mobile rank" value="cmRank" />
+                            <ExcelColumn label="desktop percentabe" value="dPersentage" />
+                            <ExcelColumn label="mobile percentabe" value="mPersentage" />
+                        </ExcelSheet>
+                    </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
                     <select
                         disabled={false}
@@ -99,7 +116,7 @@ class CategoryPage extends Component {
                     >
                         {this.returnOptions(catogories_list)}
                     </select>
-                    <BootstrapTable data={category_data["category_details_obj"]} pagination search options={options}>
+                    <BootstrapTable data={category_data} pagination search options={options}>
                         <TableHeaderColumn row='0' dataField='keyword'  isKey rowSpan="2"> keyword</TableHeaderColumn>
                         <TableHeaderColumn row='0' dataField='category_name' rowSpan="2">Category</TableHeaderColumn>
                         <TableHeaderColumn row='0' dataField='tags'  rowSpan="2">Tags</TableHeaderColumn>

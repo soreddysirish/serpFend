@@ -7,6 +7,7 @@ import '../react-bootstrap-table-all.min.css'
 import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import ReactExport from "react-data-export";
+import Moment from 'react-moment';
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -122,6 +123,8 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Life" value="life" />
                             <ExcelColumn label="Google ranking url" value="google_ranking_url" />
                             <ExcelColumn label="Search volume" value="search_volume" />
+                            <ExcelColumn label="Desktop percentage" value="dPersentage" />
+                            <ExcelColumn label="Mobile percentage" value="mPersentage" />
                             <ExcelColumn label="Google rank history" value="google_rank_history" />
                         </ExcelSheet>
                     </ExcelFile>

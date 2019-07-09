@@ -121,37 +121,21 @@ class CategoryPage extends Component {
     }
     cellFormatter(cell, row, enumObject) {
         let row_value = cell
-        if (enumObject == "smRank") {
-            // let start_date_mobile_value = cell
-            // let current_date_mobile_value = row["cmRank"]
-            // if (start_date_mobile_value > current_date_mobile_value) {
-            //     row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
-            // } else if (start_date_mobile_value < current_date_mobile_value) {
-            //     row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
-            // }
-        } else if (enumObject == 'sdRank') {
-            // let start_date_desktop_value = cell
-            // let current_date_desktop_value = row["cdRank"]
-            // if (start_date_desktop_value > current_date_desktop_value) {
-            //     row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
-            // } else if (start_date_desktop_value < current_date_desktop_value) {
-            //     row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
-            // }
-        } else if (enumObject == 'cmRank') {
+       if (enumObject == 'cmRank') {
             let current_date_mobile_value = cell
             let start_date_mobile_value = row["smRank"]
-            if (current_date_mobile_value > start_date_mobile_value) {
-                row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
-            } else if (current_date_mobile_value < start_date_mobile_value) {
+            if (parseInt(current_date_mobile_value) > parseInt(start_date_mobile_value)) {
                 row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+            } else if (parseInt(current_date_mobile_value) < parseInt(start_date_mobile_value)) {
+                row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
             }
         } else if (enumObject == 'cdRank') {
             let current_date_desktop_value = cell
-            let start_date_desktop_value = row["smRank"]
+            let start_date_desktop_value = row["sdRank"]
             if (current_date_desktop_value > start_date_desktop_value) {
-                row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
-            } else if (current_date_desktop_value < start_date_desktop_value) {
                 row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+            } else if (parseInt(current_date_desktop_value) < parseInt(start_date_desktop_value)) {
+                row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
             }
         }
         return (row_value);

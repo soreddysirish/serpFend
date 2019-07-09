@@ -215,7 +215,7 @@ class CategoryPage extends Component {
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2">volume count</TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2">search volume </TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>

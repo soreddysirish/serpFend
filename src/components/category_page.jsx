@@ -121,22 +121,28 @@ class CategoryPage extends Component {
     }
     cellFormatter(cell, row, enumObject) {
         let row_value = cell
-       if (enumObject == 'cmRank') {
+        if (enumObject == 'cmRank') {
             let current_date_mobile_value = cell
             let start_date_mobile_value = row["smRank"]
             if (parseInt(current_date_mobile_value) > parseInt(start_date_mobile_value)) {
-                row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+                row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> <span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
             } else if (parseInt(current_date_mobile_value) < parseInt(start_date_mobile_value)) {
-                row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+                row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> <span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+            }else if(parseInt(current_date_mobile_value) == parseInt(start_date_mobile_value)){
+                row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
+            }else{
+                row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
             }
         } else if (enumObject == 'cdRank') {
             let current_date_desktop_value = cell
             let start_date_desktop_value = row["sdRank"]
-            if (current_date_desktop_value > start_date_desktop_value) {
+            if (parseInt(current_date_desktop_value) > parseInt(start_date_desktop_value)) {
                 row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
             } else if (parseInt(current_date_desktop_value) < parseInt(start_date_desktop_value)) {
                 row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
             }
+        } else if (enumObject == "smRank") {
+            row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
         }
         return (row_value);
     }

@@ -43,6 +43,10 @@ span.increased{
 span.decreased{
   color:red!important;
 }
+.fa-mobile{
+color: black;
+font-size: x-large!important;
+}
 .pad-zero{
   padding: 0!important;
 }

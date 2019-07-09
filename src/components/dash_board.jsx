@@ -39,6 +39,10 @@ class DashBoard extends Component {
                         tableHeaderAndValues["current_top_2_3"] = category["current_date_kws"]["rank_2_3"]
                         tableHeaderAndValues["current_top_4_10"] = category["current_date_kws"]["rank_4_10"]
                         tableHeaderAndValues["current_rank_above_10"] = category["current_date_kws"]["rank_above_10"]
+                        tableHeaderAndValues["1"] = tableHeaderAndValues["current_top_1"] + "(" + tableHeaderAndValues["start_top_1"] + ")"
+                        tableHeaderAndValues["2_3"] = tableHeaderAndValues["current_top_2_3"] + "(" + tableHeaderAndValues["start_top_2_3"] + ")"
+                        tableHeaderAndValues["4_10"] = tableHeaderAndValues["current_top_4_10"] + "(" + tableHeaderAndValues["start_top_4_10"] + ")"
+                        tableHeaderAndValues[">10"] = tableHeaderAndValues["current_rank_above_10"] + "(" + tableHeaderAndValues["start_rank_above_10"] + ")"
                         customizedRowData.push(tableHeaderAndValues)
                     })
                     _self.setState({ catData: customizedRowData, page_loading: false })
@@ -68,7 +72,7 @@ class DashBoard extends Component {
     render() {
         var options = {
             clearSearch: true,
-            noDataText: (<i className="fa fa-circle-o-notch fa-spin" style={{ 'fontSize': '24px' }}></i>)
+            noDataText: (<span>Loading.....</span>)
         };
 
         const { catData, page_loading } = this.state
@@ -110,6 +114,10 @@ class DashBoard extends Component {
                         <TableHeaderColumn row='1' dataField='current_top_4_10'>Top 4-10</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='current_rank_above_10'>>10</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='current_unranked'>unranked</TableHeaderColumn>
+                        <TableHeaderColumn row='0' rowSpan="2" dataField='1'>1</TableHeaderColumn>
+                        <TableHeaderColumn row='0' rowSpan="2" dataField='2_3'>2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='0' rowSpan="2" dataField='4_10'>4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='0' rowSpan="2" dataField='>10'>>10</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>

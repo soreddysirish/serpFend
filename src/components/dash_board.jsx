@@ -96,6 +96,10 @@ class DashBoard extends Component {
                             <ExcelColumn label="current posiotion top 4-10" value="current_top_4_10" />
                             <ExcelColumn label="current posiotion above 10" value="current_rank_above_10" />
                             <ExcelColumn label="current unranked" value="current_unranked" />
+                            <ExcelColumn label="1" value="1" />
+                            <ExcelColumn label="2-3" value="2_3" />
+                            <ExcelColumn label="4-10" value="4_10" />
+                            <ExcelColumn label="> 10" value=">10" />
                         </ExcelSheet>
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>

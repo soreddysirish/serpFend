@@ -37,7 +37,12 @@ body {
 html {
 scroll-behavior: smooth;
 }
-
+span.increased{
+  color:green!important;
+}
+span.decreased{
+  color:red!important;
+}
 .pad-zero{
   padding: 0!important;
 }
@@ -268,22 +273,6 @@ ul{
   margin: 0;
   text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .breadcrumb-nav{
   padding: 8px 32px;

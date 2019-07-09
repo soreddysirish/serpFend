@@ -9,6 +9,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import ReactExport from "react-data-export";
 import Moment from 'react-moment';
 import moment from 'moment'
+import 'font-awesome/css/font-awesome.min.css';
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -20,7 +21,7 @@ class CategoryPage extends Component {
             category_name: '',
             category_data: [],
             page_loading: false,
-            key_names:[]
+            key_names: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
@@ -83,14 +84,14 @@ class CategoryPage extends Component {
                             date.subtract(i, 'day').format('DD-MM-YYYY');
                             dates.push(date);
                         }
-                        dates.map((v,key) => {
+                        dates.map((v, key) => {
                             let obj = {}
                             let key_name = moment(v._d).format("MMM Do")
-                            k[key_name] =  k["google_rank_history"][key]
+                            k[key_name] = k["google_rank_history"][key]
                             key_names.push(key_name)
                         })
                         k["key_names"] = key_names
-                        _self.setState({key_names:key_names})
+                        _self.setState({ key_names: key_names })
                         k["day"] = k["cycle_changes"]["day_change"]
                         k["month"] = k["cycle_changes"]["month_change"]
                         k["week"] = k["cycle_changes"]["week_change"]
@@ -118,8 +119,45 @@ class CategoryPage extends Component {
             })
         })
     }
+    cellFormatter(cell, row, enumObject) {
+        let row_value = cell
+        if (enumObject == "smRank") {
+            // let start_date_mobile_value = cell
+            // let current_date_mobile_value = row["cmRank"]
+            // if (start_date_mobile_value > current_date_mobile_value) {
+            //     row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+            // } else if (start_date_mobile_value < current_date_mobile_value) {
+            //     row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+            // }
+        } else if (enumObject == 'sdRank') {
+            // let start_date_desktop_value = cell
+            // let current_date_desktop_value = row["cdRank"]
+            // if (start_date_desktop_value > current_date_desktop_value) {
+            //     row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+            // } else if (start_date_desktop_value < current_date_desktop_value) {
+            //     row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+            // }
+        } else if (enumObject == 'cmRank') {
+            let current_date_mobile_value = cell
+            let start_date_mobile_value = row["smRank"]
+            if (current_date_mobile_value > start_date_mobile_value) {
+                row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+            } else if (current_date_mobile_value < start_date_mobile_value) {
+                row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+            }
+        } else if (enumObject == 'cdRank') {
+            let current_date_desktop_value = cell
+            let start_date_desktop_value = row["smRank"]
+            if (current_date_desktop_value > start_date_desktop_value) {
+                row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+            } else if (current_date_desktop_value < start_date_desktop_value) {
+                row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+            }
+        }
+        return (row_value);
+    }
     render() {
-        const { category_name, category_data, page_loading,key_names } = this.state
+        const { category_name, category_data, page_loading, key_names } = this.state
         var options = {
             clearSearch: true,
             noDataText: 'Loading...'
@@ -130,7 +168,7 @@ class CategoryPage extends Component {
                     <span className="common-title"><b>Dashboard</b></span>
                 </div>
                 <div className="monitor-tale">
-                    <ExcelFile  filename={category_name} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
+                    <ExcelFile filename={category_name} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
                         <ExcelSheet data={category_data} name="categories data">
                             <ExcelColumn label="Domain" value="domain" />
                             <ExcelColumn label="Keyword" value="keyword" />
@@ -151,7 +189,6 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Search volume" value="search_volume" />
                             <ExcelColumn label="Desktop percentage" value="dPersentage" />
                             <ExcelColumn label="Mobile percentage" value="mPersentage" />
-                            {/* <ExcelColumn label="Google rank history" value="google_rank_history" /> */}
                             {this.excelColumns(key_names)}
                         </ExcelSheet>
                     </ExcelFile>
@@ -169,11 +206,12 @@ class CategoryPage extends Component {
                         <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2"> keyword</TableHeaderColumn>
                         <TableHeaderColumn row='0' dataField='tags' rowSpan="2">Tags</TableHeaderColumn>
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='smRank' >Mobile</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='sdRank'>Desktop</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank"
+                        >Mobile</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank">Desktop</TableHeaderColumn>
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Current</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='cmRank'>Mobile</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='cdRank'>Desktop</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='cmRank' dataFormat={this.cellFormatter} formatExtraData="cmRank">Mobile</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='cdRank' dataFormat={this.cellFormatter} formatExtraData="cdRank">Desktop</TableHeaderColumn>
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>

@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "cleartrip-cms",
+      name: "cleartrip-serp",
       script: "npm",
       args: "run start:production",
       instances: 1,
@@ -22,7 +22,7 @@ module.exports = {
       repo: "git@github.com:soreddysirish/serpFend.git",
       path: "/var/www/serp_frontend",
       key:
-        "~/Documents/projects/cleartrip/key_files/dynamic-flights-high-config.pem",
+        "‎⁨~/Documents⁩/cleartrip⁩/pempfiles⁩/imp⁩/dynamic-flights-high-config.pem",
       ssh_options: ["ForwardAgent=yes"],
       "post-deploy": "npm install --production && npm run build"
     }

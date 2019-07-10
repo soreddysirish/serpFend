@@ -150,7 +150,8 @@ class CategoryPage extends Component {
         const { category_name, category_data, page_loading, key_names } = this.state
         var options = {
             clearSearch: true,
-            noDataText: 'Loading...'
+            noDataText: 'Loading...',
+            sizePerPage: 10
         };
         return (
             <div className="ctbot-dashboard">

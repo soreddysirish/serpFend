@@ -196,8 +196,8 @@ class CategoryPage extends Component {
                         {this.returnOptions(catogories_list)}
                     </select>
                     <BootstrapTable data={category_data} pagination search options={options}>
-                        <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle>Category</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle> keyword</TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={ { type: 'TextFilter',placeholder:'search by keyword'} } width="200"> keyword</TableHeaderColumn>
                         <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle>Tags</TableHeaderColumn>
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank"

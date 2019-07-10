@@ -167,7 +167,11 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Tags" value="tags" />
                             <ExcelColumn label="Type" value="type" />
                             <ExcelColumn label="Google Page" value="google_page" />
-                            <ExcelColumn label="Start" value="kw_start_position" />
+                            <ExcelColumn label="Keyword start position" value="kw_start_position" />
+                            <ExcelColumn label="Start date desktop rank" value="sdRank" />
+                            <ExcelColumn label="Start date mobile rank" value="smRank" />
+                            <ExcelColumn label="Current date desktop rank" value="cdRank" />
+                            <ExcelColumn label="Current date mobile rank" value="cmRank" />
                             <ExcelColumn label="Google" value="google_rank" />
                             <ExcelColumn label="Bing" value="bing_rank" />
                             <ExcelColumn label="Yahoo" value="yahoo_rank" />

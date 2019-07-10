@@ -21,8 +21,7 @@ module.exports = {
       ref: "origin/master",
       repo: "git@github.com:soreddysirish/serpFend.git",
       path: "/var/www/serp_frontend",
-      key:
-        "‎⁨~/Documents⁩/cleartrip⁩/pempfiles⁩/imp⁩/dynamic-flights-high-config.pem",
+      key:"~/Documents/cleartrip/pempfiles/dynamic-flights-high-config.pem",
       ssh_options: ["ForwardAgent=yes"],
       "post-deploy": "npm install --production && npm run build"
     }

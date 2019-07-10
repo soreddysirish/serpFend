@@ -13,7 +13,7 @@ import 'font-awesome/css/font-awesome.min.css';
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-const catogories_list = ["AE Q1 Hotels Keywords", "Emirates - UAE Campaign", "India Flights", "India Hotels", "KSA Q1 Arabic Keywords", "KSA Q1 Keywords", "UAE Q1 Activities", "UAE Q1 Keywords", "Visa"]
+// const catogories_list = ["AE Q1 Hotels Keywords", "Emirates - UAE Campaign", "India Flights", "India Hotels", "KSA Q1 Arabic Keywords", "KSA Q1 Keywords", "UAE Q1 Activities", "UAE Q1 Keywords", "Visa"]
 class CategoryPage extends Component {
     constructor(props) {
         super(props)
@@ -21,7 +21,9 @@ class CategoryPage extends Component {
             category_name: '',
             category_data: [],
             page_loading: false,
-            key_names: []
+            key_names: [],
+            load_txt:'Please wait',
+            categories_keys:[]
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
@@ -74,7 +76,10 @@ class CategoryPage extends Component {
         return new Promise(function (resolve) {
             axios.get(host() + "/category/" + _self.state.category_name).then(function (json) {
                 let individual_categories = []
-                if (json.data["category_details_obj"].length > 0) {
+                if(json.data["categories_keys"] && json.data["categories_keys"].length > 0){
+                    _self.setState({categories_keys:json.data["categories_keys"]})
+                }
+                if (json.data["category_details_obj"] && json.data["category_details_obj"].length > 0) {
                     json.data["category_details_obj"].map(function (k, v) {
                         const dates = [];
                         const key_names = []
@@ -112,8 +117,15 @@ class CategoryPage extends Component {
                         k["google_rank_history"] = k["google_rank_history"].toString()
                         individual_categories.push(k)
                     })
+                    _self.setState({ category_data: individual_categories, page_loading: false })
+                }else{
+                    _self.setState({
+                        page_loading:false,
+                        load_txt: 'No data present please add it',
+                        category_data:[]
+                    })
                 }
-                _self.setState({ category_data: individual_categories, page_loading: false })
+               
             }).catch(function (err) {
                 _self.setState({ page_loading: false })
             })
@@ -147,7 +159,7 @@ class CategoryPage extends Component {
         return (row_value);
     }
     render() {
-        const { category_name, category_data, page_loading, key_names } = this.state
+        const { category_name, category_data, page_loading, key_names,load_txt,categories_keys } = this.state
         var options = {
             clearSearch: true,
             noDataText: 'Loading...',
@@ -194,8 +206,9 @@ class CategoryPage extends Component {
                         name="category_name"
                         value={category_name}
                     >
-                        {this.returnOptions(catogories_list)}
+                        {this.returnOptions(categories_keys)}
                     </select>
+                    {category_data.length > 0 ?
                     <BootstrapTable data={category_data} pagination search options={options}>
                         <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn>
                         <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={ { type: 'TextFilter',placeholder:'search by keyword'} } width="200"> keyword</TableHeaderColumn>
@@ -211,7 +224,7 @@ class CategoryPage extends Component {
                         <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
                         <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2" columnTitle>search volume </TableHeaderColumn>
-                    </BootstrapTable>
+                    </BootstrapTable> : <div>{load_txt}</div> }
                 </div>
             </div>
         )

@@ -43,6 +43,16 @@ span.increased{
 span.decreased{
   color:red!important;
 }
+
+.monitor-tale td {
+  padding: 8px!important;
+  font-size: 13px!important;
+}
+.monitor-tale th {
+  background: #fff!important;
+  padding: 10px!important;
+  font-size: 15px!important;
+}
 .fa-mobile{
 color: black;
 font-size: x-large!important;

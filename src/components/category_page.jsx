@@ -163,7 +163,7 @@ class CategoryPage extends Component {
         var options = {
             clearSearch: true,
             noDataText: 'Loading...',
-            sizePerPage: 10
+            sizePerPage: 20
         };
         return (
             <div className="ctbot-dashboard">

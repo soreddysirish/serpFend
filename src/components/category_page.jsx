@@ -180,11 +180,7 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Tags" value="tags" />
                             <ExcelColumn label="Type" value="type" />
                             <ExcelColumn label="Google Page" value="google_page" />
-                            <ExcelColumn label="Keyword start position" value="kw_start_position" />
-                            <ExcelColumn label="Start date desktop rank" value="sdRank" />
-                            <ExcelColumn label="Start date mobile rank" value="smRank" />
-                            <ExcelColumn label="Current date desktop rank" value="cdRank" />
-                            <ExcelColumn label="Current date mobile rank" value="cmRank" />
+                            <ExcelColumn label="start" value="kw_start_position" />
                             <ExcelColumn label="Google" value="google_rank" />
                             <ExcelColumn label="Bing" value="bing_rank" />
                             <ExcelColumn label="Yahoo" value="yahoo_rank" />
@@ -192,8 +188,12 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Week" value="week" />
                             <ExcelColumn label="Month" value="month" />
                             <ExcelColumn label="Life" value="life" />
-                            <ExcelColumn label="Google ranking url" value="google_ranking_url" />
-                            <ExcelColumn label="Search volume" value="search_volume" />
+                            <ExcelColumn label="Start Date Desktop Rank" value="sdRank" />
+                            <ExcelColumn label="Start Date Mobile Rank" value="smRank" />
+                            <ExcelColumn label="Current Date Desktop Rank" value="cdRank" />
+                            <ExcelColumn label="Current Date Mobile Rank" value="cmRank" />
+                            <ExcelColumn label="Google Ranking Url" value="google_ranking_url" />
+                            <ExcelColumn label="Search Volume" value="search_volume" />
                             <ExcelColumn label="Desktop percentage" value="dPersentage" />
                             <ExcelColumn label="Mobile percentage" value="mPersentage" />
                             {this.excelColumns(key_names)}
@@ -211,7 +211,7 @@ class CategoryPage extends Component {
                     {category_data.length > 0 ?
                     <BootstrapTable data={category_data} pagination search options={options}>
                         <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={ { type: 'TextFilter',placeholder:'search by keyword'} } width="200"> keyword</TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={ { type: 'TextFilter',placeholder:'search by keyword'} } width="200"> Keyword</TableHeaderColumn>
                         <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn>
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank"
@@ -223,7 +223,7 @@ class CategoryPage extends Component {
                         <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
                         <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2" columnTitle>search volume </TableHeaderColumn>
+                        <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2" columnTitle>Search Volume </TableHeaderColumn>
                     </BootstrapTable> : <div>{load_txt}</div> }
                 </div>
             </div>

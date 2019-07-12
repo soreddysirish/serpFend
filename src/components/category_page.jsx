@@ -22,8 +22,8 @@ class CategoryPage extends Component {
             category_data: [],
             page_loading: false,
             key_names: [],
-            load_txt:'Please wait',
-            categories_keys:[]
+            load_txt: 'Please wait',
+            categories_keys: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
@@ -76,8 +76,8 @@ class CategoryPage extends Component {
         return new Promise(function (resolve) {
             axios.get(host() + "/category/" + _self.state.category_name).then(function (json) {
                 let individual_categories = []
-                if(json.data["categories_keys"] && json.data["categories_keys"].length > 0){
-                    _self.setState({categories_keys:json.data["categories_keys"]})
+                if (json.data["categories_keys"] && json.data["categories_keys"].length > 0) {
+                    _self.setState({ categories_keys: json.data["categories_keys"] })
                 }
                 if (json.data["category_details_obj"] && json.data["category_details_obj"].length > 0) {
                     json.data["category_details_obj"].map(function (k, v) {
@@ -118,14 +118,14 @@ class CategoryPage extends Component {
                         individual_categories.push(k)
                     })
                     _self.setState({ category_data: individual_categories, page_loading: false })
-                }else{
+                } else {
                     _self.setState({
-                        page_loading:false,
+                        page_loading: false,
                         load_txt: 'No data present please add it',
-                        category_data:[]
+                        category_data: []
                     })
                 }
-               
+
             }).catch(function (err) {
                 _self.setState({ page_loading: false })
             })
@@ -133,37 +133,44 @@ class CategoryPage extends Component {
     }
     cellFormatter(cell, row, enumObject) {
         let row_value = cell
-        if (enumObject == 'cmRank') {
-            let current_date_mobile_value = cell
-            let start_date_mobile_value = row["smRank"]
-            if (parseInt(current_date_mobile_value) > parseInt(start_date_mobile_value)) {
-                row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> <span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
-            } else if (parseInt(current_date_mobile_value) < parseInt(start_date_mobile_value)) {
-                row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> <span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
-            }else if(parseInt(current_date_mobile_value) == parseInt(start_date_mobile_value)){
-                row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
-            }else{
+        if (cell){
+            if (enumObject == 'cmRank') {
+                let current_date_mobile_value = cell
+                let start_date_mobile_value = row["smRank"]
+                if (parseInt(current_date_mobile_value) > parseInt(start_date_mobile_value)) {
+                    row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> <span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+                } else if (parseInt(current_date_mobile_value) < parseInt(start_date_mobile_value)) {
+                    row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> <span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+                } else if (parseInt(current_date_mobile_value) == parseInt(start_date_mobile_value)) {
+                    row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
+                } else {
+                    row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
+                }
+            } else if (enumObject == 'cdRank') {
+                let current_date_desktop_value = cell
+                let start_date_desktop_value = row["sdRank"]
+                if (parseInt(current_date_desktop_value) > parseInt(start_date_desktop_value)) {
+                    row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+                } else if (parseInt(current_date_desktop_value) < parseInt(start_date_desktop_value)) {
+                    row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+                }
+            } else if (enumObject == "smRank") {
                 row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
             }
-        } else if (enumObject == 'cdRank') {
-            let current_date_desktop_value = cell
-            let start_date_desktop_value = row["sdRank"]
-            if (parseInt(current_date_desktop_value) > parseInt(start_date_desktop_value)) {
-                row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
-            } else if (parseInt(current_date_desktop_value) < parseInt(start_date_desktop_value)) {
-                row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
-            }
-        } else if (enumObject == "smRank") {
-            row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
         }
         return (row_value);
     }
+    renderShowsTotal(start,to,total){
+        return(<p>Showing {start} to {to} of {total} entries</p>)
+    }
     render() {
-        const { category_name, category_data, page_loading, key_names,load_txt,categories_keys } = this.state
+        const { category_name, category_data, page_loading, key_names, load_txt, categories_keys } = this.state
         var options = {
             clearSearch: true,
             noDataText: 'Loading...',
-            sizePerPage: 20
+            sizePerPage: 20,
+            paginationShowsTotal: this.renderShowsTotal,
+            paginationPosition: 'top'
         };
         return (
             <div className="ctbot-dashboard">
@@ -209,22 +216,22 @@ class CategoryPage extends Component {
                         {this.returnOptions(categories_keys)}
                     </select>
                     {category_data.length > 0 ?
-                    <BootstrapTable data={category_data} pagination search options={options}>
-                        <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={ { type: 'TextFilter',placeholder:'search by keyword'} } width="200"> Keyword</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn>
-                        <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank"
-                        >Mobile</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank">Desktop</TableHeaderColumn>
-                        <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Current</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='cmRank' dataFormat={this.cellFormatter} formatExtraData="cmRank">Mobile</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='cdRank' dataFormat={this.cellFormatter} formatExtraData="cdRank">Desktop</TableHeaderColumn>
-                        <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
-                        <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2" columnTitle>Search Volume </TableHeaderColumn>
-                    </BootstrapTable> : <div>{load_txt}</div> }
+                        <BootstrapTable data={category_data} pagination search options={options}>
+                            <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn>
+                            <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="200"> Keyword</TableHeaderColumn>
+                            <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank"
+                            >Mobile</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank">Desktop</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Current</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='cmRank' dataFormat={this.cellFormatter} formatExtraData="cmRank">Mobile</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='cdRank' dataFormat={this.cellFormatter} formatExtraData="cdRank">Desktop</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
+                            <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2" columnTitle>Search Volume </TableHeaderColumn>
+                        </BootstrapTable> : <div>{load_txt}</div>}
                 </div>
             </div>
         )

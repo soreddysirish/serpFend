@@ -13,7 +13,6 @@ import 'font-awesome/css/font-awesome.min.css';
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-// const catogories_list = ["AE Q1 Hotels Keywords", "Emirates - UAE Campaign", "India Flights", "India Hotels", "KSA Q1 Arabic Keywords", "KSA Q1 Keywords", "UAE Q1 Activities", "UAE Q1 Keywords", "Visa"]
 class CategoryPage extends Component {
     constructor(props) {
         super(props)
@@ -101,10 +100,12 @@ class CategoryPage extends Component {
                         k["month"] = k["cycle_changes"]["month_change"]
                         k["week"] = k["cycle_changes"]["week_change"]
                         k["life"] = k["cycle_changes"]["life_change"]
-                        k["sdRank"] = k["start_date_ranks"]["desktop_rank"]
-                        k["smRank"] = k["start_date_ranks"]["mobile_rank"]
+                        k["sdRank"] = k["current_date_ranks"]["desktop_intial_position"]
+                        k["smRank"] = k["current_date_ranks"]["moblie_intial_position"]
                         k["cdRank"] = k["current_date_ranks"]["desktop_rank"]
                         k["cmRank"] = k["current_date_ranks"]["mobile_rank"]
+                        k["tdRank"] = k["current_date_ranks"]["desktop_target_position"]
+                        k["tmRank"] = k["current_date_ranks"]["mobile_target_position"]
                         k["dPersentage"] = k["percentage"]["desktop_rank_percentage"]
                         k["mPersentage"] = k["percentage"]["mobile_rank_percentage"]
                         if (k["types"]["desktop_type"] && k["types"]["mobile_type"]) {
@@ -133,7 +134,7 @@ class CategoryPage extends Component {
     }
     cellFormatter(cell, row, enumObject) {
         let row_value = cell
-        if (cell){
+        if (cell) {
             if (enumObject == 'cmRank') {
                 let current_date_mobile_value = cell
                 let start_date_mobile_value = row["smRank"]
@@ -160,8 +161,24 @@ class CategoryPage extends Component {
         }
         return (row_value);
     }
-    renderShowsTotal(start,to,total){
-        return(<p>Showing {start} to {to} of {total} entries</p>)
+    renderShowsTotal(start, to, total) {
+        return (<p>Showing {start} to {to} of {total} entries</p>)
+    }
+
+    convertFixNum(cell, row) {
+        let num = cell
+        if (isNaN(num)) return num;
+        if (num < 999) { return num; }
+        if (num >= 1000000000) {
+            return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + ' G';
+        }
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + ' M';
+        }
+        if (num >= 1000) {
+            return (num / 1000).toFixed(1).replace(/\.0$/, '') + ' K';
+        }
+        return num;
     }
     render() {
         const { category_name, category_data, page_loading, key_names, load_txt, categories_keys } = this.state
@@ -199,6 +216,8 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Start Date Mobile Rank" value="smRank" />
                             <ExcelColumn label="Current Date Desktop Rank" value="cdRank" />
                             <ExcelColumn label="Current Date Mobile Rank" value="cmRank" />
+                            <ExcelColumn label="Target Date Desktop Rank" value="tdRank" />
+                            <ExcelColumn label="Target Date Mobile Rank" value="tmRank" />
                             <ExcelColumn label="Google Ranking Url" value="google_ranking_url" />
                             <ExcelColumn label="Search Volume" value="search_volume" />
                             <ExcelColumn label="Desktop percentage" value="dPersentage" />
@@ -217,20 +236,23 @@ class CategoryPage extends Component {
                     </select>
                     {category_data.length > 0 ?
                         <BootstrapTable data={category_data} pagination search options={options}>
-                            <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn>
+                            {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}
                             <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="200"> Keyword</TableHeaderColumn>
-                            <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn>
-                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Start</TableHeaderColumn>
+                            {/* <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn> */}
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Initial Rank</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank"
                             >Mobile</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank">Desktop</TableHeaderColumn>
-                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Current</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Current Rank</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='cmRank' dataFormat={this.cellFormatter} formatExtraData="cmRank">Mobile</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='cdRank' dataFormat={this.cellFormatter} formatExtraData="cdRank">Desktop</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Target Rank</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='tmRank'>Mobile</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='tdRank'>Desktop</TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
-                            <TableHeaderColumn row='0' dataField='search_volume' rowSpan="2" columnTitle>Search Volume </TableHeaderColumn>
+                            <TableHeaderColumn row='0' dataField='search_volume' dataFormat={this.convertFixNum} rowSpan="2" columnTitle>Search Volume </TableHeaderColumn>
                         </BootstrapTable> : <div>{load_txt}</div>}
                 </div>
             </div>

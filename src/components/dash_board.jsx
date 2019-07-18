@@ -39,6 +39,11 @@ class DashBoard extends Component {
                         tableHeaderAndValues["current_top_2_3"] = category["current_date_kws"]["rank_2_3"]
                         tableHeaderAndValues["current_top_4_10"] = category["current_date_kws"]["rank_4_10"]
                         tableHeaderAndValues["current_rank_above_10"] = category["current_date_kws"]["rank_above_10"]
+                        tableHeaderAndValues["target_unranked"] = category["target_kws"]["target_unranked"]
+                        tableHeaderAndValues["target_top_1"] = category["target_kws"]["target_top_1"]
+                        tableHeaderAndValues["target_top_2_3"] = category["target_kws"]["target_top_2_3"]
+                        tableHeaderAndValues["target_top_4_10"] = category["target_kws"]["target_top_4_10"]
+                        tableHeaderAndValues["target_rank_above_10"] = category["target_kws"]["target_above_10"]
                         tableHeaderAndValues["1"] = tableHeaderAndValues["current_top_1"] + "(" + tableHeaderAndValues["start_top_1"] + ")"
                         tableHeaderAndValues["2_3"] = tableHeaderAndValues["current_top_2_3"] + "(" + tableHeaderAndValues["start_top_2_3"] + ")"
                         tableHeaderAndValues["4_10"] = tableHeaderAndValues["current_top_4_10"] + "(" + tableHeaderAndValues["start_top_4_10"] + ")"
@@ -96,6 +101,11 @@ class DashBoard extends Component {
                             <ExcelColumn label="Current Posiotion top 4-10" value="current_top_4_10" />
                             <ExcelColumn label="Current Posiotion above 10" value="current_rank_above_10" />
                             <ExcelColumn label="Current Unranked" value="current_unranked" />
+                            <ExcelColumn label="Target Posiotion top 1" value="target_top_1" />
+                            <ExcelColumn label="Target Posiotion top 2-3" value="target_top_2_3" />
+                            <ExcelColumn label="Target Posiotion top 4-10" value="target_top_4_10" />
+                            <ExcelColumn label="Target Posiotion above 10" value="target_rank_above_10" />
+                            <ExcelColumn label="Target Unranked" value="target_unranked" />
                             <ExcelColumn label="1" value="1" />
                             <ExcelColumn label="2-3" value="2_3" />
                             <ExcelColumn label="4-10" value="4_10" />
@@ -104,24 +114,30 @@ class DashBoard extends Component {
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
                     <BootstrapTable data={catData} pagination search options={options} >
-                        <TableHeaderColumn row='0' dataField='category' rowSpan="2" dataFormat={this.cellFormatter} isKey> category</TableHeaderColumn>
-                        <TableHeaderColumn row='0' rowSpan="2" dataField='count'>Total Keywords</TableHeaderColumn>
-                        <TableHeaderColumn row='0' colSpan="5" headerAlign='center'>Starting Position</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='start_top_1'>Top 1</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='start_top_2_3'>Top 2-3</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='start_top_4_10'>Top 4-10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='start_rank_above_10'>>10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='start_unranked'>Unranked</TableHeaderColumn>
-                        <TableHeaderColumn row='0' colSpan="5" headerAlign='center'>Current Position</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='current_top_1'>Top 1</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='current_top_2_3'>Top 2-3</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='current_top_4_10'>Top 4-10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='current_rank_above_10'>>10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' dataField='current_unranked'>Unranked</TableHeaderColumn>
-                        <TableHeaderColumn row='0' rowSpan="2" dataField='1'>1</TableHeaderColumn>
-                        <TableHeaderColumn row='0' rowSpan="2" dataField='2_3'>2-3</TableHeaderColumn>
-                        <TableHeaderColumn row='0' rowSpan="2" dataField='4_10'>4-10</TableHeaderColumn>
-                        <TableHeaderColumn row='0' rowSpan="2" dataField='>10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150'  dataField='category' rowSpan="2" dataFormat={this.cellFormatter} isKey> category</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150'  rowSpan="2" dataField='count'>Total Keywords</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150' colSpan="5" headerAlign='center'>Starting Position</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='start_top_1'>Top 1</TableHeaderColumn>
+                        <TableHeaderColumn row='1'  width='150' dataField='start_top_2_3'>Top 2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='start_top_4_10'>Top 4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='start_rank_above_10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150'  dataField='start_unranked'>Unranked</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150' colSpan="5" headerAlign='center'>Current Position</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='current_top_1'>Top 1</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='current_top_2_3'>Top 2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='current_top_4_10'>Top 4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='current_rank_above_10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='current_unranked'>Unranked</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150' colSpan="5" headerAlign='center'>Target</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='target_top_1'>Top 1</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='target_top_2_3'>Top 2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='target_top_4_10'>Top 4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='target_rank_above_10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='150' dataField='target_unranked'>Unranked</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150' rowSpan="2" dataField='1'>1</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150' rowSpan="2" dataField='2_3'>2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150' rowSpan="2" dataField='4_10'>4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='150' rowSpan="2" dataField='>10'>>10</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>

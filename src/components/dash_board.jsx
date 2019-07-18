@@ -101,10 +101,10 @@ class DashBoard extends Component {
                             <ExcelColumn label="Current Posiotion top 4-10" value="current_top_4_10" />
                             <ExcelColumn label="Current Posiotion above 10" value="current_rank_above_10" />
                             <ExcelColumn label="Current Unranked" value="current_unranked" />
-                            <ExcelColumn label="Target Posiotion top 1" value="target_top_1" />
-                            <ExcelColumn label="Target Posiotion top 2-3" value="target_top_2_3" />
-                            <ExcelColumn label="Target Posiotion top 4-10" value="target_top_4_10" />
-                            <ExcelColumn label="Target Posiotion above 10" value="target_rank_above_10" />
+                            <ExcelColumn label="Target top 1" value="target_top_1" />
+                            <ExcelColumn label="Target top 2-3" value="target_top_2_3" />
+                            <ExcelColumn label="Target top 4-10" value="target_top_4_10" />
+                            <ExcelColumn label="Target above 10" value="target_rank_above_10" />
                             <ExcelColumn label="Target Unranked" value="target_unranked" />
                             <ExcelColumn label="1" value="1" />
                             <ExcelColumn label="2-3" value="2_3" />

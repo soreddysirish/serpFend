@@ -91,7 +91,7 @@ class CategoryPage extends Component {
                         dates.map((v, key) => {
                             let obj = {}
                             let key_name = moment(v._d).format("MMM Do")
-                            k[key_name] = k["google_rank_history"][key]
+                            k[key_name] = k["google_rank_history"][key] ||"N/A"
                             key_names.push(key_name)
                         })
                         k["key_names"] = key_names
@@ -158,6 +158,9 @@ class CategoryPage extends Component {
             } else if (enumObject == "smRank") {
                 row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
             }
+        }else{
+            if(cell !=0)
+            row_value = "N/A"
         }
         return (row_value);
     }
@@ -247,8 +250,8 @@ class CategoryPage extends Component {
                             <TableHeaderColumn row='1' dataField='cmRank' dataFormat={this.cellFormatter} formatExtraData="cmRank">Mobile</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='cdRank' dataFormat={this.cellFormatter} formatExtraData="cdRank">Desktop</TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Target Rank</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='tmRank'>Mobile</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='tdRank'>Desktop</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='tmRank' dataFormat={this.cellFormatter} formatExtraData="tmRank">Mobile</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='tdRank' dataFormat={this.cellFormatter} formatExtraData="tdRank">Desktop</TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>

@@ -100,14 +100,14 @@ class CategoryPage extends Component {
                         k["month"] = k["cycle_changes"]["month_change"]
                         k["week"] = k["cycle_changes"]["week_change"]
                         k["life"] = k["cycle_changes"]["life_change"]
-                        k["sdRank"] = k["current_date_ranks"]["desktop_intial_position"]
+                        k["sdRank"] = k["current_date_ranks"]["desktop_intial_position"] ||'N/A'
                         k["smRank"] = k["current_date_ranks"]["moblie_intial_position"]
-                        k["cdRank"] = k["current_date_ranks"]["desktop_rank"]
-                        k["cmRank"] = k["current_date_ranks"]["mobile_rank"]
-                        k["tdRank"] = k["current_date_ranks"]["desktop_target_position"]
-                        k["tmRank"] = k["current_date_ranks"]["mobile_target_position"]
-                        k["dPersentage"] = k["percentage"]["desktop_rank_percentage"]
-                        k["mPersentage"] = k["percentage"]["mobile_rank_percentage"]
+                        k["cdRank"] = k["current_date_ranks"]["desktop_rank"] ||'N/A'
+                        k["cmRank"] = k["current_date_ranks"]["mobile_rank"] 
+                        k["tdRank"] = k["current_date_ranks"]["desktop_target_position"] ||'N/A'
+                        k["tmRank"] = k["current_date_ranks"]["mobile_target_position"] 
+                        k["dPersentage"] = k["percentage"]["desktop_rank_percentage"] ||'N/A'
+                        k["mPersentage"] = k["percentage"]["mobile_rank_percentage"] ||'N/A'
                         if (k["types"]["desktop_type"] && k["types"]["mobile_type"]) {
                             k["type"] = "Mobile and Desktop"
                         } else if (typeof (k["types"]["desktop_type"]) == 'undefined' && k["types"]["mobile_type"]) {

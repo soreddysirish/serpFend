@@ -76,7 +76,8 @@ class DashBoard extends Component {
     render() {
         var options = {
             clearSearch: true,
-            noDataText: (<span>Loading.....</span>)
+            noDataText: (<span>Loading.....</span>),
+            sizePerPage: 15
         };
 
         const { catData, page_loading } = this.state
@@ -113,30 +114,30 @@ class DashBoard extends Component {
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
                     <BootstrapTable data={catData} pagination search options={options} >
-                        <TableHeaderColumn row='0' width='150'  dataField='category' rowSpan="2" dataFormat={this.cellFormatter} isKey> category</TableHeaderColumn>
-                        <TableHeaderColumn row='0' width='150'  rowSpan="2" dataField='count'>Total Keywords</TableHeaderColumn>
-                        <TableHeaderColumn row='0' width='150' colSpan="5" headerAlign='center'>Starting Position</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='start_top_1'>Top 1</TableHeaderColumn>
-                        <TableHeaderColumn row='1'  width='150' dataField='start_top_2_3'>Top 2-3</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='start_top_4_10'>Top 4-10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='start_rank_above_10'>>10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150'  dataField='start_unranked'>Unranked</TableHeaderColumn>
-                        <TableHeaderColumn row='0' width='150' colSpan="5" headerAlign='center'>Current Position</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='current_top_1'>Top 1</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='current_top_2_3'>Top 2-3</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='current_top_4_10'>Top 4-10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='current_rank_above_10'>>10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='current_unranked'>Unranked</TableHeaderColumn>
-                        <TableHeaderColumn row='0' width='150' colSpan="5" headerAlign='center'>Target</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='target_top_1'>Top 1</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='target_top_2_3'>Top 2-3</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='target_top_4_10'>Top 4-10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='target_rank_above_10'>>10</TableHeaderColumn>
-                        <TableHeaderColumn row='1' width='150' dataField='target_unranked'>Unranked</TableHeaderColumn>
-                        <TableHeaderColumn row='0' width='150' rowSpan="2" dataField='1'>1</TableHeaderColumn>
-                        <TableHeaderColumn row='0' width='150' rowSpan="2" dataField='2_3'>2-3</TableHeaderColumn>
-                        <TableHeaderColumn row='0' width='150' rowSpan="2" dataField='4_10'>4-10</TableHeaderColumn>
-                        <TableHeaderColumn row='0' width='150' rowSpan="2" dataField='>10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='180'  dataField='category' rowSpan="2" dataFormat={this.cellFormatter} isKey> category</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='100'  rowSpan="2" dataField='count'>Total Keywords</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='80' rowSpan="2" dataField='1'>1</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='80' rowSpan="2" dataField='2_3'>2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='80' rowSpan="2" dataField='4_10'>4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='80' rowSpan="2" dataField='>10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='100' colSpan="5" headerAlign='center'>Starting Position</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='80' dataField='start_top_1'>Top 1</TableHeaderColumn>
+                        <TableHeaderColumn row='1'  width='80' dataField='start_top_2_3'>Top 2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='90' dataField='start_top_4_10'>Top 4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='80' dataField='start_rank_above_10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='100'  dataField='start_unranked'>Unranked</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='100' colSpan="5" headerAlign='center'>Current Position</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='80' dataField='current_top_1'>Top 1</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='80' dataField='current_top_2_3'>Top 2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='90' dataField='current_top_4_10'>Top 4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='80' dataField='current_rank_above_10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='100' dataField='current_unranked'>Unranked</TableHeaderColumn>
+                        <TableHeaderColumn row='0' width='100' colSpan="5" headerAlign='center'>Target</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='80' dataField='target_top_1'>Top 1</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='80' dataField='target_top_2_3'>Top 2-3</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='90' dataField='target_top_4_10'>Top 4-10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='80' dataField='target_rank_above_10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row='1' width='100' dataField='target_unranked'>Unranked</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>

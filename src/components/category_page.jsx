@@ -89,7 +89,6 @@ class CategoryPage extends Component {
                             dates.push(date);
                         }
                         dates.map((v, key) => {
-                            let obj = {}
                             let key_name = moment(v._d).format("MMM Do")
                             k[key_name] = k["google_rank_history"][key] ||"N/A"
                             key_names.push(key_name)
@@ -215,16 +214,16 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Week" value="week" />
                             <ExcelColumn label="Month" value="month" />
                             <ExcelColumn label="Life" value="life" />
-                            <ExcelColumn label="Start Date Desktop Rank" value="sdRank" />
-                            <ExcelColumn label="Start Date Mobile Rank" value="smRank" />
-                            <ExcelColumn label="Current Date Desktop Rank" value="cdRank" />
-                            <ExcelColumn label="Current Date Mobile Rank" value="cmRank" />
-                            <ExcelColumn label="Target Date Desktop Rank" value="tdRank" />
-                            <ExcelColumn label="Target Date Mobile Rank" value="tmRank" />
+                            <ExcelColumn label="Start(D)" value="sdRank" />
+                            <ExcelColumn label="Start(M)" value="smRank" />
+                            <ExcelColumn label="Current(D)" value="cdRank" />
+                            <ExcelColumn label="Current(M)" value="cmRank" />
+                            <ExcelColumn label="Target(M)" value="tdRank" />
+                            <ExcelColumn label="Target(M)" value="tmRank" />
                             <ExcelColumn label="Google Ranking Url" value="google_ranking_url" />
                             <ExcelColumn label="Search Volume" value="search_volume" />
-                            <ExcelColumn label="Desktop percentage" value="dPersentage" />
-                            <ExcelColumn label="Mobile percentage" value="mPersentage" />
+                            <ExcelColumn label="%(D)" value="dPersentage" />
+                            <ExcelColumn label="%(M)" value="mPersentage" />
                             {this.excelColumns(key_names)}
                         </ExcelSheet>
                     </ExcelFile>

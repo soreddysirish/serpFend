@@ -159,7 +159,7 @@ class CategoryPage extends Component {
                 row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
             }
         }else{
-            if(cell !=0)
+            if(cell !=0 || cell == "")
             row_value = "N/A"
         }
         return (row_value);

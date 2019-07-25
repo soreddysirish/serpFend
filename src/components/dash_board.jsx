@@ -22,7 +22,6 @@ class DashBoard extends Component {
         let _self = this
         return new Promise(function (resolve) {
             axios.get(host() + "/overall_categories").then(function (json) {
-                let obj = {}
                 let customizedRowData = []
                 if (json.data && json.data.length > 0) {
                     json.data.map(function (category, i) {

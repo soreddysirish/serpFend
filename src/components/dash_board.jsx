@@ -47,6 +47,7 @@ class DashBoard extends Component {
                         tableHeaderAndValues["2_3"] = tableHeaderAndValues["current_top_2_3"] + "(" + tableHeaderAndValues["start_top_2_3"] + ")"
                         tableHeaderAndValues["4_10"] = tableHeaderAndValues["current_top_4_10"] + "(" + tableHeaderAndValues["start_top_4_10"] + ")"
                         tableHeaderAndValues[">10"] = tableHeaderAndValues["current_rank_above_10"] + "(" + tableHeaderAndValues["start_rank_above_10"] + ")"
+                        tableHeaderAndValues["unranked"] =  category["current_date_kws"]["unranked"]+ "(" + category["start_date_kws"]["unranked"] + ")"
                         customizedRowData.push(tableHeaderAndValues)
                     })
                     _self.setState({ catData: customizedRowData, page_loading: false })
@@ -110,6 +111,7 @@ class DashBoard extends Component {
                             <ExcelColumn label="2-3" value="2_3" />
                             <ExcelColumn label="4-10" value="4_10" />
                             <ExcelColumn label="> 10" value=">10" />
+                            <ExcelColumn label="unranked" value="unranked" />
                         </ExcelSheet>
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
@@ -120,6 +122,7 @@ class DashBoard extends Component {
                         <TableHeaderColumn row='0' width='80' rowSpan="2" dataField='2_3'>2-3</TableHeaderColumn>
                         <TableHeaderColumn row='0' width='80' rowSpan="2" dataField='4_10'>4-10</TableHeaderColumn>
                         <TableHeaderColumn row='0' width='80' rowSpan="2" dataField='>10'>>10</TableHeaderColumn>
+                        <TableHeaderColumn row="0" width="100" rowSpan="2" dataField='unranked'>unranked</TableHeaderColumn>
                         <TableHeaderColumn row='0' width='100' colSpan="5" headerAlign='center'>Starting Position</TableHeaderColumn>
                         <TableHeaderColumn row='1' width='80' dataField='start_top_1'>Top 1</TableHeaderColumn>
                         <TableHeaderColumn row='1'  width='80' dataField='start_top_2_3'>Top 2-3</TableHeaderColumn>

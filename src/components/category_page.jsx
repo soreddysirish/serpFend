@@ -22,12 +22,15 @@ class CategoryPage extends Component {
             page_loading: false,
             key_names: [],
             load_txt: 'Please wait',
-            categories_keys: []
+            categories_keys: [],
+            excelJsonObj: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
         this.excelColumns = this.excelColumns.bind(this)
+        this.generatexcelJsonObj = this.generatexcelJsonObj.bind(this)
     }
+
     handleChange(e, fieldName) {
         let _self = this
         _self.setState({ [fieldName]: e.target.value, page_loading: true })
@@ -70,6 +73,37 @@ class CategoryPage extends Component {
         }, 500)
     }
 
+    generatexcelJsonObj(resObj) {
+        let excel_obj_mobile = []
+        let excel_obj_desktop = []
+        let _self = this
+        resObj.map((v, i) => {
+            let obj = v
+            let type_keys = Object.keys(v["types"])
+            if (type_keys.length > 0) {
+                type_keys.map((val, key) => {
+                    if (val == "mobile_type") {
+                        let info ={}
+                        info["tag_name"] = obj["tags"]["mobile_tag"] || "N/A"
+                        info["device_name"] = "Mobile"
+                        info["current_grank"] = obj["current_date_ranks"]["mobile_rank"] || "N/A"
+                        excel_obj_mobile.push({...obj,...info})
+                    } else if(val == "desktop_type") {
+                        let info ={}
+                        info["tag_name"] = obj["tags"]["desktop_tag"] || "N/A"
+                        info["device_name"] = "Desktop"
+                        info["current_grank"] = obj["current_date_ranks"]["desktop_rank"]  || "N/A"
+                        excel_obj_desktop.push({...obj,...info})
+                    }
+                })
+            }
+        })
+        debugger
+        _self.setState({
+            excelJsonObj:excel_obj_desktop.concat(excel_obj_mobile)
+        })
+    }
+
     getCategoryData() {
         let _self = this
         return new Promise(function (resolve) {
@@ -90,7 +124,7 @@ class CategoryPage extends Component {
                         }
                         dates.map((v, key) => {
                             let key_name = moment(v._d).format("MMM Do")
-                            k[key_name] = k["google_rank_history"][key] ||"N/A"
+                            k[key_name] = k["google_rank_history"][key] || "N/A"
                             key_names.push(key_name)
                         })
                         k["key_names"] = key_names
@@ -99,14 +133,14 @@ class CategoryPage extends Component {
                         k["month"] = k["cycle_changes"]["month_change"]
                         k["week"] = k["cycle_changes"]["week_change"]
                         k["life"] = k["cycle_changes"]["life_change"]
-                        k["sdRank"] = k["current_date_ranks"]["desktop_intial_position"] ||'N/A'
+                        k["sdRank"] = k["current_date_ranks"]["desktop_intial_position"] || 'N/A'
                         k["smRank"] = k["current_date_ranks"]["moblie_intial_position"]
-                        k["cdRank"] = k["current_date_ranks"]["desktop_rank"] ||'N/A'
-                        k["cmRank"] = k["current_date_ranks"]["mobile_rank"] 
-                        k["tdRank"] = k["current_date_ranks"]["desktop_target_position"] ||'N/A'
-                        k["tmRank"] = k["current_date_ranks"]["mobile_target_position"] 
-                        k["dPersentage"] = k["percentage"]["desktop_rank_percentage"] ||'N/A'
-                        k["mPersentage"] = k["percentage"]["mobile_rank_percentage"] ||'N/A'
+                        k["cdRank"] = k["current_date_ranks"]["desktop_rank"] || 'N/A'
+                        k["cmRank"] = k["current_date_ranks"]["mobile_rank"]
+                        k["tdRank"] = k["current_date_ranks"]["desktop_target_position"] || 'N/A'
+                        k["tmRank"] = k["current_date_ranks"]["mobile_target_position"]
+                        k["dPersentage"] = k["percentage"]["desktop_rank_percentage"] || 'N/A'
+                        k["mPersentage"] = k["percentage"]["mobile_rank_percentage"] || 'N/A'
                         if (k["types"]["desktop_type"] && k["types"]["mobile_type"]) {
                             k["type"] = "Mobile and Desktop"
                         } else if (typeof (k["types"]["desktop_type"]) == 'undefined' && k["types"]["mobile_type"]) {
@@ -118,6 +152,7 @@ class CategoryPage extends Component {
                         individual_categories.push(k)
                     })
                     _self.setState({ category_data: individual_categories, page_loading: false })
+                    _self.generatexcelJsonObj(individual_categories)
                 } else {
                     _self.setState({
                         page_loading: false,
@@ -157,9 +192,9 @@ class CategoryPage extends Component {
             } else if (enumObject == "smRank") {
                 row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
             }
-        }else{
-            if(cell !=0 || cell == "")
-            row_value = "N/A"
+        } else {
+            if (cell != 0 || cell == "")
+                row_value = "N/A"
         }
         return (row_value);
     }
@@ -183,7 +218,7 @@ class CategoryPage extends Component {
         return num;
     }
     render() {
-        const { category_name, category_data, page_loading, key_names, load_txt, categories_keys } = this.state
+        const { category_name, category_data, page_loading, key_names, load_txt, categories_keys,excelJsonObj } = this.state
         var options = {
             clearSearch: true,
             noDataText: 'Loading...',
@@ -197,17 +232,17 @@ class CategoryPage extends Component {
                     <span className="common-title"><b>Dashboard</b></span>
                 </div>
                 <div className="monitor-tale">
-                    <ExcelFile filename={category_name} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
-                        <ExcelSheet data={category_data} name="categories data">
+                    <ExcelFile filename={category_name} alignment={{vertical:"center",horizontal:"center"}} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
+                        <ExcelSheet data={excelJsonObj} name="categories data">
                             <ExcelColumn label="Domain" value="domain" />
                             <ExcelColumn label="Keyword" value="keyword" />
                             <ExcelColumn label="Region" value="region" />
                             <ExcelColumn label="Language" value="language" />
-                            <ExcelColumn label="Tags" value="tags" />
-                            <ExcelColumn label="Type" value="type" />
+                            <ExcelColumn label="Tags" value="tag_name" />
+                            <ExcelColumn label="Type" value="device_name" />
                             <ExcelColumn label="Google Page" value="google_page" />
                             <ExcelColumn label="start" value="kw_start_position" />
-                            <ExcelColumn label="Google" value="google_rank" />
+                            <ExcelColumn label="Google" value="current_grank" />
                             <ExcelColumn label="Bing" value="bing_rank" />
                             <ExcelColumn label="Yahoo" value="yahoo_rank" />
                             <ExcelColumn label="Day" value="day" />

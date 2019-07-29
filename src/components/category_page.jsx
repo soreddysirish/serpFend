@@ -230,7 +230,9 @@ class CategoryPage extends Component {
             <div className="ctbot-dashboard">
                 <div className="ctbot-top">
                     <span className="common-title"><b>Dashboard</b></span>
+                    <div className="clearfix"></div>
                 </div>
+                <div className="clearfix"></div>
                 <div className="monitor-tale">
                     <ExcelFile filename={category_name} alignment={{vertical:"center",horizontal:"center"}} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
                         <ExcelSheet data={excelJsonObj} name="categories data">
@@ -263,6 +265,7 @@ class CategoryPage extends Component {
                         </ExcelSheet>
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
+                    <span className="category-filter">
                     <select
                         disabled={false}
                         onChange={e => this.handleChange(e, "category_name")}
@@ -271,6 +274,8 @@ class CategoryPage extends Component {
                     >
                         {this.returnOptions(categories_keys)}
                     </select>
+                    </span>
+                    <div className="clearfix"></div>
                     {category_data.length > 0 ?
                         <BootstrapTable data={category_data} pagination search options={options}>
                             {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}

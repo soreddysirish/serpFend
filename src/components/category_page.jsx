@@ -237,8 +237,7 @@ class CategoryPage extends Component {
             clearSearch: true,
             noDataText: 'Loading...',
             sizePerPage: 20,
-            paginationShowsTotal: this.renderShowsTotal,
-            paginationPosition: 'top'
+            paginationShowsTotal: this.renderShowsTotal
         };
         return (
             <div className="ctbot-dashboard">
@@ -291,7 +290,7 @@ class CategoryPage extends Component {
                     </span>
                     <div className="clearfix"></div>
                     {category_data.length > 0 ?
-                        <BootstrapTable data={category_data} pagination search options={options}>
+                    <BootstrapTable data={category_data} pagination search options={options} striped condensed>
                             {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}
                             <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="200"> Keyword</TableHeaderColumn>
                             {/* <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn> */}

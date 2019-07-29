@@ -4,7 +4,8 @@ import Promise from "promise"
 import '../react-bootstrap-table-all.min.css'
 import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { host } from "./helper";
+import { host, checkSession } from "./helper";
+import { Redirect } from 'react-router-dom'
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import ReactExport from "react-data-export";
 import jwtDecode from "jwt-decode"
@@ -16,21 +17,29 @@ class DashBoard extends Component {
         super(props)
         this.state = {
             page_loading: true,
-            catData: []
+            catData: [],
+            isLogin: true
         }
     }
     componentDidMount() {
         let _self = this
+        if (!checkSession()) {
+            _self.setState({
+                isLogin: false
+            })
+            return false
+        } else {
+            _self.setState({
+                isLogin: true
+            })
+        }
         return new Promise(function (resolve) {
             axios.get(host() + "/overall_categories").then(function (json) {
                 let customizedRowData = []
                 if (json.data && json.data.length > 0) {
                     json.data.map(function (category, i) {
                         let tableHeaderAndValues = {}
-                        debugger
-                        let cat_name_key = category["category_name"].replace(/[_-\s]/g, ' ').replace("  ","").toLowerCase()
-                        let category_formatted = cat_name_key.charAt(0).toUpperCase()+cat_name_key.slice(1)
-                        tableHeaderAndValues["category"] = category_formatted
+                        tableHeaderAndValues["category"] = category["category_name"]
                         tableHeaderAndValues["count"] = category["count"]
                         tableHeaderAndValues["start_unranked"] = category["start_date_kws"]["unranked"]
                         tableHeaderAndValues["start_top_1"] = category["start_date_kws"]["rank_1"]
@@ -65,7 +74,9 @@ class DashBoard extends Component {
     }
 
     cellFormatter(cell, row) {
-        let cat_name = "<a href=" + window.location.origin + "/category_page/?name=" + cell.replace(/[^A-Z0-9]/ig, "_").replace("__", "") + ">" + cell + "</a>"
+        let cat_name_key = cell.replace(/[_-\s]/g, ' ').replace("  ", "").toLowerCase()
+        let category_formatted = cat_name_key.charAt(0).toUpperCase() + cat_name_key.slice(1)
+        let cat_name = "<a href=" + window.location.origin + "/category_page/?name=" + cell.replace(/[^A-Z0-9]/ig, "_").replace("__", "") + ">" + category_formatted + "</a>"
         return (cat_name);
     }
     customExcelRows = options => {
@@ -85,7 +96,10 @@ class DashBoard extends Component {
             sizePerPage: 15
         };
 
-        const { catData, page_loading } = this.state
+        const { catData, page_loading,isLogin } = this.state
+        if(!isLogin){
+            return <Redirect to={"/login"} />
+        }
         return (
             <div className="ctbot-dashboard">
                 <div className="ctbot-top">

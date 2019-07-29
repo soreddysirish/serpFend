@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import queryString from 'query-string'
 import axios from "axios";
 import Promise from "promise"
-import { host } from "./helper";
+import { host,checkSession } from "./helper";
+import { Redirect } from 'react-router-dom'
 import '../react-bootstrap-table-all.min.css'
 import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
@@ -23,7 +24,8 @@ class CategoryPage extends Component {
             key_names: [],
             load_txt: 'Please wait',
             categories_keys: [],
-            excelJsonObj: []
+            excelJsonObj: [],
+            isLogin:true
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
@@ -61,6 +63,15 @@ class CategoryPage extends Component {
     }
     componentDidMount() {
         let _self = this
+        if (!checkSession()) {
+            _self.setState({
+                isLogin: false
+            })
+        } else {
+            _self.setState({
+                isLogin: true
+            })
+        }
         let parsed = queryString.parse(this.props.location.search);
         _self.setState({
             category_name: parsed["name"],
@@ -218,7 +229,10 @@ class CategoryPage extends Component {
         return num;
     }
     render() {
-        const { category_name, category_data, page_loading, key_names, load_txt, categories_keys,excelJsonObj } = this.state
+        const { isLogin,category_name, category_data, page_loading, key_names, load_txt, categories_keys,excelJsonObj } = this.state
+        if(!isLogin){
+            return <Redirect to={"/login"} />
+        }
         var options = {
             clearSearch: true,
             noDataText: 'Loading...',
@@ -230,7 +244,9 @@ class CategoryPage extends Component {
             <div className="ctbot-dashboard">
                 <div className="ctbot-top">
                     <span className="common-title"><b>Dashboard</b></span>
+                    <div className="clearfix"></div>
                 </div>
+                <div className="clearfix"></div>
                 <div className="monitor-tale">
                     <ExcelFile filename={category_name} alignment={{vertical:"center",horizontal:"center"}} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
                         <ExcelSheet data={excelJsonObj} name="categories data">
@@ -263,6 +279,7 @@ class CategoryPage extends Component {
                         </ExcelSheet>
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
+                    <span className="category-filter">
                     <select
                         disabled={false}
                         onChange={e => this.handleChange(e, "category_name")}
@@ -271,6 +288,8 @@ class CategoryPage extends Component {
                     >
                         {this.returnOptions(categories_keys)}
                     </select>
+                    </span>
+                    <div className="clearfix"></div>
                     {category_data.length > 0 ?
                         <BootstrapTable data={category_data} pagination search options={options}>
                             {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}

@@ -1,10 +1,48 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { checkSession } from "./helper";
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import { Redirect } from 'react-router-dom'
+
 class Layout extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            userLogin: true,
+            redirect: false
+        }
+        this.logout = this.logout.bind(this)
+    }
+    logout() {
+        localStorage.removeItem("token")
+        this.setState({
+            redirect: true
+        })
+    }
     render() {
+        const { userLogin, redirect } = this.state
+        let _self = this
+        if (checkSession()) {
+            setTimeout(function () {
+                _self.setState({ userLogin: true })
+            }, 10)
+        } else {
+            setTimeout(function () {
+                _self.setState({ userLogin: false })
+            }, 10)
+        }
+        if (redirect) {
+            return <Redirect to={"/login"} />
+        }
         return (
             <div>
                 <div className="main-navbar">
+                    <div className="ct-logo">
+                        <a className="ctBrand" href="/">
+                            <span className="cleartripLogo" title="Cleartrip ">
+                                Home
+              </span>
+                        </a>
+                    </div>
                     <div className="rhs-nav">
                         <ul className="list-unstyled rhs-nav-links">
                             <li>
@@ -13,35 +51,17 @@ class Layout extends Component {
                                 </span>
                                 <span className="user-name">Admin</span>
                             </li>
+                            <li>
+                                {userLogin ?
+                                    <button type="button" className="btn btn-info" onClick={this.logout}>Logout</button>
+                                    : <button type="button" className="btn btn-info">{ReactHtmlParser("<a class='loginBtn' href='/login'>Login</a>")}</button>}
+                            </li>
                         </ul>
                     </div>
-                    <div className="clearfix"></div>
-                </div>
-                <div className="side-navbar">
-                    <div className="side-bar-toggle">
-                        <a className="ctBrand" href="/">
-                            <span className="cleartripLogo" title="Cleartrip ">Home</span>
-                        </a>
-                        <div className="clearfix"></div>
-                    </div>
-                    <ul className="list-unstyled side-nav-links">
-                        <li><a href="/dash_board">Keyowrds</a></li>
-                        {/* <li>
-                            Flights<ul className="list-unstyled">
-                                <li><a href="">Flight Schedule</a></li>
-                                <li><a href="">Airline Overview</a></li>
-                                <li><a href="">Flight Tickets</a></li>
-                                <li><a href="">Booking Routes</a></li>
-                                <li><a href="">Others</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">Hotels</a></li>
-                        <li><a href="">Calendar API</a></li>
-                        <li><a href="">Bot Logs</a></li> */}
-                    </ul>
+                    <div className="clearfix" />
                 </div>
             </div>
-        )
+        );
     }
 }
 

@@ -34,6 +34,13 @@ body {
   background: #f3f3f3;
 }
 
+
+.react-bs-table table th {
+  overflow-wrap: break-word!important;
+  white-space: normal!important;
+  text-overflow: ellipsis!important;
+  word-wrap: break-word!important;
+}
 html {
 scroll-behavior: smooth;
 }
@@ -94,9 +101,17 @@ ul{
   background-image: url(https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/flight-schedule-version-2-images/iconSprite37.png);
   background-repeat: no-repeat;
 }
+td div >a{
+  font-size: 16px!important;
+}
+td div >a:hover{
+  text-decoration: none!important;
+}
 
-
-
+.react-bs-table .table-bordered>tbody>tr>td{
+  color: black!important;
+  font-weight: 400!important;
+}
 /*Dashboard Components*/
 #ctbot-wrapper {
   background: #f3f3f3;

@@ -255,7 +255,7 @@ class CategoryPage extends Component {
                             <ExcelColumn label="Start(M)" value="smRank" />
                             <ExcelColumn label="Current(D)" value="cdRank" />
                             <ExcelColumn label="Current(M)" value="cmRank" />
-                            <ExcelColumn label="Target(M)" value="tdRank" />
+                            <ExcelColumn label="Target(D)" value="tdRank" />
                             <ExcelColumn label="Target(M)" value="tmRank" />
                             <ExcelColumn label="Google Ranking Url" value="google_ranking_url" />
                             <ExcelColumn label="Search Volume" value="search_volume" />

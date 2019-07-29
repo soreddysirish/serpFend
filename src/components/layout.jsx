@@ -7,13 +7,6 @@ class Layout extends Component {
                 <div className="main-navbar">
                     <div className="rhs-nav">
                         <ul className="list-unstyled rhs-nav-links">
-                            {/* <li>
-                                <span className="apply-filter-btn">
-                                    <i className="fa fa-plus"></i> Add New Monitor</span>
-                            </li>
-                            <li className="noify">
-                                <i className="fa fa-bell"></i> <span className="notify-count">5</span>
-                            </li> */}
                             <li>
                                 <span className="profile-pic">
                                     <img src="images/profile-pic.jpeg" alt="" />

@@ -5,7 +5,8 @@ import Layout from './components/layout'
 import DashBoard from './components/dash_board'
 import CategoryPage from './components/category_page'
 import 'bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route,Redirect } from "react-router-dom";
+import jwtDecode from "jwt-decode"
 class App extends Component {
   render() {
     return (<section id="ctbot-wrapper">

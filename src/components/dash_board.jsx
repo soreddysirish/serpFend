@@ -7,6 +7,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { host } from "./helper";
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import ReactExport from "react-data-export";
+import jwtDecode from "jwt-decode"
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;

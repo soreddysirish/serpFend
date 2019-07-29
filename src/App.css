@@ -87,6 +87,12 @@ ul{
 .row{
   margin: 0;
 }
+.hide{
+  display: none!important;
+}
+.show{
+  display: block!important;
+}
 
 .cleartripLogo {
   float: left;

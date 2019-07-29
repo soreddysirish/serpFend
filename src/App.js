@@ -4,6 +4,7 @@ import './react-bootstrap-table-all.min.css'
 import Layout from './components/layout'
 import DashBoard from './components/dash_board'
 import CategoryPage from './components/category_page'
+import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router, Switch, Route,Redirect } from "react-router-dom";
 import jwtDecode from "jwt-decode"
@@ -16,6 +17,7 @@ class App extends Component {
             <Route exact path="/" component={DashBoard} />
             <Route exact path="/dash_board" component={DashBoard} />
             <Route exact path="/category_page" component={CategoryPage} />
+            <Route exact path="/login" component={Login} />
           </Switch>
       </Router>
     </section>)

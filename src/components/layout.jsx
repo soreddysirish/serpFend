@@ -5,6 +5,8 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2
 } from "react-html-parser";
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class Layout extends Component {
   constructor(props) {
@@ -32,7 +34,10 @@ class Layout extends Component {
   render() {
     const { userLogin, redirect } = this.state;
     if (redirect) {
-      return window.location.href="/login"
+        NotificationManager.info("Logout","You are successfully loggedout",3000)
+        setTimeout(function(){
+            return window.location.href="/login"
+        },2000)
     }
     return (
       <div>
@@ -67,6 +72,7 @@ class Layout extends Component {
           </div>
           <div className="clearfix" />
         </div>
+        <NotificationContainer/>
       </div>
     );
   }

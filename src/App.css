@@ -111,15 +111,18 @@ a.loginBtn:hover {
   font-weight: bold;
   text-decoration: none;
 }
+.react-bs-table-search-form > input.form-control {
+height: 37px!important;
+}
 .react-bs-table-search-clear-btn{
-  padding: 3px 19px 7px 26px!important;
-    font-weight: bolder!important;
-    background-color: #ef6837!important;
-    border-color: bisque!important;
-    margin-left: 0px!important;
-    border-radius: 9%!important;
-    margin-top: 0px!important;
-    text-transform: lowercase!important;
+  padding: 5px 19px 9px 26px!important;
+  font-weight: bolder!important;
+  background-color: #ef6837!important;
+  border-color: bisque!important;
+  margin-left: 0!important;
+  border-radius: 9%!important;
+  margin-top: -3px!important;
+  text-transform: lowercase!important;
 }
 
 .error {

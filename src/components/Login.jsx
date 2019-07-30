@@ -61,7 +61,7 @@ export default class Login extends Component {
     render() {
         const { username, password, showUsernameErr, showPasswordErr,showLoginErr,islogin } = this.state
         if(islogin){
-            return <Redirect to={"/"} />
+            return window.location.href="/"
         }
         return (
             <div className="ctbot-dashboard">

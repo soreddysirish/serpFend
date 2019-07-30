@@ -6,9 +6,7 @@ import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { host, checkSession } from "./helper";
 import { Redirect } from 'react-router-dom'
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import ReactExport from "react-data-export";
-import jwtDecode from "jwt-decode"
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;

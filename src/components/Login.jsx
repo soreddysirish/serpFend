@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import Promise from "promise"
 import { host,checkSession } from "./helper";
-import { Redirect } from 'react-router-dom'
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -61,7 +62,10 @@ export default class Login extends Component {
     render() {
         const { username, password, showUsernameErr, showPasswordErr,showLoginErr,islogin } = this.state
         if(islogin){
-            return <Redirect to={"/"} />
+            NotificationManager.success("success","You are successfully loggedin",2000)
+            setTimeout(function(){
+                return window.location.href="/"
+            },2500)
         }
         return (
             <div className="ctbot-dashboard">
@@ -84,11 +88,12 @@ export default class Login extends Component {
                         </div>
                         <div className="form-group">
                             <div className="col-sm-offset-2 col-sm-10">
-                                <button type="button" className="btn btn-primary" onClick={this.loginSerp}>Submit</button>
+                                <button type="button" className="btn btn-primary" onClick={this.loginSerp}>Login</button>
                             </div>
                         </div>
                     </form>
                 </div>
+                <NotificationContainer/>
             </div>
         )
     }

@@ -5,13 +5,14 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2
 } from "react-html-parser";
-import { Redirect } from "react-router-dom";
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class Layout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userLogin: true,
+      userLogin: false,
       redirect: false
     };
     this.logout = this.logout.bind(this);
@@ -22,20 +23,21 @@ class Layout extends Component {
       redirect: true
     });
   }
+  componentDidMount(){
+      let _self = this;
+    if (checkSession()) {
+        _self.setState({ userLogin: true });
+    } else {
+        _self.setState({ userLogin: false });
+    }
+  }
   render() {
     const { userLogin, redirect } = this.state;
-    let _self = this;
-    if (checkSession()) {
-      setTimeout(function() {
-        _self.setState({ userLogin: true });
-      }, 10);
-    } else {
-      setTimeout(function() {
-        _self.setState({ userLogin: false });
-      }, 10);
-    }
     if (redirect) {
-      return <Redirect to={"/login"} />;
+        NotificationManager.info("Logout","You are successfully loggedout",3000)
+        setTimeout(function(){
+            return window.location.href="/login"
+        },2000)
     }
     return (
       <div>
@@ -70,6 +72,7 @@ class Layout extends Component {
           </div>
           <div className="clearfix" />
         </div>
+        <NotificationContainer/>
       </div>
     );
   }

@@ -242,7 +242,7 @@ class CategoryPage extends Component {
         return (
             <div className="ctbot-dashboard">
                 <div className="ctbot-top">
-                    <span className="common-title"><b>Dashboard</b></span>
+                    <span className="common-title"><b>Category page</b></span>
                     <div className="clearfix"></div>
                 </div>
                 <div className="clearfix"></div>

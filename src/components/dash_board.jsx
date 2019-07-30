@@ -145,7 +145,7 @@ class DashBoard extends Component {
 
         const { catData, page_loading, isLogin } = this.state;
         if (!isLogin) {
-            return window.location.href="/login"
+            return window.location.href = "/login"
         }
         return (
             <div className="ctbot-dashboard">
@@ -155,7 +155,7 @@ class DashBoard extends Component {
                     </span>
                 </div>
                 <div className="monitor-tale">
-                    <ExcelFile
+                    <ExcelFile filename="dash_board"
                         element={
                             <span className="excel-download">
                                 <img src={excel_icon} alt="" /> Download
@@ -163,12 +163,12 @@ class DashBoard extends Component {
                         }
                     >
                         <ExcelSheet data={catData} name="categories data">
+                            <ExcelColumn label="Category" value="category" />
                             <ExcelColumn label="1" value="1" />
                             <ExcelColumn label="2-3" value="2_3" />
                             <ExcelColumn label="4-10" value="4_10" />
                             <ExcelColumn label="> 10" value=">10" />
                             <ExcelColumn label="unranked" value="unranked" />
-                            <ExcelColumn label="Category" value="category" />
                             <ExcelColumn label="Total count" value="count" />
                             <ExcelColumn label="Start top 1" value="start_top_1" />
                             <ExcelColumn label="Start top 2-3" value="start_top_2_3" />

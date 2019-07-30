@@ -12,10 +12,10 @@ export const checkSession = function () {
   let exp = jwtDecode_val["exp"]
   if (exp < new Date().getTime() / 1000) {
     localStorage.removeItem("token")
-    NotificationManager.error("session expired","please login to continue",3000)
+    NotificationManager.error("session expired","please login to continue",3500)
     setTimeout(function(){
       return false
-    },3500)
+    },3800)
   }
   return true
 }

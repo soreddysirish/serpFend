@@ -4,7 +4,6 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 export const checkSession = function () {
   let token = localStorage.getItem("token")
   if(!token){
-    NotificationManager.error("You are not loggedin","please login to continue",2000)
     localStorage.removeItem("token")
     return false
   }

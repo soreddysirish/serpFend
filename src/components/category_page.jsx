@@ -44,6 +44,8 @@ class CategoryPage extends Component {
                 }
                 _self.getCategoryData()
             }, 500)
+        }else{
+            return window.location.href="/login"
         }
     }
     returnOptions = options => {

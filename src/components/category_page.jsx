@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import queryString from 'query-string'
 import axios from "axios";
 import Promise from "promise"
-import { host,checkSession } from "./helper";
+import { host, checkSession } from "./helper";
 import { Redirect } from 'react-router-dom'
 import '../react-bootstrap-table-all.min.css'
 import excel_icon from '../images/excel-icon.svg'
@@ -25,7 +25,7 @@ class CategoryPage extends Component {
             load_txt: 'Please wait',
             categories_keys: [],
             excelJsonObj: [],
-            isLogin:true
+            isLogin: true
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
@@ -34,15 +34,17 @@ class CategoryPage extends Component {
     }
 
     handleChange(e, fieldName) {
-        let _self = this
-        _self.setState({ [fieldName]: e.target.value, page_loading: true })
-        setTimeout(function () {
-            if (window.history.pushState) {
-                let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?name=' + _self.state.category_name
-                window.history.pushState({ path: newurl }, '', newurl);
-            }
-            _self.getCategoryData()
-        }, 500)
+        if (checkSession()) {
+            let _self = this
+            _self.setState({ [fieldName]: e.target.value, page_loading: true })
+            setTimeout(function () {
+                if (window.history.pushState) {
+                    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?name=' + _self.state.category_name
+                    window.history.pushState({ path: newurl }, '', newurl);
+                }
+                _self.getCategoryData()
+            }, 500)
+        }
     }
     returnOptions = options => {
         return options.map((opt, idx) => {
@@ -94,24 +96,24 @@ class CategoryPage extends Component {
             if (type_keys.length > 0) {
                 type_keys.map((val, key) => {
                     if (val == "mobile_type") {
-                        let info ={}
+                        let info = {}
                         info["tag_name"] = obj["tags"]["mobile_tag"] || "N/A"
                         info["device_name"] = "Mobile"
                         info["current_grank"] = obj["current_date_ranks"]["mobile_rank"] || "N/A"
-                        excel_obj_mobile.push({...obj,...info})
-                    } else if(val == "desktop_type") {
-                        let info ={}
+                        excel_obj_mobile.push({ ...obj, ...info })
+                    } else if (val == "desktop_type") {
+                        let info = {}
                         info["tag_name"] = obj["tags"]["desktop_tag"] || "N/A"
                         info["device_name"] = "Desktop"
-                        info["current_grank"] = obj["current_date_ranks"]["desktop_rank"]  || "N/A"
-                        excel_obj_desktop.push({...obj,...info})
+                        info["current_grank"] = obj["current_date_ranks"]["desktop_rank"] || "N/A"
+                        excel_obj_desktop.push({ ...obj, ...info })
                     }
                 })
             }
         })
         debugger
         _self.setState({
-            excelJsonObj:excel_obj_desktop.concat(excel_obj_mobile)
+            excelJsonObj: excel_obj_desktop.concat(excel_obj_mobile)
         })
     }
 
@@ -229,9 +231,9 @@ class CategoryPage extends Component {
         return num;
     }
     render() {
-        const { isLogin,category_name, category_data, page_loading, key_names, load_txt, categories_keys,excelJsonObj } = this.state
-        if(!isLogin){
-            return window.location.href="/login"
+        const { isLogin, category_name, category_data, page_loading, key_names, load_txt, categories_keys, excelJsonObj } = this.state
+        if (!isLogin) {
+            return window.location.href = "/login"
         }
         var options = {
             clearSearch: true,
@@ -247,7 +249,7 @@ class CategoryPage extends Component {
                 </div>
                 <div className="clearfix"></div>
                 <div className="monitor-tale">
-                    <ExcelFile filename={category_name} alignment={{vertical:"center",horizontal:"center"}} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
+                    <ExcelFile filename={category_name} alignment={{ vertical: "center", horizontal: "center" }} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
                         <ExcelSheet data={excelJsonObj} name="categories data">
                             <ExcelColumn label="Domain" value="domain" />
                             <ExcelColumn label="Keyword" value="keyword" />
@@ -279,18 +281,18 @@ class CategoryPage extends Component {
                     </ExcelFile>
                     <div className={page_loading ? "loading" : ""}></div>
                     <span className="category-filter">
-                    <select
-                        disabled={false}
-                        onChange={e => this.handleChange(e, "category_name")}
-                        name="category_name"
-                        value={category_name}
-                    >
-                        {this.returnOptions(categories_keys)}
-                    </select>
+                        <select
+                            disabled={false}
+                            onChange={e => this.handleChange(e, "category_name")}
+                            name="category_name"
+                            value={category_name}
+                        >
+                            {this.returnOptions(categories_keys)}
+                        </select>
                     </span>
                     <div className="clearfix"></div>
                     {category_data.length > 0 ?
-                    <BootstrapTable data={category_data} pagination search options={options} striped condensed>
+                        <BootstrapTable data={category_data} pagination search options={options} striped condensed>
                             {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}
                             <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="200"> Keyword</TableHeaderColumn>
                             {/* <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn> */}

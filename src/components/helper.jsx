@@ -1,9 +1,9 @@
 import jwtDecode from "jwt-decode"
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 export const checkSession = function () {
   let token = localStorage.getItem("token")
-  if(!token){
+  if (!token) {
     localStorage.removeItem("token")
     return false
   }
@@ -11,10 +11,12 @@ export const checkSession = function () {
   let exp = jwtDecode_val["exp"]
   if (exp < new Date().getTime() / 1000) {
     localStorage.removeItem("token")
-    NotificationManager.error("session expired","please login to continue",3500)
-    setTimeout(function(){
-      return false
-    },3800)
+    setTimeout(function () {
+      setTimeout(function () {
+        return false
+      }, 1000)
+      NotificationManager.error("session expired", "please login to continue", 1000)
+    }, 1500)
   }
   return true
 }

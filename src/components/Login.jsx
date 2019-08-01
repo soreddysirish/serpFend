@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Promise from "promise"
-import { host,checkSession } from "./helper";
+import { host, checkSession } from "./helper";
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -13,7 +13,7 @@ export default class Login extends Component {
             password: "",
             showUsernameErr: false,
             showPasswordErr: false,
-            showLoginErr:false
+            showLoginErr: false
         }
         this.handleChage = this.handleChage.bind(this)
         this.loginSerp = this.loginSerp.bind(this)
@@ -27,26 +27,26 @@ export default class Login extends Component {
             _self.setState({ showPasswordErr: true })
             return false
         }
-        return new Promise(function(resolve){
-            axios.get(host() +"/authenticate_user",{params:{username:_self.state.username,password:_self.state.password}}).then(function(json){
-                if(json.data && json.data.token){
-                    localStorage.setItem("token",json.data.token)
+        return new Promise(function (resolve) {
+            axios.get(host() + "/authenticate_user", { params: { username: _self.state.username, password: _self.state.password } }).then(function (json) {
+                if (json.data && json.data.token) {
+                    localStorage.setItem("token", json.data.token)
                     _self.setState({
                         showLoginErr: false,
-                        islogin:true
+                        islogin: true
                     })
                 }
-            }).catch(function(err){
-                _self.setState({showLoginErr: true,username:"",password:"",islogin:false})
+            }).catch(function (err) {
+                _self.setState({ showLoginErr: true, username: "", password: "", islogin: false })
                 localStorage.removeItem("token")
             })
         })
     }
-    componentDidMount(){
-        if(checkSession()){
+    componentDidMount() {
+        if (checkSession()) {
             let _self = this
             _self.setState({
-                islogin:true
+                islogin: true
             })
         }
     }
@@ -56,22 +56,24 @@ export default class Login extends Component {
             [e.target.name]: e.target.value,
             showUsernameErr: false,
             showPasswordErr: false,
-            showLoginErr:false
+            showLoginErr: false
         })
     }
     render() {
-        const { username, password, showUsernameErr, showPasswordErr,showLoginErr,islogin } = this.state
-        if(islogin){
-            NotificationManager.success("success","You are successfully loggedin",2000)
-            setTimeout(function(){
-                return window.location.href="/"
-            },2500)
+        const { username, password, showUsernameErr, showPasswordErr, showLoginErr, islogin } = this.state
+        if (islogin) {
+            setTimeout(function () {
+                setTimeout(function () {
+                    return window.location.href = "/"
+                }, 1000)
+                NotificationManager.success("success", "You are successfully loggedin", 1000)
+            }, 1500)
         }
         return (
             <div className="ctbot-dashboard">
                 <div className="monitor-tale">
                     <form className="form-horizontal loginForm" >
-                    <span className={"error " + (showLoginErr ? '' : 'hide')}>Please enter valid credentials</span>
+                        <span className={"error " + (showLoginErr ? '' : 'hide')}>Please enter valid credentials</span>
                         <div className="form-group">
                             <label className="control-label col-sm-2" htmlFor="email">Username:</label>
                             <div className="col-sm-10">
@@ -93,7 +95,7 @@ export default class Login extends Component {
                         </div>
                     </form>
                 </div>
-                <NotificationContainer/>
+                <NotificationContainer />
             </div>
         )
     }

@@ -6,7 +6,7 @@ import ReactHtmlParser, {
   htmlparser2
 } from "react-html-parser";
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 class Layout extends Component {
   constructor(props) {
@@ -23,21 +23,23 @@ class Layout extends Component {
       redirect: true
     });
   }
-  componentDidMount(){
-      let _self = this;
+  componentDidMount() {
+    let _self = this;
     if (checkSession()) {
-        _self.setState({ userLogin: true });
+      _self.setState({ userLogin: true });
     } else {
-        _self.setState({ userLogin: false });
+      _self.setState({ userLogin: false });
     }
   }
   render() {
     const { userLogin, redirect } = this.state;
     if (redirect) {
-        NotificationManager.info("Logout","You are successfully loggedout",3000)
-        setTimeout(function(){
-            return window.location.href="/login"
-        },2000)
+      setTimeout(function () {
+        setTimeout(function () {
+          return window.location.href = "/login"
+        }, 1000)
+        NotificationManager.info("Logout", "You are successfully loggedout", 1000)
+      }, 1500)
     }
     return (
       <div>
@@ -61,18 +63,18 @@ class Layout extends Component {
                     Logout
                   </button>
                 ) : (
-                  <button type="button" className="btn btn-info">
-                    {ReactHtmlParser(
-                      "<a class='loginBtn' href='/login'>Login</a>"
-                    )}
-                  </button>
-                )}
+                    <button type="button" className="btn btn-info">
+                      {ReactHtmlParser(
+                        "<a class='loginBtn' href='/login'>Login</a>"
+                      )}
+                    </button>
+                  )}
               </li>
             </ul>
           </div>
           <div className="clearfix" />
         </div>
-        <NotificationContainer/>
+        <NotificationContainer />
       </div>
     );
   }

@@ -7,7 +7,9 @@ export const checkSession = function () {
     localStorage.removeItem("token")
     NotificationManager.error("You are not logged in", "please login to continue", 1000)
     setTimeout(function () {
-      window.location.href = "/login"
+      if(!window.location.pathname.includes("/login")){
+        window.location.href = "/login"
+      }
     }, 800)
     return false
   }
@@ -17,7 +19,9 @@ export const checkSession = function () {
     localStorage.removeItem("token")
     setTimeout(function () {
       setTimeout(function () {
-        window.location.href = "/login"
+        if(!window.location.pathname.includes("/login")){
+          window.location.href = "/login"
+        }
         return false
       }, 1000)
       NotificationManager.error("session expired", "please login to continue", 1000)

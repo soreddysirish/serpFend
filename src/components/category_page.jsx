@@ -247,43 +247,12 @@ class CategoryPage extends Component {
             <div className="ctbot-dashboard">
                 <div className="ctbot-top">
                     <div className="common-title"><b>Category page</b></div>
+                    <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className="clearfix"></div>
                 </div>
                 <div className="clearfix"></div>
                 <div className="monitor-tale">
-                    <ExcelFile filename={category_name} alignment={{ vertical: "center", horizontal: "center" }} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
-                        <ExcelSheet data={excelJsonObj} name="categories data">
-                            <ExcelColumn label="Domain" value="domain" />
-                            <ExcelColumn label="Keyword" value="keyword" />
-                            <ExcelColumn label="Region" value="region" />
-                            <ExcelColumn label="Language" value="language" />
-                            <ExcelColumn label="Tags" value="tag_name" />
-                            <ExcelColumn label="Type" value="device_name" />
-                            <ExcelColumn label="Google Page" value="google_page" />
-                            <ExcelColumn label="start" value="kw_start_position" />
-                            <ExcelColumn label="Google" value="current_grank" />
-                            <ExcelColumn label="Bing" value="bing_rank" />
-                            <ExcelColumn label="Yahoo" value="yahoo_rank" />
-                            <ExcelColumn label="Day" value="day" />
-                            <ExcelColumn label="Week" value="week" />
-                            <ExcelColumn label="Month" value="month" />
-                            <ExcelColumn label="Life" value="life" />
-                            <ExcelColumn label="Start(D)" value="sdRank" />
-                            <ExcelColumn label="Start(M)" value="smRank" />
-                            <ExcelColumn label="Current(D)" value="cdRank" />
-                            <ExcelColumn label="Current(M)" value="cmRank" />
-                            <ExcelColumn label="Target(D)" value="tdRank" />
-                            <ExcelColumn label="Target(M)" value="tmRank" />
-                            <ExcelColumn label="Google Ranking Url" value="google_ranking_url" />
-                            <ExcelColumn label="Search Volume" value="search_volume" />
-                            <ExcelColumn label="%(D)" value="dPersentage" />
-                            <ExcelColumn label="%(M)" value="mPersentage" />
-                            {this.excelColumns(key_names)}
-                        </ExcelSheet>
-                    </ExcelFile>
-                    <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
-                    <div className={page_loading ? "loading" : ""}></div>
-                    <span className="category-filter">
+                    <div className="category-filter">
                         <select
                             disabled={false}
                             onChange={e => this.handleChange(e, "category_name")}
@@ -292,8 +261,39 @@ class CategoryPage extends Component {
                         >
                             {this.returnOptions(categories_keys)}
                         </select>
-                    </span>
+                        <ExcelFile filename={category_name} alignment={{ vertical: "center", horizontal: "center" }} element={<span className="excel-download excel-individual-category"><img src={excel_icon} alt="" /> Download</span>}>
+                            <ExcelSheet data={excelJsonObj} name="categories data">
+                                <ExcelColumn label="Domain" value="domain" />
+                                <ExcelColumn label="Keyword" value="keyword" />
+                                <ExcelColumn label="Region" value="region" />
+                                <ExcelColumn label="Language" value="language" />
+                                <ExcelColumn label="Tags" value="tag_name" />
+                                <ExcelColumn label="Type" value="device_name" />
+                                <ExcelColumn label="Google Page" value="google_page" />
+                                <ExcelColumn label="start" value="kw_start_position" />
+                                <ExcelColumn label="Google" value="current_grank" />
+                                <ExcelColumn label="Bing" value="bing_rank" />
+                                <ExcelColumn label="Yahoo" value="yahoo_rank" />
+                                <ExcelColumn label="Day" value="day" />
+                                <ExcelColumn label="Week" value="week" />
+                                <ExcelColumn label="Month" value="month" />
+                                <ExcelColumn label="Life" value="life" />
+                                <ExcelColumn label="Start(D)" value="sdRank" />
+                                <ExcelColumn label="Start(M)" value="smRank" />
+                                <ExcelColumn label="Current(D)" value="cdRank" />
+                                <ExcelColumn label="Current(M)" value="cmRank" />
+                                <ExcelColumn label="Target(D)" value="tdRank" />
+                                <ExcelColumn label="Target(M)" value="tmRank" />
+                                <ExcelColumn label="Google Ranking Url" value="google_ranking_url" />
+                                <ExcelColumn label="Search Volume" value="search_volume" />
+                                <ExcelColumn label="%(D)" value="dPersentage" />
+                                <ExcelColumn label="%(M)" value="mPersentage" />
+                                {this.excelColumns(key_names)}
+                            </ExcelSheet>
+                        </ExcelFile>
+                    </div>
                     <div className="clearfix"></div>
+                    <div className={page_loading ? "loading" : ""}></div>
                     {category_data.length > 0 ?
                         <BootstrapTable data={category_data} pagination search options={options} striped condensed>
                             {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}

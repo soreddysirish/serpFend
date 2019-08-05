@@ -90,7 +90,7 @@ export default class Login extends Component {
                         </div>
                         <div className="form-group">
                             <div className="col-sm-offset-2 col-sm-10">
-                                <button type="button" className="btn btn-primary" onClick={this.loginSerp}>Login</button>
+                                <button type="button" className="btn btn-primary logInOutBtn" onClick={this.loginSerp}>Login</button>
                             </div>
                         </div>
                     </form>

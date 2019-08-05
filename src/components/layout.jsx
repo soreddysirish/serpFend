@@ -57,13 +57,13 @@ class Layout extends Component {
                 {userLogin ? (
                   <button
                     type="button"
-                    className="btn btn-info logOutBtn"
+                    className="btn btn-info logInOutBtn"
                     onClick={this.logout}
                   >
                     Logout
                   </button>
                 ) : (
-                    <button type="button" className="btn btn-info">
+                    <button type="button" className="btn btn-info logInOutBtn">
                       {ReactHtmlParser(
                         "<a class='loginBtn' href='/login'>Login</a>"
                       )}

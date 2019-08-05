@@ -183,12 +183,12 @@ class DashBoard extends Component {
             }
           >
             <ExcelSheet data={catData} name="categories data">
-              <ExcelColumn label="Category" value="Category" />
+              <ExcelColumn label="Category" value="category" />
               <ExcelColumn label="1" value="1" />
               <ExcelColumn label="2-3" value="2_3" />
               <ExcelColumn label="4-10" value="4_10" />
               <ExcelColumn label="> 10" value=">10" />
-              <ExcelColumn label="unranked" value="Unranked" />
+              <ExcelColumn label="Unranked" value="unranked" />
               <ExcelColumn label="Total count" value="count" />
               <ExcelColumn label="Start top 1" value="start_top_1" />
               <ExcelColumn label="Start top 2-3" value="start_top_2_3" />

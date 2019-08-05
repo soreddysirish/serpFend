@@ -257,6 +257,7 @@ class DashBoard extends Component {
               width="100"
               rowSpan="2"
               dataField="unranked"
+              dataFormat={this.colorForPositveAndNegitive}
             >
               Unranked
             </TableHeaderColumn>

@@ -247,11 +247,20 @@ class CategoryPage extends Component {
             <div className="ctbot-dashboard">
                 <div className="ctbot-top">
                     <div className="common-title"><b>Category page</b></div>
+                    <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className="clearfix"></div>
                 </div>
-                <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                 <div className="clearfix"></div>
                 <div className="monitor-tale">
+                <div className="category-filter">
+                <select
+                            disabled={false}
+                            onChange={e => this.handleChange(e, "category_name")}
+                            name="category_name"
+                            value={category_name}
+                        >
+                            {this.returnOptions(categories_keys)}
+                        </select>
                     <ExcelFile filename={category_name} alignment={{ vertical: "center", horizontal: "center" }} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
                         <ExcelSheet data={excelJsonObj} name="categories data">
                             <ExcelColumn label="Domain" value="domain" />
@@ -282,18 +291,9 @@ class CategoryPage extends Component {
                             {this.excelColumns(key_names)}
                         </ExcelSheet>
                     </ExcelFile>
-                    <div className={page_loading ? "loading" : ""}></div>
-                    <span className="category-filter">
-                        <select
-                            disabled={false}
-                            onChange={e => this.handleChange(e, "category_name")}
-                            name="category_name"
-                            value={category_name}
-                        >
-                            {this.returnOptions(categories_keys)}
-                        </select>
-                    </span>
+                    </div>
                     <div className="clearfix"></div>
+                    <div className={page_loading ? "loading" : ""}></div>
                     {category_data.length > 0 ?
                         <BootstrapTable data={category_data} pagination search options={options} striped condensed>
                             {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}

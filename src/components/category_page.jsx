@@ -113,7 +113,6 @@ class CategoryPage extends Component {
                 })
             }
         })
-        debugger
         _self.setState({
             excelJsonObj: excel_obj_desktop.concat(excel_obj_mobile)
         })
@@ -172,12 +171,17 @@ class CategoryPage extends Component {
                     _self.setState({
                         page_loading: false,
                         load_txt: 'No data present please add it',
-                        category_data: []
+                        category_data: [],
+                        excelJsonObj:[]
                     })
                 }
 
             }).catch(function (err) {
-                _self.setState({ page_loading: false })
+                _self.setState({ page_loading: false,
+                load_txt: 'No data present please add it',
+                category_data: [],
+                excelJsonObj:[]
+                 })
             })
         })
     }
@@ -222,13 +226,13 @@ class CategoryPage extends Component {
         if (isNaN(num)) return num;
         if (num < 999) { return num; }
         if (num >= 1000000000) {
-            return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + ' G';
+            return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
         }
         if (num >= 1000000) {
-            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + ' M';
+            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
         }
         if (num >= 1000) {
-            return (num / 1000).toFixed(1).replace(/\.0$/, '') + ' K';
+            return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
         }
         return num;
     }
@@ -261,6 +265,7 @@ class CategoryPage extends Component {
                         >
                             {this.returnOptions(categories_keys)}
                         </select>
+                        { excelJsonObj && excelJsonObj.length > 0 ? 
                         <ExcelFile filename={category_name} alignment={{ vertical: "center", horizontal: "center" }} element={<span className="excel-download excel-individual-category"><img src={excel_icon} alt="" /> Download</span>}>
                             <ExcelSheet data={excelJsonObj} name="categories data">
                                 <ExcelColumn label="Domain" value="domain" />
@@ -290,7 +295,7 @@ class CategoryPage extends Component {
                                 <ExcelColumn label="%(M)" value="mPersentage" />
                                 {this.excelColumns(key_names)}
                             </ExcelSheet>
-                        </ExcelFile>
+                        </ExcelFile> : ''}
                     </div>
                     <div className="clearfix"></div>
                     <div className={page_loading ? "loading" : ""}></div>

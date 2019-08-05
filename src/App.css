@@ -208,6 +208,16 @@ td div > a:hover {
 .side-nav-links {
   padding: 88px 0 0;
 }
+.bckBtn{
+background-color: #4c4c4c;
+border-radius: 6px;
+}
+.bckAncorTag{
+  color: whitesmoke;
+    font-size: medium;
+    font-weight: bolder;
+}
+
 .side-nav-links a {
   display: block;
   padding: 16px;

@@ -44,8 +44,8 @@ class CategoryPage extends Component {
                 }
                 _self.getCategoryData()
             }, 500)
-        }else{
-            return window.location.href="/login"
+        } else {
+            return window.location.href = "/login"
         }
     }
     returnOptions = options => {
@@ -148,12 +148,12 @@ class CategoryPage extends Component {
                         k["month"] = k["cycle_changes"]["month_change"]
                         k["week"] = k["cycle_changes"]["week_change"]
                         k["life"] = k["cycle_changes"]["life_change"]
-                        k["sdRank"] = k["current_date_ranks"]["desktop_intial_position"] || k['start_date_ranks']['desktop_intial_position'] ||  'N/A'
-                        k["smRank"] = k["current_date_ranks"]["moblie_intial_position"] || k['start_date_ranks']['moblie_intial_position'] ||  'N/A'
+                        k["sdRank"] = k["current_date_ranks"]["desktop_intial_position"] || k['start_date_ranks']['desktop_intial_position'] || 'N/A'
+                        k["smRank"] = k["current_date_ranks"]["moblie_intial_position"] || k['start_date_ranks']['moblie_intial_position'] || 'N/A'
                         k["cdRank"] = k["current_date_ranks"]["desktop_rank"] || k["start_date_ranks"]["desktop_rank"] || 'N/A'
-                        k["cmRank"] = k["current_date_ranks"]["mobile_rank"] ||  k["start_date_ranks"]["mobile_rank"]  || 'N/A'
-                        k["tdRank"] = k["current_date_ranks"]["desktop_target_position"] || k["start_date_ranks"]["desktop_target_position"]  || 'N/A'
-                        k["tmRank"] = k["current_date_ranks"]["mobile_target_position"] ||  k["start_date_ranks"]["mobile_target_position"] || 'N/A'
+                        k["cmRank"] = k["current_date_ranks"]["mobile_rank"] || k["start_date_ranks"]["mobile_rank"] || 'N/A'
+                        k["tdRank"] = k["current_date_ranks"]["desktop_target_position"] || k["start_date_ranks"]["desktop_target_position"] || 'N/A'
+                        k["tmRank"] = k["current_date_ranks"]["mobile_target_position"] || k["start_date_ranks"]["mobile_target_position"] || 'N/A'
                         k["dPersentage"] = k["percentage"]["desktop_rank_percentage"] || 'N/A'
                         k["mPersentage"] = k["percentage"]["mobile_rank_percentage"] || 'N/A'
                         if (k["types"]["desktop_type"] && k["types"]["mobile_type"]) {
@@ -246,7 +246,7 @@ class CategoryPage extends Component {
         return (
             <div className="ctbot-dashboard">
                 <div className="ctbot-top">
-                    <span className="common-title"><b>Category page</b></span>
+                    <div className="common-title"><button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button><b>Category page</b></div>
                     <div className="clearfix"></div>
                 </div>
                 <div className="clearfix"></div>

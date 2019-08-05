@@ -137,6 +137,9 @@ a.loginBtn:hover {
 .error {
   color: red;
 }
+.success{
+  color:green;
+}
 .cleartripLogo {
   float: left;
   margin-top: 8px;

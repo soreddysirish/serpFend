@@ -108,6 +108,24 @@ class DashBoard extends Component {
         });
     });
   }
+  colorForPositveAndNegitive(cell,row){
+    let cell_val = cell
+    if(cell !="N/A"){
+      let splitVal = cell.replace("("," ").replace(")","").split(" ")
+      if(!splitVal.includes("N/A")){
+        if(splitVal.length ==2){
+          if(splitVal[1] > splitVal[0]){
+            cell_val = "<span class='success'>" + splitVal[0] + "</span><span class='success'>("+ splitVal[1]+")</span>"
+          }else if(splitVal[1] < splitVal[0]){
+            cell_val = "<span class='success'>" + splitVal[0] + "</span><span class='success'>("+ splitVal[1]+")</span>"
+          }else if(splitVal[1] == splitVal[0]){
+            return cell_val 
+          }
+        }
+      }
+    }
+    return cell_val
+  }
 
   cellFormatter(cell, row) {
     let cat_name_key = cell
@@ -222,16 +240,16 @@ class DashBoard extends Component {
             >
               Total Keywords
             </TableHeaderColumn>
-            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="1">
+            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="1" dataFormat={this.colorForPositveAndNegitive}>
               1
             </TableHeaderColumn>
-            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="2_3">
+            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="2_3" dataFormat={this.colorForPositveAndNegitive}>
               2-3
             </TableHeaderColumn>
-            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="4_10">
+            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="4_10" dataFormat={this.colorForPositveAndNegitive}>
               4-10
             </TableHeaderColumn>
-            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField=">10">
+            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField=">10" dataFormat={this.colorForPositveAndNegitive}>
               >10
             </TableHeaderColumn>
             <TableHeaderColumn

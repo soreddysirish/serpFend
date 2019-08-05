@@ -113,13 +113,14 @@ class DashBoard extends Component {
     if(cell !="N/A"){
       let splitVal = cell.replace("("," ").replace(")","").split(" ")
       if(!splitVal.includes("N/A")){
+        debugger
         if(splitVal.length ==2){
-          if(splitVal[1] > splitVal[0]){
-            cell_val = "<span class='success'>" + splitVal[0] + "</span><span class='success'>("+ splitVal[1]+")</span>"
-          }else if(splitVal[1] < splitVal[0]){
-            cell_val = "<span class='success'>" + splitVal[0] + "</span><span class='success'>("+ splitVal[1]+")</span>"
-          }else if(splitVal[1] == splitVal[0]){
-            return cell_val 
+          if(parseInt(splitVal[0]) < parseInt(splitVal[1])){
+            cell_val = "<span class='error'>" + splitVal[0] + "</span> ("+ splitVal[1]+")"
+          }else if(parseInt(splitVal[0]) > parseInt(splitVal[1])){
+            cell_val = "<span class='success'>" + splitVal[0] + "</span> ("+ splitVal[1]+")"
+          }else if(parseInt(splitVal[1]) == parseInt(splitVal[0])){
+            cell_val = "<span class=''>" + splitVal[0] + "</span> ("+ splitVal[1]+")"  
           }
         }
       }

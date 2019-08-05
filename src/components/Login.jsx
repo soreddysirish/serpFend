@@ -67,10 +67,9 @@ export default class Login extends Component {
                             })
                         }
                     }
-                   
                 }
             }).catch(function (err) {
-                _self.setState({ showLoginErr: true, username: "", password: "", islogin: false })
+                _self.setState({ showLoginErr: true, username: "", password: "", islogin: false,showPasswordErr:true,passwordErrMsg:"wrong password",showUsernameErr:true,passwordErrMsg:"wrong username" })
                 localStorage.removeItem("token")
             })
         })

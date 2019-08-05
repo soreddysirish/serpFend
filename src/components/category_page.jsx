@@ -244,7 +244,7 @@ class CategoryPage extends Component {
             paginationShowsTotal: this.renderShowsTotal
         };
         return (
-            <div className="ctbot-dashboard">
+            <div className="ctbot-dashboard category-page">
                 <div className="ctbot-top">
                     <div className="common-title"><b>Category page</b></div>
                     <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>

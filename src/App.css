@@ -505,7 +505,10 @@ td div > a:hover {
   height: 50px;
   background: #fff;
   margin: 0 0 8px;
-  float: left;
+  float: right;
+}
+.excel-individual-category{
+  float: left!important;
 }
 .excel-download img {
   width: 27px;

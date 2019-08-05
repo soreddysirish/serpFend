@@ -13,7 +13,9 @@ export default class Login extends Component {
             password: "",
             showUsernameErr: false,
             showPasswordErr: false,
-            showLoginErr: false
+            showLoginErr: false,
+            passwordErrMsg: 'password required',
+            usernameErrMsg: 'username required'
         }
         this.handleChage = this.handleChage.bind(this)
         this.loginSerp = this.loginSerp.bind(this)
@@ -21,10 +23,12 @@ export default class Login extends Component {
     loginSerp() {
         let _self = this
         if (_self.state.username == "") {
-            _self.setState({ showUsernameErr: true })
+            _self.setState({ showUsernameErr: true,
+                usernameErrMsg: 'username required' })
             return false
         } else if (_self.state.password == "") {
-            _self.setState({ showPasswordErr: true })
+            _self.setState({ showPasswordErr: true,
+                passwordErrMsg: 'password required', })
             return false
         }
         return new Promise(function (resolve) {
@@ -35,6 +39,35 @@ export default class Login extends Component {
                         showLoginErr: false,
                         islogin: true
                     })
+                }else{
+                    if(json.data && json.data.obj){
+                        let resp = json.data.obj[0]
+                        if(resp["name"] && resp["name"] !=""){
+                            _self.setState({
+                                showUsernameErr:false,
+                                usernameErrMsg: "username required",
+                            })
+                        }else{
+                            _self.setState({
+                                showUsernameErr:true,
+                                usernameErrMsg: "username doesn't exists",
+                                username:""
+                            })
+                        }
+                        if(resp["auth"]){
+                            _self.setState({
+                                showPasswordErr: false,
+                                passwordErrMsg: "password required",
+                            })
+                        }else{
+                            _self.setState({
+                                showPasswordErr: true,
+                                passwordErrMsg: "wrong password",
+                                password:""
+                            })
+                        }
+                    }
+                   
                 }
             }).catch(function (err) {
                 _self.setState({ showLoginErr: true, username: "", password: "", islogin: false })
@@ -60,7 +93,7 @@ export default class Login extends Component {
         })
     }
     render() {
-        const { username, password, showUsernameErr, showPasswordErr, showLoginErr, islogin } = this.state
+        const { username, password, showUsernameErr, showPasswordErr, showLoginErr, islogin,passwordErrMsg,usernameErrMsg } = this.state
         if (islogin) {
             setTimeout(function () {
                 setTimeout(function () {
@@ -73,19 +106,19 @@ export default class Login extends Component {
             <div className="ctbot-dashboard">
                 <div className="monitor-tale">
                     <form className="form-horizontal loginForm" >
-                        <span className={"error " + (showLoginErr ? '' : 'hide')}>Please enter valid credentials</span>
+                        {/* <span className={"error " + (showLoginErr ? '' : 'hide')}>Please enter valid credentials</span> */}
                         <div className="form-group">
                             <label className="control-label col-sm-2" htmlFor="email">Username:</label>
                             <div className="col-sm-10">
                                 <input type="email" className="form-control" placeholder="Username" name="username" onChange={this.handleChage} value={username} />
-                                <span className={"error " + (showUsernameErr ? '' : 'hide')}>Please enter username</span>
+                                <span className={"error " + (showUsernameErr ? '' : 'hide')}>{usernameErrMsg}</span>
                             </div>
                         </div>
                         <div className="form-group">
                             <label className="control-label col-sm-2" htmlFor="pwd">Password:</label>
                             <div className="col-sm-10">
                                 <input type="password" className="form-control" id="pwd" placeholder="Password" name="password" onChange={this.handleChage} value={password} />
-                                <span className={"error " + (showPasswordErr ? '' : 'hide')}>Please enter  password </span>
+                                <span className={"error " + (showPasswordErr ? '' : 'hide')}>{passwordErrMsg}</span>
                             </div>
                         </div>
                         <div className="form-group">

@@ -246,7 +246,7 @@ class CategoryPage extends Component {
         return (
             <div className="ctbot-dashboard">
                 <div className="ctbot-top">
-                    <div className="common-title"><button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button><b>Category page</b></div>
+                    <div className="common-title"><b>Category page</b></div>
                     <div className="clearfix"></div>
                 </div>
                 <div className="clearfix"></div>
@@ -281,6 +281,7 @@ class CategoryPage extends Component {
                             {this.excelColumns(key_names)}
                         </ExcelSheet>
                     </ExcelFile>
+                    <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className={page_loading ? "loading" : ""}></div>
                     <span className="category-filter">
                         <select

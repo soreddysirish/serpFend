@@ -5,7 +5,6 @@ export const checkSession = function () {
   let token = localStorage.getItem("token")
   if (!token) {
     localStorage.removeItem("token")
-    NotificationManager.error("You are not logged in", "please login to continue", 1000)
     setTimeout(function () {
       if(!window.location.pathname.includes("/login")){
         window.location.href = "/login"

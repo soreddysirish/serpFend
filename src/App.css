@@ -26,7 +26,11 @@ ul li {
   list-style: none;
   padding: 10px;
 }
-
+.logOutBtn{
+  background-color: #ef6837!important;
+  border: none!important;
+  font-weight: bolder!important;
+}
 body {
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: grayscale;
@@ -211,11 +215,18 @@ td div > a:hover {
 .bckBtn{
 background-color: #4c4c4c;
 border-radius: 6px;
+float: right;
+    height: 50px;
+    text-align: center;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 .bckAncorTag{
-  color: whitesmoke;
-    font-size: medium;
-    font-weight: bolder;
+  color: whitesmoke!important;
+  text-decoration: none!important;
+  font-size: medium!important;
+  font-weight: bolder!important;    
+  float: right!important;
 }
 
 .side-nav-links a {

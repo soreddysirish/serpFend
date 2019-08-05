@@ -57,7 +57,7 @@ class Layout extends Component {
                 {userLogin ? (
                   <button
                     type="button"
-                    className="btn btn-info"
+                    className="btn btn-info logOutBtn"
                     onClick={this.logout}
                   >
                     Logout

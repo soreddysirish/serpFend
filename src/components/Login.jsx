@@ -117,7 +117,7 @@ export default class Login extends Component {
                         <div className="form-group">
                             <label className="control-label col-sm-2" htmlFor="pwd">Password:</label>
                             <div className="col-sm-10">
-                                <input type="password" className="form-control" id="pwd" placeholder="Password" name="password" onChange={this.handleChage} value={password} />
+                                <input type="password" className="form-control" id="pwd" placeholder="Password" name="password" onChange={this.handleChage} value={password} autocomplete="off"/>
                                 <span className={"error " + (showPasswordErr ? '' : 'hide')}>{passwordErrMsg}</span>
                             </div>
                         </div>

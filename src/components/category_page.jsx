@@ -249,6 +249,7 @@ class CategoryPage extends Component {
                     <div className="common-title"><b>Category page</b></div>
                     <div className="clearfix"></div>
                 </div>
+                <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                 <div className="clearfix"></div>
                 <div className="monitor-tale">
                     <ExcelFile filename={category_name} alignment={{ vertical: "center", horizontal: "center" }} element={<span className="excel-download"><img src={excel_icon} alt="" /> Download</span>}>
@@ -281,7 +282,6 @@ class CategoryPage extends Component {
                             {this.excelColumns(key_names)}
                         </ExcelSheet>
                     </ExcelFile>
-                    <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className={page_loading ? "loading" : ""}></div>
                     <span className="category-filter">
                         <select

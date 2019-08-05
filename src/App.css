@@ -43,6 +43,9 @@ body {
   text-overflow: ellipsis !important;
   word-wrap: break-word !important;
 }
+.react-bs-table-bordered {
+  border: none !important;
+}
 html {
   scroll-behavior: smooth;
 }
@@ -212,14 +215,14 @@ td div > a:hover {
 .side-nav-links {
   padding: 88px 0 0;
 }
-.bckBtn{
-background-color: #4c4c4c;
-border-radius: 6px;
-float: right;
-height: 50px;
-text-align: center;
-padding-left: 2%;
-padding-right: 2%;
+.bckBtn {
+  background-color: #4c4c4c;
+  border-radius: 6px;
+  float: right;
+  height: 40px;
+  text-align: center;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 .bckAncorTag{
   color: whitesmoke!important;

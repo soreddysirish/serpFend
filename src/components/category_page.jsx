@@ -300,7 +300,7 @@ class CategoryPage extends Component {
                     <div className="clearfix"></div>
                     <div className={page_loading ? "loading" : ""}></div>
                     {category_data.length > 0 ?
-                        <BootstrapTable data={category_data} pagination search options={options} striped condensed>
+                        <BootstrapTable data={category_data} pagination search options={options} hover>
                             {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}
                             <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="200"> Keyword</TableHeaderColumn>
                             {/* <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn> */}

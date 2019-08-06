@@ -219,8 +219,7 @@ class DashBoard extends Component {
             pagination
             search
             options={options}
-            striped
-            condensed
+           hover
           >
             <TableHeaderColumn
               row="0"

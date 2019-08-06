@@ -37,9 +37,9 @@ class Layout extends Component {
       setTimeout(function () {
         setTimeout(function () {
           return window.location.href = "/login"
-        }, 1000)
+        }, 100)
         NotificationManager.info("Logout", "You are successfully loggedout", 1000)
-      }, 1500)
+      }, 1000)
     }
     return (
       <div>

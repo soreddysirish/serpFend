@@ -83,7 +83,7 @@ export default class Login extends Component {
                     _self.setState({
                         page_loading: false
                     })
-                }, 100)
+                }, 800)
             }).catch(function (err) {
                 _self.setState({ showLoginErr: true, username: "", password: "", islogin: false, showPasswordErr: true, passwordErrMsg: "wrong password", showUsernameErr: true, passwordErrMsg: "wrong username", page_loading: false })
                 localStorage.removeItem("token")

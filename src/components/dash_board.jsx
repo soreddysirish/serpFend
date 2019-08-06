@@ -116,9 +116,9 @@ class DashBoard extends Component {
         debugger
         if(splitVal.length ==2){
           if(parseInt(splitVal[0]) < parseInt(splitVal[1])){
-            cell_val = "<span class='error'>" + splitVal[0] + "</span> ("+ splitVal[1]+")"
+            cell_val = "<span class='error-index'>" + splitVal[0] + "</span> ("+ splitVal[1]+")"
           }else if(parseInt(splitVal[0]) > parseInt(splitVal[1])){
-            cell_val = "<span class='success'>" + splitVal[0] + "</span> ("+ splitVal[1]+")"
+            cell_val = "<span class='success-index'>" + splitVal[0] + "</span> ("+ splitVal[1]+")"
           }else if(parseInt(splitVal[1]) == parseInt(splitVal[0])){
             cell_val = "<span class=''>" + splitVal[0] + "</span> ("+ splitVal[1]+")"  
           }

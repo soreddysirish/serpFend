@@ -3,12 +3,10 @@ import queryString from 'query-string'
 import axios from "axios";
 import Promise from "promise"
 import { host, checkSession } from "./helper";
-import { Redirect } from 'react-router-dom'
 import '../react-bootstrap-table-all.min.css'
 import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import ReactExport from "react-data-export";
-import Moment from 'react-moment';
 import moment from 'moment'
 import 'font-awesome/css/font-awesome.min.css';
 const ExcelFile = ReactExport.ExcelFile;

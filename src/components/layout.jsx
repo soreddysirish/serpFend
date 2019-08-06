@@ -13,18 +13,26 @@ class Layout extends Component {
     super(props);
     this.state = {
       userLogin: false,
-      redirect: false
+      redirect: false,
+      page_loading:false,
+      is_login_page:false
     };
     this.logout = this.logout.bind(this);
   }
   logout() {
     localStorage.removeItem("token");
     this.setState({
-      redirect: true
+      redirect: true,
+      page_loading:true
     });
   }
   componentDidMount() {
     let _self = this;
+    if(window.location.href.includes("/login")){
+      _self.setState({
+        is_login_page:true
+      })
+    }
     if (checkSession()) {
       _self.setState({ userLogin: true });
     } else {
@@ -32,17 +40,18 @@ class Layout extends Component {
     }
   }
   render() {
-    const { userLogin, redirect } = this.state;
+    const { userLogin, redirect,page_loading,is_login_page } = this.state;
     if (redirect) {
       setTimeout(function () {
         setTimeout(function () {
           return window.location.href = "/login"
-        }, 100)
+        }, 800)
         NotificationManager.info("Logout", "You are successfully loggedout", 1000)
-      }, 1000)
+      }, 2000)
     }
     return (
       <div>
+         <div className={page_loading ? "loading" : ""} />
         <div className="main-navbar">
           <div className="ct-logo">
             <a className="ctBrand" href="/">
@@ -52,6 +61,7 @@ class Layout extends Component {
             </a>
           </div>
           <div className="rhs-nav">
+          {is_login_page ? "" :
             <ul className="list-unstyled rhs-nav-links">
               <li>
                 {userLogin ? (
@@ -71,6 +81,7 @@ class Layout extends Component {
                   )}
               </li>
             </ul>
+          }
           </div>
           <div className="clearfix" />
         </div>

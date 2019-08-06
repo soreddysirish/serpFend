@@ -15,7 +15,8 @@ export default class Login extends Component {
             showPasswordErr: false,
             showLoginErr: false,
             passwordErrMsg: 'password required',
-            usernameErrMsg: 'username required'
+            usernameErrMsg: 'username required',
+            page_loading: false
         }
         this.handleChage = this.handleChage.bind(this)
         this.loginSerp = this.loginSerp.bind(this)
@@ -23,14 +24,19 @@ export default class Login extends Component {
     loginSerp() {
         let _self = this
         if (_self.state.username == "") {
-            _self.setState({ showUsernameErr: true,
-                usernameErrMsg: 'username required' })
+            _self.setState({
+                showUsernameErr: true,
+                usernameErrMsg: 'username required'
+            })
             return false
         } else if (_self.state.password == "") {
-            _self.setState({ showPasswordErr: true,
-                passwordErrMsg: 'password required', })
+            _self.setState({
+                showPasswordErr: true,
+                passwordErrMsg: 'password required',
+            })
             return false
         }
+        _self.setState({ page_loading: true })
         return new Promise(function (resolve) {
             axios.get(host() + "/authenticate_user", { params: { username: _self.state.username, password: _self.state.password } }).then(function (json) {
                 if (json.data && json.data.token) {
@@ -39,37 +45,47 @@ export default class Login extends Component {
                         showLoginErr: false,
                         islogin: true
                     })
-                }else{
-                    if(json.data && json.data.obj){
+                    NotificationManager.success("success", "You are successfully loggedin", 1000)
+                    setTimeout(function () {
+                        return window.location.href = "/"
+                    }, 1500)
+
+                } else {
+                    if (json.data && json.data.obj) {
                         let resp = json.data.obj[0]
-                        if(resp["name"] && resp["name"] !=""){
+                        if (resp["name"] && resp["name"] != "") {
                             _self.setState({
-                                showUsernameErr:false,
+                                showUsernameErr: false,
                                 usernameErrMsg: "username required",
                             })
-                        }else{
+                        } else {
                             _self.setState({
-                                showUsernameErr:true,
+                                showUsernameErr: true,
                                 usernameErrMsg: "username doesn't exists",
-                                username:""
+                                username: ""
                             })
                         }
-                        if(resp["auth"]){
+                        if (resp["auth"]) {
                             _self.setState({
                                 showPasswordErr: false,
-                                passwordErrMsg: "password required",
+                                passwordErrMsg: "password required"
                             })
-                        }else{
+                        } else {
                             _self.setState({
                                 showPasswordErr: true,
                                 passwordErrMsg: "wrong password",
-                                password:""
+                                password: ""
                             })
                         }
                     }
                 }
+                setTimeout(function () {
+                    _self.setState({
+                        page_loading: false
+                    })
+                }, 100)
             }).catch(function (err) {
-                _self.setState({ showLoginErr: true, username: "", password: "", islogin: false,showPasswordErr:true,passwordErrMsg:"wrong password",showUsernameErr:true,passwordErrMsg:"wrong username" })
+                _self.setState({ showLoginErr: true, username: "", password: "", islogin: false, showPasswordErr: true, passwordErrMsg: "wrong password", showUsernameErr: true, passwordErrMsg: "wrong username", page_loading: false })
                 localStorage.removeItem("token")
             })
         })
@@ -92,20 +108,12 @@ export default class Login extends Component {
         })
     }
     render() {
-        const { username, password, showUsernameErr, showPasswordErr, showLoginErr, islogin,passwordErrMsg,usernameErrMsg } = this.state
-        if (islogin) {
-            setTimeout(function () {
-                setTimeout(function () {
-                    return window.location.href = "/"
-                }, 1000)
-                NotificationManager.success("success", "You are successfully loggedin", 1000)
-            }, 1500)
-        }
+        const { username, password, showUsernameErr, showPasswordErr, page_loading, islogin, passwordErrMsg, usernameErrMsg } = this.state
         return (
             <div className="ctbot-dashboard">
+                <div className={page_loading ? "loading" : ""} />
                 <div className="monitor-tale">
                     <form className="form-horizontal loginForm" >
-                        {/* <span className={"error " + (showLoginErr ? '' : 'hide')}>Please enter valid credentials</span> */}
                         <div className="form-group">
                             <label className="control-label col-sm-2" htmlFor="email">Username:</label>
                             <div className="col-sm-10">
@@ -116,7 +124,7 @@ export default class Login extends Component {
                         <div className="form-group">
                             <label className="control-label col-sm-2" htmlFor="pwd">Password:</label>
                             <div className="col-sm-10">
-                                <input type="password" className="form-control" id="pwd" placeholder="Password" name="password" onChange={this.handleChage} value={password} autocomplete="off"/>
+                                <input type="password" className="form-control" id="pwd" placeholder="Password" name="password" onChange={this.handleChage} value={password} autoComplete="off" />
                                 <span className={"error " + (showPasswordErr ? '' : 'hide')}>{passwordErrMsg}</span>
                             </div>
                         </div>

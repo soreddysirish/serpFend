@@ -249,7 +249,7 @@ class CategoryPage extends Component {
         return (
             <div className="ctbot-dashboard category-page">
                 <div className="ctbot-top">
-                    <div className="common-title"><b>Category page</b></div>
+                    <div className="common-title"><b>Category name: <span className="categoryName">{category_name.replace("_"," ")}</span></b></div>
                     <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className="clearfix"></div>
                 </div>

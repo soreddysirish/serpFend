@@ -145,6 +145,26 @@ a.loginBtn:hover {
   color:green;
   font-weight: bolder;
 }
+.border-box-green{
+  width: 12px;
+    height: 11px;
+    display: inline-block;
+    background-color: green;
+    margin-right:4px;
+}
+.border-box-red{
+  width: 12px;
+    height: 11px;
+    display: inline-block;
+    background-color: red;
+    margin-right:4px;
+}
+ul.color-boxes li{
+  display: inline-block;
+}
+.categoryName{
+  text-transform: capitalize;
+}
 .cleartripLogo {
   float: left;
   margin-top: 8px;

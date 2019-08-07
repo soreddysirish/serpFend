@@ -31,13 +31,13 @@ class DashBoard extends Component {
         isLogin: true
       });
     }
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       axios
         .get(host() + "/overall_categories")
-        .then(function(json) {
+        .then(function (json) {
           let customizedRowData = [];
           if (json.data && json.data.length > 0) {
-            json.data.map(function(category, i) {
+            json.data.map(function (category, i) {
               let tableHeaderAndValues = {};
               tableHeaderAndValues["category"] = category["category_name"];
               tableHeaderAndValues["count"] = category["count"];
@@ -102,25 +102,24 @@ class DashBoard extends Component {
           }
           return resolve(json);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           _self.setState({ page_loading: false });
           console.log(err);
         });
     });
   }
-  colorForPositveAndNegitive(cell,row){
+  colorForPositveAndNegitive(cell, row) {
     let cell_val = cell
-    if(cell !="N/A"){
-      let splitVal = cell.replace("("," ").replace(")","").split(" ")
-      if(!splitVal.includes("N/A")){
-        debugger
-        if(splitVal.length ==2){
-          if(parseInt(splitVal[0]) < parseInt(splitVal[1])){
-            cell_val = "<span class='error-index'>" + splitVal[0] + "</span> ("+ splitVal[1]+")"
-          }else if(parseInt(splitVal[0]) > parseInt(splitVal[1])){
-            cell_val = "<span class='success-index'>" + splitVal[0] + "</span> ("+ splitVal[1]+")"
-          }else if(parseInt(splitVal[1]) == parseInt(splitVal[0])){
-            cell_val = "<span class=''>" + splitVal[0] + "</span> ("+ splitVal[1]+")"  
+    if (cell != "N/A") {
+      let splitVal = cell.replace("(", " ").replace(")", "").split(" ")
+      if (!splitVal.includes("N/A")) {
+        if (splitVal.length == 2) {
+          if (parseInt(splitVal[0]) < parseInt(splitVal[1])) {
+            cell_val = "<span class='error-index'>" + splitVal[0] + "</span> (" + splitVal[1] + ")"
+          } else if (parseInt(splitVal[0]) > parseInt(splitVal[1])) {
+            cell_val = "<span class='success-index'>" + splitVal[0] + "</span> (" + splitVal[1] + ")"
+          } else if (parseInt(splitVal[1]) == parseInt(splitVal[0])) {
+            cell_val = "<span class=''>" + splitVal[0] + "</span> (" + splitVal[1] + ")"
           }
         }
       }
@@ -174,6 +173,11 @@ class DashBoard extends Component {
           </span>
         </div>
         <div className="monitor-tale">
+            <ul className="color-boxes">
+              <li className="color-info"><span className="border-box-green"></span>current position is greater</li>
+              <li className="color-info"><span className="border-box-red"></span>starting position is greater</li>
+              <li> current-position (start-position) of keyword</li>
+            </ul>
           <ExcelFile
             filename="dash_board"
             element={
@@ -219,13 +223,11 @@ class DashBoard extends Component {
             pagination
             search
             options={options}
-           hover
           >
             <TableHeaderColumn
               row="0"
               width="180"
               dataField="category"
-              rowSpan="2"
               dataFormat={this.cellFormatter}
               isKey
             >
@@ -235,33 +237,33 @@ class DashBoard extends Component {
             <TableHeaderColumn
               row="0"
               width="100"
-              rowSpan="2"
               dataField="count"
+              headerAlign="center"
             >
               Total Keywords
             </TableHeaderColumn>
-            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="1" dataFormat={this.colorForPositveAndNegitive}>
+            <TableHeaderColumn row="0" width="80" dataField="1" dataFormat={this.colorForPositveAndNegitive} headerAlign="center">
               1
             </TableHeaderColumn>
-            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="2_3" dataFormat={this.colorForPositveAndNegitive}>
+            <TableHeaderColumn row="0" width="80" dataField="2_3" dataFormat={this.colorForPositveAndNegitive} headerAlign="center">
               2-3
             </TableHeaderColumn>
-            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField="4_10" dataFormat={this.colorForPositveAndNegitive}>
+            <TableHeaderColumn row="0" width="80" dataField="4_10" dataFormat={this.colorForPositveAndNegitive} headerAlign="center">
               4-10
             </TableHeaderColumn>
-            <TableHeaderColumn row="0" width="80" rowSpan="2" dataField=">10" dataFormat={this.colorForPositveAndNegitive}>
+            <TableHeaderColumn row="0" width="80" dataField=">10" dataFormat={this.colorForPositveAndNegitive} headerAlign="center">
               >10
             </TableHeaderColumn>
             <TableHeaderColumn
               row="0"
               width="100"
-              rowSpan="2"
               dataField="unranked"
               dataFormat={this.colorForPositveAndNegitive}
+              headerAlign="center"
             >
               Unranked
             </TableHeaderColumn>
-            <TableHeaderColumn
+            {/* <TableHeaderColumn
               row="0"
               width="100"
               colSpan="5"
@@ -287,8 +289,8 @@ class DashBoard extends Component {
             </TableHeaderColumn>
             <TableHeaderColumn row="1" width="100" dataField="start_unranked">
               Unranked
-            </TableHeaderColumn>
-            <TableHeaderColumn
+            </TableHeaderColumn> */}
+            {/* <TableHeaderColumn
               row="0"
               width="100"
               colSpan="5"
@@ -314,8 +316,8 @@ class DashBoard extends Component {
             </TableHeaderColumn>
             <TableHeaderColumn row="1" width="100" dataField="current_unranked">
               Unranked
-            </TableHeaderColumn>
-            <TableHeaderColumn
+            </TableHeaderColumn> */}
+            {/* <TableHeaderColumn
               row="0"
               width="100"
               colSpan="5"
@@ -341,7 +343,7 @@ class DashBoard extends Component {
             </TableHeaderColumn>
             <TableHeaderColumn row="1" width="100" dataField="target_unranked">
               Unranked
-            </TableHeaderColumn>
+            </TableHeaderColumn> */}
           </BootstrapTable>
         </div>
       </div>

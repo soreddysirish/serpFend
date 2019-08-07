@@ -153,6 +153,7 @@ class CategoryPage extends Component {
                         k["tmRank"] = k["current_date_ranks"]["mobile_target_position"] || k["start_date_ranks"]["mobile_target_position"] || 'N/A'
                         k["dPersentage"] = k["percentage"]["desktop_rank_percentage"] || 'N/A'
                         k["mPersentage"] = k["percentage"]["mobile_rank_percentage"] || 'N/A'
+                        k["search_volume"]=k["search_volume"] || "N/A"
                         if (k["types"]["desktop_type"] && k["types"]["mobile_type"]) {
                             k["type"] = "Mobile and Desktop"
                         } else if (typeof (k["types"]["desktop_type"]) == 'undefined' && k["types"]["mobile_type"]) {
@@ -299,9 +300,7 @@ class CategoryPage extends Component {
                     <div className={page_loading ? "loading" : ""}></div>
                     {category_data.length > 0 ?
                         <BootstrapTable data={category_data} pagination search options={options} hover>
-                            {/* <TableHeaderColumn row='0' dataField='category_name' rowSpan="2" columnTitle width="220">Category</TableHeaderColumn> */}
-                            <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="200"> Keyword</TableHeaderColumn>
-                            {/* <TableHeaderColumn row='0' dataField='tags' rowSpan="2" columnTitle width="200">Tags</TableHeaderColumn> */}
+                            <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"> Keyword</TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Initial Rank</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank"
                             >Mobile</TableHeaderColumn>

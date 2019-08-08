@@ -243,7 +243,7 @@ class CategoryPage extends Component {
     }
     percentArcheived(cell, row) {
         if (cell > 0) {
-            cell = "<span class='archived'>Archived</span>"
+            cell = "<span class='archived'>Achieved</span>"
         } else {
             if (cell !== "N/A") {
                 cell += " %"
@@ -329,15 +329,16 @@ class CategoryPage extends Component {
                         <BootstrapTable data={category_data} pagination search options={options} keyField="keyword" >
                             <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"
                             >Keyword</TableHeaderColumn>
-                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center' width="110">current rank(starting rank)</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center' width="110">Current rank(Starting rank)</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank" dataAlign='center' width="85"
                             ><i className="fa fa-mobile" aria-hidden="true"></i></TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank" dataAlign='center' width="85"><i className="fa fa-desktop" aria-hidden="true"></i></TableHeaderColumn>
-                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Target Rank</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Target rank</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='tmRank' dataFormat={this.cellFormatter} formatExtraData="tmRank" headerAlign='center' dataAlign='center' width="75"><i className="fa fa-mobile" aria-hidden="true"></i>
                             </TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='tdRank' dataFormat={this.cellFormatter} formatExtraData="tdRank" headerAlign='center' dataAlign='center' width="75"><i className="fa fa-desktop" aria-hidden="true"></i>
                             </TableHeaderColumn>
+                            {/* map is not working in bootstrap table */}
                             <TableHeaderColumn row='0' colSpan='7' headerAlign='center'>Ranks from past one week</TableHeaderColumn>
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[0]}>{week_ranks[0]} </TableHeaderColumn>
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[1]}>{week_ranks[1]} </TableHeaderColumn>
@@ -345,7 +346,7 @@ class CategoryPage extends Component {
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[3]}>{week_ranks[3]} </TableHeaderColumn>
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[4]}>{week_ranks[4]} </TableHeaderColumn>
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[5]}>{week_ranks[5]} </TableHeaderColumn>
-                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[5]}>{week_ranks[6]} </TableHeaderColumn>
+                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[6]}>{week_ranks[6]} </TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.percentArcheived} dataAlign='left' width="90"  headerAlign="center"><i className="fa fa-mobile" aria-hidden="true"></i>
                             </TableHeaderColumn>

@@ -51,11 +51,16 @@ html {
 }
 span.increased {
   color: green !important;
+  font-weight: bolder;
 }
 span.decreased {
   color: red !important;
+  font-weight: bolder;
 }
-
+.archived{
+  font-weight: bolder;
+  color:green;
+}
 .monitor-tale td {
   padding: 12px !important;
   font-size: 16px !important;
@@ -162,9 +167,23 @@ a.loginBtn:hover {
 ul.color-boxes li{
   display: inline-block;
 }
-.categoryName{
-  text-transform: capitalize;
-}
+table thead .caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  }
+  table thead .dropup .caret, table thead .navbar-fixed-bottom .dropdown .caret {
+  border-top: 0;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid \9;
+  content: "";
+  }
 .cleartripLogo {
   float: left;
   margin-top: 8px;

@@ -23,12 +23,15 @@ class CategoryPage extends Component {
             load_txt: 'Please wait',
             categories_keys: [],
             excelJsonObj: [],
-            isLogin: true
+            isLogin: true,
+            formated_cat_name: '',
+            week_ranks:[]
         }
         this.handleChange = this.handleChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
         this.excelColumns = this.excelColumns.bind(this)
         this.generatexcelJsonObj = this.generatexcelJsonObj.bind(this)
+        this.formatCatogory_name = this.formatCatogory_name.bind(this)
     }
 
     handleChange(e, fieldName) {
@@ -55,14 +58,6 @@ class CategoryPage extends Component {
             );
         });
     };
-
-    excelColumns = options => {
-        return options.map((opt, idx) => {
-            return (
-                <ExcelColumn label={opt} value={opt} key={idx} />
-            );
-        });
-    }
     componentDidMount() {
         let _self = this
         if (!checkSession()) {
@@ -75,9 +70,11 @@ class CategoryPage extends Component {
             })
         }
         let parsed = queryString.parse(this.props.location.search);
+        let formatCatogory_name = this.formatCatogory_name(parsed['name']) || ''
         _self.setState({
             category_name: parsed["name"],
-            page_loading: true
+            page_loading: true,
+            formated_cat_name: formatCatogory_name
         })
         setTimeout(function () {
             if (_self.state.category_name) {
@@ -140,7 +137,7 @@ class CategoryPage extends Component {
                             key_names.push(key_name)
                         })
                         k["key_names"] = key_names
-                        _self.setState({ key_names: key_names })
+                        _self.setState({ key_names: key_names,week_ranks:key_names.splice(0,7) })
                         k["day"] = k["cycle_changes"]["day_change"]
                         k["month"] = k["cycle_changes"]["month_change"]
                         k["week"] = k["cycle_changes"]["week_change"]
@@ -153,7 +150,7 @@ class CategoryPage extends Component {
                         k["tmRank"] = k["current_date_ranks"]["mobile_target_position"] || k["start_date_ranks"]["mobile_target_position"] || 'N/A'
                         k["dPersentage"] = k["percentage"]["desktop_rank_percentage"] || 'N/A'
                         k["mPersentage"] = k["percentage"]["mobile_rank_percentage"] || 'N/A'
-                        k["search_volume"]=k["search_volume"] || "N/A"
+                        k["search_volume"] = k["search_volume"] || "N/A"
                         if (k["types"]["desktop_type"] && k["types"]["mobile_type"]) {
                             k["type"] = "Mobile and Desktop"
                         } else if (typeof (k["types"]["desktop_type"]) == 'undefined' && k["types"]["mobile_type"]) {
@@ -171,46 +168,51 @@ class CategoryPage extends Component {
                         page_loading: false,
                         load_txt: 'No data present please add it',
                         category_data: [],
-                        excelJsonObj:[]
+                        excelJsonObj: []
                     })
                 }
 
             }).catch(function (err) {
-                _self.setState({ page_loading: false,
-                load_txt: 'No data present please add it',
-                category_data: [],
-                excelJsonObj:[]
-                 })
+                _self.setState({
+                    page_loading: false,
+                    load_txt: 'No data present please add it',
+                    category_data: [],
+                    excelJsonObj: []
+                })
             })
         })
     }
     cellFormatter(cell, row, enumObject) {
         let row_value = cell
         if (cell) {
-            if (enumObject == 'cmRank') {
-                let current_date_mobile_value = cell
-                let start_date_mobile_value = row["smRank"]
-                if (parseInt(current_date_mobile_value) > parseInt(start_date_mobile_value)) {
-                    row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> <span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
-                } else if (parseInt(current_date_mobile_value) < parseInt(start_date_mobile_value)) {
-                    row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> <span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
-                } else if (parseInt(current_date_mobile_value) == parseInt(start_date_mobile_value)) {
-                    row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
+            if (enumObject == "smRank") {
+                let starting_mobile_rank = parseInt(row['smRank']) || "N/A"
+                let current_mobile_rank = parseInt(row['cmRank']) || "N/A"
+                if (current_mobile_rank !== "N/A" && starting_mobile_rank !== "N/A" && current_mobile_rank > starting_mobile_rank) {
+                    row_value = "<span class='decreased'>" + current_mobile_rank + "</span><span> (" + starting_mobile_rank + ")</span><span class='decreased'><i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+                } else if (current_mobile_rank !== "N/A" && starting_mobile_rank !== "N/A" && current_mobile_rank < starting_mobile_rank) {
+                    row_value = "<span class='increased'>" + current_mobile_rank + "</span><span> (" + starting_mobile_rank + ")</span><span class='increased'><i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+                } else if (current_mobile_rank == starting_mobile_rank) {
+                    row_value = current_mobile_rank + " (" + starting_mobile_rank + ")"
                 } else {
-                    row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
+                    row_value = current_mobile_rank + " (" + starting_mobile_rank + ")"
                 }
-            } else if (enumObject == 'cdRank') {
-                let current_date_desktop_value = cell
-                let start_date_desktop_value = row["sdRank"]
-                if (parseInt(current_date_desktop_value) > parseInt(start_date_desktop_value)) {
-                    row_value = "<span class='decreased'>" + cell + "<i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
-                } else if (parseInt(current_date_desktop_value) < parseInt(start_date_desktop_value)) {
-                    row_value = "<span class='increased'>" + cell + "<i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+            } else if (enumObject == "sdRank") {
+                let starting_desktop_rank = parseInt(row['sdRank']) || "N/A"
+                let current_desktop_rank = parseInt(row['cdRank']) || "N/A"
+
+                if (current_desktop_rank !== "N/A" && starting_desktop_rank !== "N/A" && current_desktop_rank > starting_desktop_rank) {
+                    row_value = "<span class='decreased'>" + current_desktop_rank + "</span><span> (" + starting_desktop_rank + ")</span><span class='decreased'><i class='fa fa-arrow-down' aria-hidden='true'></i></span>"
+                } else if (current_desktop_rank !== "N/A" && starting_desktop_rank !== "N/A" && current_desktop_rank < starting_desktop_rank) {
+                    row_value = "<span class='increased'>" + current_desktop_rank + "</span><span> (" + starting_desktop_rank + ")</span><span class='increased'><i class='fa fa-arrow-up' aria-hidden='true'></i></span>"
+                } else if (current_desktop_rank == starting_desktop_rank) {
+                    row_value = current_desktop_rank + " (" + starting_desktop_rank + ")"
+                } else {
+                    row_value = current_desktop_rank + " (" + starting_desktop_rank + ")"
                 }
-            } else if (enumObject == "smRank") {
-                row_value = "<i class='fa fa-mobile' aria-hidden='true'></i> " + cell
             }
-        } else {
+        }
+        else {
             if (cell != 0 || cell == "")
                 row_value = "N/A"
         }
@@ -219,7 +221,6 @@ class CategoryPage extends Component {
     renderShowsTotal(start, to, total) {
         return (<p>Showing {start} to {to} of {total} entries</p>)
     }
-
     convertFixNum(cell, row) {
         let num = cell
         if (isNaN(num)) return num;
@@ -235,8 +236,32 @@ class CategoryPage extends Component {
         }
         return num;
     }
+    formatCatogory_name(cat) {
+        let cat_name_key = cat.replace(/[_-\s]/g, " ").replace("  ", "").toLowerCase();
+        let category_formatted = cat_name_key.charAt(0).toUpperCase() + cat_name_key.slice(1);
+        return category_formatted
+    }
+    percentArcheived(cell, row) {
+        if (cell > 0) {
+            cell = "<span class='archived'>Archived</span>"
+        } else {
+            if (cell !== "N/A") {
+                cell += " %"
+            }
+        }
+        return cell
+    }
+
+    excelColumns = options => {
+        return options.map((opt, idx) => {
+            return (
+                <ExcelColumn label={opt} value={opt} key={idx} />
+            );
+        });
+    }
+
     render() {
-        const { isLogin, category_name, category_data, page_loading, key_names, load_txt, categories_keys, excelJsonObj } = this.state
+        const { isLogin, category_name, category_data, page_loading, key_names, load_txt, categories_keys, excelJsonObj, formated_cat_name,week_ranks } = this.state
         if (!isLogin) {
             return window.location.href = "/login"
         }
@@ -244,12 +269,14 @@ class CategoryPage extends Component {
             clearSearch: true,
             noDataText: 'Loading...',
             sizePerPage: 20,
-            paginationShowsTotal: this.renderShowsTotal
+            paginationShowsTotal: this.renderShowsTotal,
+            defaultSortName: 'search_volume',
+            defaultSortOrder: 'desc'
         };
         return (
             <div className="ctbot-dashboard category-page">
                 <div className="ctbot-top">
-                    <div className="common-title"><b>Category name: <span className="categoryName">{category_name.replace("_"," ")}</span></b></div>
+                    <div className="common-title">Showing list of keywords in <b><span className="categoryName">{formated_cat_name}</span></b> category</div>
                     <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className="clearfix"></div>
                 </div>
@@ -264,57 +291,67 @@ class CategoryPage extends Component {
                         >
                             {this.returnOptions(categories_keys)}
                         </select>
-                        { excelJsonObj && excelJsonObj.length > 0 ? 
-                        <ExcelFile filename={category_name} alignment={{ vertical: "center", horizontal: "center" }} element={<span className="excel-download excel-individual-category"><img src={excel_icon} alt="" /> Download</span>}>
-                            <ExcelSheet data={excelJsonObj} name="categories data">
-                                <ExcelColumn label="Domain" value="domain" />
-                                <ExcelColumn label="Keyword" value="keyword" />
-                                <ExcelColumn label="Region" value="region" />
-                                <ExcelColumn label="Language" value="language" />
-                                <ExcelColumn label="Tags" value="tag_name" />
-                                <ExcelColumn label="Type" value="device_name" />
-                                <ExcelColumn label="Google Page" value="google_page" />
-                                <ExcelColumn label="start" value="kw_start_position" />
-                                <ExcelColumn label="Google" value="current_grank" />
-                                <ExcelColumn label="Bing" value="bing_rank" />
-                                <ExcelColumn label="Yahoo" value="yahoo_rank" />
-                                <ExcelColumn label="Day" value="day" />
-                                <ExcelColumn label="Week" value="week" />
-                                <ExcelColumn label="Month" value="month" />
-                                <ExcelColumn label="Life" value="life" />
-                                <ExcelColumn label="Start(D)" value="sdRank" />
-                                <ExcelColumn label="Start(M)" value="smRank" />
-                                <ExcelColumn label="Current(D)" value="cdRank" />
-                                <ExcelColumn label="Current(M)" value="cmRank" />
-                                <ExcelColumn label="Target(D)" value="tdRank" />
-                                <ExcelColumn label="Target(M)" value="tmRank" />
-                                <ExcelColumn label="Google Ranking Url" value="google_ranking_url" />
-                                <ExcelColumn label="Search Volume" value="search_volume" />
-                                <ExcelColumn label="%(D)" value="dPersentage" />
-                                <ExcelColumn label="%(M)" value="mPersentage" />
-                                {this.excelColumns(key_names)}
-                            </ExcelSheet>
-                        </ExcelFile> : ''}
+                        {excelJsonObj && excelJsonObj.length > 0 ?
+                            <ExcelFile filename={category_name} alignment={{ vertical: "center", horizontal: "center" }} element={<span className="excel-download excel-individual-category"><img src={excel_icon} alt="" /> Download</span>}>
+                                <ExcelSheet data={excelJsonObj} name="categories data">
+                                    <ExcelColumn label="Domain" value="domain" />
+                                    <ExcelColumn label="Keyword" value="keyword" />
+                                    <ExcelColumn label="Region" value="region" />
+                                    <ExcelColumn label="Language" value="language" />
+                                    <ExcelColumn label="Tags" value="tag_name" />
+                                    <ExcelColumn label="Type" value="device_name" />
+                                    <ExcelColumn label="Google Page" value="google_page" />
+                                    <ExcelColumn label="start" value="kw_start_position" />
+                                    <ExcelColumn label="Google" value="current_grank" />
+                                    <ExcelColumn label="Bing" value="bing_rank" />
+                                    <ExcelColumn label="Yahoo" value="yahoo_rank" />
+                                    <ExcelColumn label="Day" value="day" />
+                                    <ExcelColumn label="Week" value="week" />
+                                    <ExcelColumn label="Month" value="month" />
+                                    <ExcelColumn label="Life" value="life" />
+                                    <ExcelColumn label="Start(D)" value="sdRank" />
+                                    <ExcelColumn label="Start(M)" value="smRank" />
+                                    <ExcelColumn label="Current(D)" value="cdRank" />
+                                    <ExcelColumn label="Current(M)" value="cmRank" />
+                                    <ExcelColumn label="Target(D)" value="tdRank" />
+                                    <ExcelColumn label="Target(M)" value="tmRank" />
+                                    <ExcelColumn label="Google Ranking Url" value="google_ranking_url" />
+                                    <ExcelColumn label="Search Volume" value="search_volume" />
+                                    <ExcelColumn label="%(D)" value="dPersentage" />
+                                    <ExcelColumn label="%(M)" value="mPersentage" />
+                                    {this.excelColumns(key_names)}
+                                </ExcelSheet>
+                            </ExcelFile> : ''}
                     </div>
                     <div className="clearfix"></div>
                     <div className={page_loading ? "loading" : ""}></div>
                     {category_data.length > 0 ?
-                        <BootstrapTable data={category_data} pagination search options={options} hover>
-                            <TableHeaderColumn row='0' dataField='keyword' isKey rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"> Keyword</TableHeaderColumn>
-                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Initial Rank</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank"
-                            >Mobile</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank">Desktop</TableHeaderColumn>
-                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Current Rank</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='cmRank' dataFormat={this.cellFormatter} formatExtraData="cmRank">Mobile</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='cdRank' dataFormat={this.cellFormatter} formatExtraData="cdRank">Desktop</TableHeaderColumn>
+                        <BootstrapTable data={category_data} pagination search options={options} keyField="keyword" >
+                            <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"
+                            >Keyword</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center' width="110">current rank(starting rank)</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank" dataAlign='center' width="85"
+                            ><i className="fa fa-mobile" aria-hidden="true"></i></TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank" dataAlign='center' width="85"><i className="fa fa-desktop" aria-hidden="true"></i></TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Target Rank</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='tmRank' dataFormat={this.cellFormatter} formatExtraData="tmRank">Mobile</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='tdRank' dataFormat={this.cellFormatter} formatExtraData="tdRank">Desktop</TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='tmRank' dataFormat={this.cellFormatter} formatExtraData="tmRank" headerAlign='center' dataAlign='center' width="75"><i className="fa fa-mobile" aria-hidden="true"></i>
+                            </TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='tdRank' dataFormat={this.cellFormatter} formatExtraData="tdRank" headerAlign='center' dataAlign='center' width="75"><i className="fa fa-desktop" aria-hidden="true"></i>
+                            </TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='7' headerAlign='center'>Ranks from past one week</TableHeaderColumn>
+                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[0]}>{week_ranks[0]} </TableHeaderColumn>
+                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[1]}>{week_ranks[1]} </TableHeaderColumn>
+                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[2]}>{week_ranks[2]} </TableHeaderColumn>
+                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[3]}>{week_ranks[3]} </TableHeaderColumn>
+                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[4]}>{week_ranks[4]} </TableHeaderColumn>
+                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[5]}>{week_ranks[5]} </TableHeaderColumn>
+                            <TableHeaderColumn row='1' width="60" dataField={week_ranks[5]}>{week_ranks[6]} </TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='mPersentage'>Mobile</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='dPersentage'>Desktop</TableHeaderColumn>
-                            <TableHeaderColumn row='0' dataField='search_volume' dataFormat={this.convertFixNum} rowSpan="2" columnTitle>Search Volume </TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.percentArcheived} dataAlign='left' width="90"  headerAlign="center"><i className="fa fa-mobile" aria-hidden="true"></i>
+                            </TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='dPersentage' dataFormat={this.percentArcheived} dataAlign='left' headerAlign="center"  width="90"><i className="fa fa-desktop" aria-hidden="true"></i>
+                            </TableHeaderColumn>
+                            <TableHeaderColumn row='0' dataField='search_volume' dataFormat={this.convertFixNum} rowSpan="2"  width="100" columnTitle dataSort={true}>Search Volume </TableHeaderColumn>
                         </BootstrapTable> : <div>{load_txt}</div>}
                 </div>
             </div>

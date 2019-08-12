@@ -8,6 +8,7 @@ import excel_icon from '../images/excel-icon.svg'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import ReactExport from "react-data-export";
 import moment from 'moment'
+import Chart from "react-apexcharts";
 import 'font-awesome/css/font-awesome.min.css';
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -25,9 +26,12 @@ class CategoryPage extends Component {
             excelJsonObj: [],
             isLogin: true,
             formated_cat_name: '',
-            week_ranks:[]
+            week_ranks: [],
+            category_keyword_rankings: [],
+            pieChartFilterVal: 'desktop'
         }
         this.handleChange = this.handleChange.bind(this)
+        this.handleChartTypeChange = this.handleChartTypeChange.bind(this)
         this.getCategoryData = this.getCategoryData.bind(this)
         this.excelColumns = this.excelColumns.bind(this)
         this.generatexcelJsonObj = this.generatexcelJsonObj.bind(this)
@@ -48,6 +52,12 @@ class CategoryPage extends Component {
         } else {
             return window.location.href = "/login"
         }
+    }
+    handleChartTypeChange(e,fieldName){
+        let _self = this
+        _self.setState({
+            pieChartFilterVal:e.target.value
+        })
     }
     returnOptions = options => {
         return options.map((opt, idx) => {
@@ -121,6 +131,9 @@ class CategoryPage extends Component {
                 if (json.data["categories_keys"] && json.data["categories_keys"].length > 0) {
                     _self.setState({ categories_keys: json.data["categories_keys"] })
                 }
+                if (json.data["category_keyword_rankings"] && json.data["category_keyword_rankings"].length > 0) {
+                    _self.setState({ category_keyword_rankings: json.data["category_keyword_rankings"] })
+                }
                 if (json.data["category_details_obj"] && json.data["category_details_obj"].length > 0) {
                     json.data["category_details_obj"].map(function (k, v) {
                         const dates = [];
@@ -137,7 +150,7 @@ class CategoryPage extends Component {
                             key_names.push(key_name)
                         })
                         k["key_names"] = key_names
-                        _self.setState({ key_names: key_names,week_ranks:key_names.splice(0,7) })
+                        _self.setState({ key_names: key_names, week_ranks: key_names.splice(0, 7) })
                         k["day"] = k["cycle_changes"]["day_change"]
                         k["month"] = k["cycle_changes"]["month_change"]
                         k["week"] = k["cycle_changes"]["week_change"]
@@ -242,7 +255,7 @@ class CategoryPage extends Component {
         return category_formatted
     }
     percentArcheived(cell, row) {
-        if (cell > 0) {
+        if (cell > 0 || cell == 0) {
             cell = "<span class='archived'>Achieved</span>"
         } else {
             if (cell !== "N/A") {
@@ -259,12 +272,70 @@ class CategoryPage extends Component {
             );
         });
     }
-
+    pieChartDynamicObj(type, obj, filterVal) {
+        if (obj.length > 0) {
+            let labels = []
+            let series = []
+            let formatedLables = []
+            let heading = type
+            labels.push(filterVal + "_start_" + type)
+            labels.push(filterVal + "_current_" + type)
+            series.push(obj[0][labels[0]])
+            series.push(obj[1][labels[1]])
+            heading = heading.replace(/_/g, ' ')
+            heading = heading.charAt(0).toUpperCase() + heading.substr(1).toLowerCase()
+            let number = heading.match(/[\d\.]+/g)
+            heading = heading.replace(/\d+/g, '') + number.join("-")
+            let str1 = labels[0].replace(/_/g, ' ')
+            str1 = str1.charAt(0).toUpperCase() + str1.substr(1).toLowerCase()
+            let str2 = labels[1].replace(/_/g, ' ')
+            str2 = str2.charAt(0).toUpperCase() + str2.substr(1).toLowerCase()
+            formatedLables.push(str1, str2)
+            return {
+                options: {
+                    labels: formatedLables,
+                    legend: {
+                        show: true,
+                        showForSingleSeries: false,
+                        showForNullSeries: true,
+                        showForZeroSeries: true,
+                        position: 'bottom',
+                        floating: false,
+                        fontSize: '14px',
+                        fontFamily: 'Helvetica, Arial',
+                        formatter: function (seriesName, opts) {
+                            let numbers = seriesName.match(/[\d\.]+/g)
+                            seriesName = seriesName.replace(/\d+/g, '') + numbers.join("-")
+                            return [seriesName + ": " + opts.w.globals.series[opts.seriesIndex]]
+                        }
+                    },
+                    title: {
+                        text: heading,
+                        align: 'center',
+                        margin: 0,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize: '25px',
+                            color: '#263238',
+                            fontWeight: 'bolder'
+                        },
+                    }
+                },
+                series: series,
+            }
+        }
+    }
     render() {
-        const { isLogin, category_name, category_data, page_loading, key_names, load_txt, categories_keys, excelJsonObj, formated_cat_name,week_ranks } = this.state
+        const { isLogin, category_name, category_data, page_loading, key_names, load_txt, categories_keys, excelJsonObj, formated_cat_name, week_ranks, category_keyword_rankings, pieChartFilterVal } = this.state
         if (!isLogin) {
             return window.location.href = "/login"
         }
+        let top_1 = this.pieChartDynamicObj("top_1", category_keyword_rankings, pieChartFilterVal)
+        let top_2_3 = this.pieChartDynamicObj("top_2_3", category_keyword_rankings, pieChartFilterVal)
+        let top_4_10 = this.pieChartDynamicObj("top_4_10", category_keyword_rankings, pieChartFilterVal)
+        let above_10 = this.pieChartDynamicObj("above_10", category_keyword_rankings, pieChartFilterVal)
         var options = {
             clearSearch: true,
             noDataText: 'Loading...',
@@ -275,6 +346,53 @@ class CategoryPage extends Component {
         };
         return (
             <div className="ctbot-dashboard category-page">
+                {category_keyword_rankings.length > 0 ?
+                    <div id="chart">
+                    <div className="category-filter">
+                      <select
+                            disabled={false}
+                            onChange={e => this.handleChartTypeChange(e, "chart_type")}
+                            name="chart_type"
+                            value={pieChartFilterVal}
+                        >
+                          <option name="desktop" value='desktop'>Desktop</option>
+                          <option name="mobile" value='mobile'>Mobile</option>
+                        </select>
+                        </div>
+                        <ul className="pieChartList">
+                            <li><Chart
+                                options={top_1.options}
+                                series={top_1.series}
+                                type="pie"
+                                width="300"
+                            />
+                            </li>
+                            <li>
+                                <Chart
+                                    options={top_2_3.options}
+                                    series={top_2_3.series}
+                                    type="pie"
+                                    width="300"
+                                />
+                            </li>
+                            <li>
+                                <Chart
+                                    options={top_4_10.options}
+                                    series={top_4_10.series}
+                                    type="pie"
+                                    width="300"
+                                />
+                            </li>
+                            <li>
+                                <Chart
+                                    options={above_10.options}
+                                    series={above_10.series}
+                                    type="pie"
+                                    width="300"
+                                />
+                            </li>
+                        </ul>
+                    </div> : ''}
                 <div className="ctbot-top">
                     <div className="common-title">Showing list of keywords in <b><span className="categoryName">{formated_cat_name}</span></b> category</div>
                     <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
@@ -348,11 +466,11 @@ class CategoryPage extends Component {
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[5]}>{week_ranks[5]} </TableHeaderColumn>
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[6]}>{week_ranks[6]} </TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.percentArcheived} dataAlign='left' width="90"  headerAlign="center"><i className="fa fa-mobile" aria-hidden="true"></i>
+                            <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.percentArcheived} dataAlign='left' width="90" headerAlign="center"><i className="fa fa-mobile" aria-hidden="true"></i>
                             </TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='dPersentage' dataFormat={this.percentArcheived} dataAlign='left' headerAlign="center"  width="90"><i className="fa fa-desktop" aria-hidden="true"></i>
+                            <TableHeaderColumn row='1' dataField='dPersentage' dataFormat={this.percentArcheived} dataAlign='left' headerAlign="center" width="90"><i className="fa fa-desktop" aria-hidden="true"></i>
                             </TableHeaderColumn>
-                            <TableHeaderColumn row='0' dataField='search_volume' dataFormat={this.convertFixNum} rowSpan="2"  width="100" columnTitle dataSort={true}>Search Volume </TableHeaderColumn>
+                            <TableHeaderColumn row='0' dataField='search_volume' dataFormat={this.convertFixNum} rowSpan="2" width="100" columnTitle dataSort={true}>Search Volume </TableHeaderColumn>
                         </BootstrapTable> : <div>{load_txt}</div>}
                 </div>
             </div>

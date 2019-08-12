@@ -726,12 +726,14 @@ td div>a:hover {
   margin: 0 8px 0 0;
   width: 250px;
   z-index: 1;
+  cursor: pointer;
 }
 
 .category-filter-chart {
   position: absolute;
   right: 20px;
   top: 75px;
+  z-index: 1;
 }
 
 .category-filter-chart select {

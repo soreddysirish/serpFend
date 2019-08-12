@@ -255,8 +255,16 @@ class CategoryPage extends Component {
         return category_formatted
     }
     percentArcheived(cell, row, enumObject) {
-        if (typeof(cell) === 'undefined' || cell === null) {
-            return cell = "N/A"
+        if (typeof (cell) === 'undefined' || cell === null) {
+            cell = "N/A"
+            return cell
+        }
+        if (enumObject === "mPersentage" && row['tmRank'] == "N/A") {
+            cell = "N/A"
+            return cell
+        } else if (enumObject === "dPersentage" && row['tdRank'] == "N/A") {
+            cell = "N/A"
+            return cell
         }
         if (cell > 0 || cell == 0) {
             cell = "<span class='archived'>Achieved</span>"
@@ -294,7 +302,7 @@ class CategoryPage extends Component {
             }
             return {
                 options: {
-                    labels: ["Starting position","Current position"],
+                    labels: ["Starting position", "Current position"],
                     legend: {
                         show: true,
                         showForSingleSeries: false,
@@ -305,7 +313,7 @@ class CategoryPage extends Component {
                         fontSize: '14px',
                         fontFamily: 'Helvetica, Arial',
                         formatter: function (seriesName, opts) {
-                            return [seriesName + " ("+opts.w.globals.series[opts.seriesIndex]+")"]
+                            return [seriesName + " (" + opts.w.globals.series[opts.seriesIndex] + ")"]
                         }
                     },
                     colors: colors,

@@ -53,10 +53,10 @@ class CategoryPage extends Component {
             return window.location.href = "/login"
         }
     }
-    handleChartTypeChange(e,fieldName){
+    handleChartTypeChange(e, fieldName) {
         let _self = this
         _self.setState({
-            pieChartFilterVal:e.target.value
+            pieChartFilterVal: e.target.value
         })
     }
     returnOptions = options => {
@@ -276,6 +276,7 @@ class CategoryPage extends Component {
         if (obj.length > 0) {
             let labels = []
             let series = []
+            let colors = ['#FA4443', 'rgba(15,113,9,1)']
             let formatedLables = []
             let heading = type
             labels.push(filterVal + "_start_" + type)
@@ -291,6 +292,9 @@ class CategoryPage extends Component {
             let str2 = labels[1].replace(/_/g, ' ')
             str2 = str2.charAt(0).toUpperCase() + str2.substr(1).toLowerCase()
             formatedLables.push(str1, str2)
+            if (series[0] > series[1]) {
+                colors = colors.reverse()
+            }
             return {
                 options: {
                     labels: formatedLables,
@@ -309,6 +313,20 @@ class CategoryPage extends Component {
                             return [seriesName + ": " + opts.w.globals.series[opts.seriesIndex]]
                         }
                     },
+                    colors: colors,
+                    animations: {
+                        enabled: true,
+                        easing: 'linear',
+                        speed: 1000,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 1000
+                        },
+                        dynamicAnimation: {
+                            enabled: true,
+                            speed: 1000
+                        }
+                    },
                     title: {
                         text: heading,
                         align: 'center',
@@ -323,7 +341,23 @@ class CategoryPage extends Component {
                         },
                     }
                 },
-                series: series,
+                series: series
+
+            }
+        }
+    }
+    revertSortFunc(a, b, order, field, enumObject) {
+        if (order === 'desc') {
+            if (enumObject == 'mobile') {
+                return a['cmRank'] - b['cmRank'];
+            } else {
+                return a['cdRank'] - b['cdRank'];
+            }
+        } else {
+            if (enumObject == 'mobile') {
+                return b['cmRank'] - a['cmRank'];
+            } else {
+                return b['cdRank'] - a['cdRank'];
             }
         }
     }
@@ -348,16 +382,16 @@ class CategoryPage extends Component {
             <div className="ctbot-dashboard category-page">
                 {category_keyword_rankings.length > 0 ?
                     <div id="chart">
-                    <div className="category-filter-chart">
-                      <select
-                            disabled={false}
-                            onChange={e => this.handleChartTypeChange(e, "chart_type")}
-                            name="chart_type"
-                            value={pieChartFilterVal}
-                        >
-                          <option name="desktop" value='desktop'>Desktop</option>
-                          <option name="mobile" value='mobile'>Mobile</option>
-                        </select>
+                        <div className="category-filter-chart">
+                            <select
+                                disabled={false}
+                                onChange={e => this.handleChartTypeChange(e, "chart_type")}
+                                name="chart_type"
+                                value={pieChartFilterVal}
+                            >
+                                <option name="desktop" value='desktop'>Desktop</option>
+                                <option name="mobile" value='mobile'>Mobile</option>
+                            </select>
                         </div>
                         <ul className="pieChartList">
                             <li><Chart
@@ -394,7 +428,7 @@ class CategoryPage extends Component {
                         </ul>
                     </div> : ''}
                 <div className="ctbot-top">
-                    <div className="common-title">Showing keywords in <b><span className="categoryName">{formated_cat_name}</span></b> category</div>
+                    <div className="common-title">Showing list of keywords in <b><span className="categoryName">{formated_cat_name}</span></b> category</div>
                     <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className="clearfix"></div>
                 </div>
@@ -448,9 +482,9 @@ class CategoryPage extends Component {
                             <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"
                             >Keyword</TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center' width="110">Current rank(Starting rank)</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank" dataAlign='center' width="85"
+                            <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank" dataAlign='center' width="85" dataSort={true} sortFunc={this.revertSortFunc} sortFuncExtraData={'mobile'}
                             ><i className="fa fa-mobile" aria-hidden="true"></i></TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank" dataAlign='center' width="85"><i className="fa fa-desktop" aria-hidden="true"></i></TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank" dataAlign='center' width="85"  dataSort={true} sortFunc={this.revertSortFunc} sortFuncExtraData={'desktop'}><i className="fa fa-desktop" aria-hidden="true"></i></TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Target rank</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='tmRank' dataFormat={this.cellFormatter} formatExtraData="tmRank" headerAlign='center' dataAlign='center' width="75"><i className="fa fa-mobile" aria-hidden="true"></i>
                             </TableHeaderColumn>

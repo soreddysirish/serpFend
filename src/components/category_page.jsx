@@ -28,7 +28,28 @@ class CategoryPage extends Component {
             formated_cat_name: '',
             week_ranks: [],
             category_keyword_rankings: [],
-            pieChartFilterVal: 'desktop'
+            pieChartFilterVal: 'desktop',
+            top_1: {
+                options: {
+                    labels: []
+                },
+                series: []
+            },
+            top_2_3: {
+                options: {
+                    labels: []
+                }, series: []
+            },
+            top_4_10: {
+                options: {
+                    labels: []
+                }, series: []
+            },
+            above_10: {
+                options: {
+                    labels: []
+                }, series: []
+            }
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleChartTypeChange = this.handleChartTypeChange.bind(this)
@@ -36,6 +57,7 @@ class CategoryPage extends Component {
         this.excelColumns = this.excelColumns.bind(this)
         this.generatexcelJsonObj = this.generatexcelJsonObj.bind(this)
         this.formatCatogory_name = this.formatCatogory_name.bind(this)
+        this.setChartData = this.setChartData.bind(this)
     }
 
     handleChange(e, fieldName) {
@@ -58,6 +80,9 @@ class CategoryPage extends Component {
         _self.setState({
             pieChartFilterVal: e.target.value
         })
+        setTimeout(function(){
+            _self.setChartData(_self.state.category_keyword_rankings)
+        },5)
     }
     returnOptions = options => {
         return options.map((opt, idx) => {
@@ -122,6 +147,81 @@ class CategoryPage extends Component {
             excelJsonObj: excel_obj_desktop.concat(excel_obj_mobile)
         })
     }
+    pieChartDynamicObj(type, obj, filterVal) {
+        if (obj.length > 0) {
+            let labels = []
+            let series = []
+            let colors = ['#FA4443', 'rgba(15,113,9,1)']
+            let heading = type
+            labels.push(filterVal + "_start_" + type)
+            labels.push(filterVal + "_current_" + type)
+            series.push(obj[0][labels[0]])
+            series.push(obj[1][labels[1]])
+            heading = heading.replace(/_/g, ' ')
+            heading = heading.charAt(0).toUpperCase() + heading.substr(1).toLowerCase()
+            let number = heading.match(/[\d\.]+/g)
+            heading = heading.replace(/\d+/g, '') + number.join("-")
+            if (series[0] > series[1]) {
+                colors = colors.reverse()
+            }
+            return {
+                options: {
+                    labels: ["Starting position", "Current position"],
+                    legend: {
+                        show: true,
+                        showForSingleSeries: false,
+                        showForNullSeries: true,
+                        showForZeroSeries: true,
+                        position: 'bottom',
+                        floating: false,
+                        fontSize: '14px',
+                        fontFamily: 'Helvetica, Arial',
+                        formatter: function (seriesName, opts) {
+                            return [seriesName + " (" + opts.w.globals.series[opts.seriesIndex] + ")"]
+                        }
+                    },
+                    colors: colors,
+                    animations: {
+                        enabled: true,
+                        easing: 'linear',
+                        speed: 1000,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 1000
+                        },
+                        dynamicAnimation: {
+                            enabled: true,
+                            speed: 1000
+                        }
+                    },
+                    title: {
+                        text: heading,
+                        align: 'center',
+                        margin: 0,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize: '25px',
+                            color: '#263238'
+                        },
+                    }
+                },
+                series: series
+            }
+        }
+    }
+
+    setChartData(obj) {
+        let _self = this
+        let top_1 = _self.pieChartDynamicObj("top_1", obj, _self.state.pieChartFilterVal)
+        let top_2_3 = _self.pieChartDynamicObj("top_2_3", obj, _self.state.pieChartFilterVal)
+        let top_4_10 = _self.pieChartDynamicObj("top_4_10", obj, _self.state.pieChartFilterVal)
+        let above_10 = _self.pieChartDynamicObj("above_10", obj, _self.state.pieChartFilterVal)
+        _self.setState({
+            top_1: top_1, top_2_3: top_2_3, top_4_10: top_4_10, above_10: above_10
+        })
+    }
 
     getCategoryData() {
         let _self = this
@@ -175,15 +275,16 @@ class CategoryPage extends Component {
                         k["google_rank_history"] = k["google_rank_history"].toString()
                         individual_categories.push(k)
                     })
-                    _self.setState({ category_data: individual_categories, page_loading: false,formated_cat_name:formatCatogory_name })
+                    _self.setState({ category_data: individual_categories, page_loading: false, formated_cat_name: formatCatogory_name })
                     _self.generatexcelJsonObj(individual_categories)
+                    _self.setChartData(json.data["category_keyword_rankings"])
                 } else {
                     _self.setState({
                         page_loading: false,
                         load_txt: 'No data present please add it',
                         category_data: [],
                         excelJsonObj: [],
-                        formated_cat_name:formatCatogory_name
+                        formated_cat_name: formatCatogory_name
                     })
                 }
 
@@ -285,70 +386,7 @@ class CategoryPage extends Component {
             );
         });
     }
-    pieChartDynamicObj(type, obj, filterVal) {
-        if (obj.length > 0) {
-            let labels = []
-            let series = []
-            let colors = ['#FA4443', 'rgba(15,113,9,1)']
-            let heading = type
-            labels.push(filterVal + "_start_" + type)
-            labels.push(filterVal + "_current_" + type)
-            series.push(obj[0][labels[0]])
-            series.push(obj[1][labels[1]])
-            heading = heading.replace(/_/g, ' ')
-            heading = heading.charAt(0).toUpperCase() + heading.substr(1).toLowerCase()
-            let number = heading.match(/[\d\.]+/g)
-            heading = heading.replace(/\d+/g, '') + number.join("-")
-            if (series[0] > series[1]) {
-                colors = colors.reverse()
-            }
-            return {
-                options: {
-                    labels: ["Starting position", "Current position"],
-                    legend: {
-                        show: true,
-                        showForSingleSeries: false,
-                        showForNullSeries: true,
-                        showForZeroSeries: true,
-                        position: 'bottom',
-                        floating: false,
-                        fontSize: '14px',
-                        fontFamily: 'Helvetica, Arial',
-                        formatter: function (seriesName, opts) {
-                            return [seriesName + " (" + opts.w.globals.series[opts.seriesIndex] + ")"]
-                        }
-                    },
-                    colors: colors,
-                    animations: {
-                        enabled: true,
-                        easing: 'linear',
-                        speed: 1000,
-                        animateGradually: {
-                            enabled: true,
-                            delay: 1000
-                        },
-                        dynamicAnimation: {
-                            enabled: true,
-                            speed: 1000
-                        }
-                    },
-                    title: {
-                        text: heading,
-                        align: 'center',
-                        margin: 0,
-                        offsetX: 0,
-                        offsetY: 0,
-                        floating: false,
-                        style: {
-                            fontSize: '25px',
-                            color: '#263238'
-                        },
-                    }
-                },
-                series: series
-            }
-        }
-    }
+
     revertSortFunc(a, b, order, field, enumObject) {
         if (order === 'desc') {
             if (enumObject == 'mobile') {
@@ -365,14 +403,10 @@ class CategoryPage extends Component {
         }
     }
     render() {
-        const { isLogin, category_name, category_data, page_loading, key_names, load_txt, categories_keys, excelJsonObj, formated_cat_name, week_ranks, category_keyword_rankings, pieChartFilterVal } = this.state
+        const { isLogin, category_name, category_data, page_loading, key_names, load_txt, categories_keys, excelJsonObj, formated_cat_name, week_ranks, category_keyword_rankings, pieChartFilterVal, top_1, top_2_3, top_4_10, above_10 } = this.state
         if (!isLogin) {
             return window.location.href = "/login"
         }
-        let top_1 = this.pieChartDynamicObj("top_1", category_keyword_rankings, pieChartFilterVal)
-        let top_2_3 = this.pieChartDynamicObj("top_2_3", category_keyword_rankings, pieChartFilterVal)
-        let top_4_10 = this.pieChartDynamicObj("top_4_10", category_keyword_rankings, pieChartFilterVal)
-        let above_10 = this.pieChartDynamicObj("above_10", category_keyword_rankings, pieChartFilterVal)
         var options = {
             clearSearch: true,
             noDataText: 'Loading...',
@@ -482,7 +516,7 @@ class CategoryPage extends Component {
                     <div className={page_loading ? "loading" : ""}></div>
                     {category_data.length > 0 ?
                         <BootstrapTable data={category_data} pagination search options={options} keyField="keyword" >
-                            <TableHeaderColumn row='0' dataField='keyword'  headerAlign='center' rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"
+                            <TableHeaderColumn row='0' dataField='keyword' headerAlign='center' rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"
                             >Keyword</TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center' width="110">Current rank(Starting rank)</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank" dataAlign='center' width="85" dataSort={true} sortFunc={this.revertSortFunc} sortFuncExtraData={'mobile'}

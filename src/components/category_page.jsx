@@ -348,7 +348,7 @@ class CategoryPage extends Component {
             <div className="ctbot-dashboard category-page">
                 {category_keyword_rankings.length > 0 ?
                     <div id="chart">
-                    <div className="category-filter">
+                    <div className="category-filter-chart">
                       <select
                             disabled={false}
                             onChange={e => this.handleChartTypeChange(e, "chart_type")}
@@ -394,7 +394,7 @@ class CategoryPage extends Component {
                         </ul>
                     </div> : ''}
                 <div className="ctbot-top">
-                    <div className="common-title">Showing list of keywords in <b><span className="categoryName">{formated_cat_name}</span></b> category</div>
+                    <div className="common-title">Showing keywords in <b><span className="categoryName">{formated_cat_name}</span></b> category</div>
                     <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className="clearfix"></div>
                 </div>

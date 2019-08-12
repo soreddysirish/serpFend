@@ -22,19 +22,22 @@
 .App-link {
   color: #61dafb;
 }
+
 ul li {
   list-style: none;
   padding: 10px;
 }
-.logInOutBtn{
-  background-color: #ef6837!important;
-  border: none!important;
-  font-weight: bolder!important;
+
+.logInOutBtn {
+  background-color: #ef6837 !important;
+  border: none !important;
+  font-weight: bolder !important;
 }
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: grayscale;
-  background: #f3f3f3!important;
+  background: #f3f3f3 !important;
 }
 
 .react-bs-table table th {
@@ -43,60 +46,76 @@ body {
   text-overflow: ellipsis !important;
   word-wrap: break-word !important;
 }
+
 .react-bs-table-bordered {
   border: none !important;
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 span.increased {
   color: green !important;
   font-weight: bolder;
 }
+
 span.decreased {
   color: red !important;
   font-weight: bolder;
 }
-.archived{
+
+.archived {
   font-weight: bolder;
-  color:green;
+  color: green;
 }
-ul.pieCharts li{
+
+ul.pieCharts li {
   display: inline;
 }
-ul.pieChartList li{
+
+ul.pieChartList li {
   display: inline-block;
 }
+
 .monitor-tale td {
-  padding: 12px !important;
-  font-size: 16px !important;
+  padding: 8px !important;
+  font-size: 14px !important;
   text-align: center;
 }
+
 .monitor-tale td i {
   margin: 0 4px;
 }
+
 .monitor-tale th {
   background: #fff !important;
-  padding: 10px !important;
-  font-size: 15px !important;
+  padding: 8px !important;
+  font-size: 14px !important;
 }
+
 .fa-mobile {
   color: black;
   font-size: x-large !important;
 }
+
 .pad-zero {
   padding: 0 !important;
 }
+
 .pad-lzero {
   padding-left: 0 !important;
 }
+
 .pad-rzero {
   padding-right: 0 !important;
 }
+
 .custom-container {
   width: 1260px;
   margin: 0 auto;
 }
+
 h1,
 h2,
 h3,
@@ -106,18 +125,23 @@ h6 {
   font-family: "Roboto", sans-serif;
   margin: 0;
 }
+
 ul {
   margin: 0;
 }
+
 .row {
   margin: 0;
 }
+
 .hide {
   display: none !important;
 }
+
 .show {
   display: block !important;
 }
+
 .loginForm {
   width: 34%;
   margin-left: 32%;
@@ -125,15 +149,18 @@ ul {
   padding: 24px;
   background: #fff;
 }
+
 a.loginBtn,
 a.loginBtn:hover {
   color: white;
   font-weight: bold;
   text-decoration: none;
 }
-.react-bs-table-search-form > input.form-control {
+
+.react-bs-table-search-form>input.form-control {
   height: 37px !important;
 }
+
 .react-bs-table-search-clear-btn {
   padding: 5px 19px 9px 26px !important;
   font-weight: bolder !important;
@@ -148,31 +175,37 @@ a.loginBtn:hover {
 .error {
   color: red;
 }
-.error-index{
+
+.error-index {
   color: red;
   font-weight: bolder;
 }
-.success-index{
-  color:green;
+
+.success-index {
+  color: green;
   font-weight: bolder;
 }
-.border-box-green{
+
+.border-box-green {
   width: 12px;
-    height: 11px;
-    display: inline-block;
-    background-color: green;
-    margin-right:4px;
+  height: 11px;
+  display: inline-block;
+  background-color: green;
+  margin-right: 4px;
 }
-.border-box-red{
+
+.border-box-red {
   width: 12px;
-    height: 11px;
-    display: inline-block;
-    background-color: red;
-    margin-right:4px;
+  height: 11px;
+  display: inline-block;
+  background-color: red;
+  margin-right: 4px;
 }
-ul.color-boxes li{
+
+ul.color-boxes li {
   display: inline-block;
 }
+
 table thead .caret {
   display: inline-block;
   width: 0;
@@ -183,13 +216,16 @@ table thead .caret {
   border-top: 4px solid \9;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
-  }
-  table thead .dropup .caret, table thead .navbar-fixed-bottom .dropdown .caret {
+}
+
+table thead .dropup .caret,
+table thead .navbar-fixed-bottom .dropdown .caret {
   border-top: 0;
   border-bottom: 4px dashed;
   border-bottom: 4px solid \9;
   content: "";
-  }
+}
+
 .cleartripLogo {
   float: left;
   margin-top: 8px;
@@ -198,6 +234,7 @@ table thead .caret {
   background-position: 0px 0px;
   text-indent: -9999px;
 }
+
 .productIcon,
 .flagIcon,
 .cleartripLogo,
@@ -207,23 +244,28 @@ table thead .caret {
   background-image: url(https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/flight-schedule-version-2-images/iconSprite37.png);
   background-repeat: no-repeat;
 }
-td div > a {
+
+td div>a {
   font-size: 16px !important;
   text-transform: capitalize;
 }
-td div > a:hover {
+
+td div>a:hover {
   text-decoration: none !important;
 }
 
-.react-bs-table .table-bordered > tbody > tr > td {
+.react-bs-table .table-bordered>tbody>tr>td {
   color: black !important;
   font-weight: 400 !important;
+
 }
+
 /*Dashboard Components*/
 #ctbot-wrapper {
   background: #f3f3f3;
   font-size: 16px;
 }
+
 .main-navbar {
   background: #fff;
   height: 64px;
@@ -236,11 +278,13 @@ td div > a:hover {
 
   padding: 12px 24px;
 }
+
 .dashboard-logo {
   float: left;
   position: relative;
   top: -4px;
 }
+
 .rhs-nav {
   float: right;
   width: 50%;
@@ -263,13 +307,16 @@ td div > a:hover {
   transition: all all ease-in 0.3s ease-out;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 }
+
 .side-bar-toggle {
   text-align: center;
   padding: 24px 16px 0;
 }
+
 .side-nav-links {
   padding: 88px 0 0;
 }
+
 .bckBtn {
   background-color: #4c4c4c;
   border-radius: 6px;
@@ -279,12 +326,13 @@ td div > a:hover {
   padding-left: 24px;
   padding-right: 24px;
 }
-.bckAncorTag{
-  color: whitesmoke!important;
-  text-decoration: none!important;
-  font-size: medium!important;
-  font-weight: bolder!important;    
-  float: right!important;
+
+.bckAncorTag {
+  color: whitesmoke !important;
+  text-decoration: none !important;
+  font-size: medium !important;
+  font-weight: bolder !important;
+  float: right !important;
 }
 
 .side-nav-links a {
@@ -293,18 +341,22 @@ td div > a:hover {
   text-align: left;
   color: #3f414d;
 }
+
 .side-nav-links a:hover {
   background: #f4f6f9;
   font-weight: 500;
   text-decoration: none;
 }
+
 .side-nav-links ul a {
   padding: 8px 32px;
   font-weight: 500;
 }
+
 .side-nav-links ul a:hover {
   background: #f4f6f9;
 }
+
 .side-nav-links li.active a {
   border-left: 3px solid #fc2779;
   padding: 16px 16px 16px 13px;
@@ -314,13 +366,16 @@ td div > a:hover {
 .ctbot-dashboard {
   margin: 64px 16px;
 }
+
 .ctbot-top ul li {
   display: inline-block;
 }
+
 .ctbot-top {
   text-align: right;
   padding: 24px 0;
 }
+
 .ctbot-top select {
   width: 160px;
   padding: 8px;
@@ -330,6 +385,7 @@ td div > a:hover {
   border-radius: 0;
   border: 1px solid #d9d9d9;
 }
+
 .ctbot-top input {
   width: 160px;
   padding: 8px;
@@ -338,6 +394,7 @@ td div > a:hover {
   border-radius: 0;
   border: 1px solid #d9d9d9;
 }
+
 .common-btn,
 .common-btn:hover,
 .common-btn:focus {
@@ -366,10 +423,12 @@ td div > a:hover {
   font-size: 18px;
   min-height: 240px;
 }
+
 .common-card .weak {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.7);
 }
+
 .common-card .add-btn a {
   padding: 10px 14px;
   text-decoration: none;
@@ -385,31 +444,38 @@ td div > a:hover {
   box-shadow: 0 2px 11px 0 rgba(0, 0, 0, 0.03);
   margin: 16px 0 0;
 }
+
 .common-card h4 {
   font-size: 21px;
   font-weight: 500;
   margin: 0 0 24px;
 }
+
 .slot-fields {
   padding: 16px 0 0;
 }
+
 .slot-fields label {
   width: 160px;
   font-weight: 500;
 }
+
 .slot-fields li {
   padding: 0 0 16px;
 }
+
 .slot-fields select {
   width: 180px;
   background: #fff;
   padding: 8px;
 }
+
 .add-btn {
   position: relative;
   width: 180px;
   margin: 0 auto;
 }
+
 .add-btn input {
   position: absolute;
   top: 15px;
@@ -419,10 +485,12 @@ td div > a:hover {
   width: 100px;
   opacity: 0;
 }
+
 .file-upload .add-btn {
   display: inline-block;
   text-align: left;
 }
+
 .file-upload .add-btn a {
   margin: 0;
   text-align: center;
@@ -432,24 +500,29 @@ td div > a:hover {
   padding: 8px 32px;
   margin: 0;
 }
+
 .breadcrumb-nav li {
   display: inline-block;
   font-size: 14px;
   margin: 0 4px 0 0;
 }
+
 .breadcrumb-nav li a,
 .breadcrumb-nav li a:hover {
   color: #8c8d94;
 }
+
 .breadcrumb-nav li.active {
   font-weight: 600;
 }
+
 .dashboard-toggle {
   padding: 8px;
   border-radius: 2.1px;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
 }
+
 .toogle-wrapper {
   background: #f3f3f3;
   padding: 6px 10px;
@@ -458,6 +531,7 @@ td div > a:hover {
   width: 236px;
   margin: 0 auto;
 }
+
 .toogle-wrapper a {
   padding: 10px 14px;
   color: #b0adad;
@@ -469,28 +543,34 @@ td div > a:hover {
   margin: 0 3px;
   width: 100px;
 }
+
 .toogle-wrapper a.active {
   color: #fff;
   background: #fc2779;
   border-radius: 2px;
   box-shadow: 0 2px 11px 0 rgba(0, 0, 0, 0.03);
 }
+
 .rhs-nav-links li {
   display: inline-block;
   margin: 0 0 0 40px;
 }
+
 .rhs-nav {
   position: relative;
   top: -8px;
 }
+
 .rhs-nav-links {
   margin: 0;
 }
+
 .noify {
   font-size: 24px;
   position: relative;
   top: 8px;
 }
+
 .notify-count {
   border: solid 2.1px #ffffff;
   background-color: #fc2779;
@@ -507,12 +587,14 @@ td div > a:hover {
   right: -16px;
   top: -4px;
 }
+
 .profile-pic img {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   margin: 0 8px 0 0;
 }
+
 .user-name {
   width: 110px;
   overflow: hidden;
@@ -536,6 +618,7 @@ td div > a:hover {
   font-size: 16px;
   font-weight: 600;
 }
+
 .apply-filter-btn,
 .excel-download {
   text-transform: uppercase;
@@ -546,12 +629,14 @@ td div > a:hover {
   cursor: pointer;
   font-weight: bold;
 }
+
 .apply-filter-btn i {
   color: #fc2779;
   font-weight: 500;
   margin: 0 10px 0 0;
   font-size: 16px;
 }
+
 .excel-download {
   text-align: right;
   color: #4c4c4c;
@@ -559,21 +644,25 @@ td div > a:hover {
   font-size: 14px;
   height: 50px;
   background: #fff;
-  margin:0 0 8px 8px;
+  margin: 0 0 8px 8px;
   float: right;
 }
-.excel-individual-category{
-  float: left!important;
+
+.excel-individual-category {
+  float: left !important;
 }
+
 .excel-download img {
   width: 27px;
   margin: 0 16px 0 0;
 }
+
 .filter-tags {
   color: rgba(0, 0, 0, 0.7);
   text-align: center;
   line-height: 1.37;
 }
+
 .filter-tags li {
   display: inline-block;
   border-radius: 90.4px;
@@ -582,6 +671,7 @@ td div > a:hover {
   font-weight: 400;
   border: solid 1.1px rgba(220, 220, 220, 0.8);
 }
+
 .filter-tags li.tag-label {
   border: none;
   font-weight: bold;
@@ -589,6 +679,7 @@ td div > a:hover {
   margin: 0 5px 0 0;
   color: #3f414d;
 }
+
 .filter-tags .active {
   color: #fc2779;
   font-weight: bold;
@@ -600,13 +691,16 @@ td div > a:hover {
   padding: 16px;
   font-size: 18px;
 }
+
 .monitor-tale td {
   padding: 16px;
   font-size: 16px;
 }
+
 .monitor-tale tr:nth-child(odd) {
   background: rgba(255, 255, 255, 0.7);
 }
+
 .monitor-tale tr:nth-child(even) {
   background: rgba(238, 238, 238, 0.5);
 }
@@ -616,35 +710,60 @@ td div > a:hover {
   font-size: 21px;
   font-weight: 500;
 }
+
 .Dcategory-list {
   float: left;
   width: 17%;
   margin-left: 2%;
   width: 16% !important;
 }
-.category-filter select {
+
+.category-filter select,
+.category-filter-chart select {
   background: #fff;
   height: 49px;
-  float:left;
+  float: left;
   margin: 0 8px 0 0;
   width: 250px;
+  z-index: 1;
 }
-.react-bs-table-search-form > input.form-control{
-  height: 48px!important;
+
+.category-filter-chart {
+  position: absolute;
+  right: 20px;
+  top: 75px;
+}
+
+.category-filter-chart select {
+  width: 120px;
+  height: 32px;
+}
+
+ul.pieChartList li {
+  padding: 32px 0 0;
+  width: 24%;
+}
+
+.react-bs-table-search-form>input.form-control {
+  height: 48px !important;
   outline: none;
   font-size: 16px;
   margin: 0 -16px 0 0;
 }
-.react-bs-table-search-clear-btn{
-  display: none!important;
+
+.react-bs-table-search-clear-btn {
+  display: none !important;
 }
-.category-page .react-bs-table-container{
+
+.category-page .react-bs-table-container {
   margin: -54px 0 0;
 }
+
 @media screen and (max-height: 450px) {
   .sidenav {
     padding-top: 15px;
   }
+
   .sidenav a {
     font-size: 18px;
   }
@@ -654,10 +773,12 @@ td div > a:hover {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 /* Absolute Center Spinner */
 .loading {
   position: fixed;
@@ -729,6 +850,7 @@ td div > a:hover {
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
@@ -737,6 +859,7 @@ td div > a:hover {
     transform: rotate(360deg);
   }
 }
+
 @-moz-keyframes spinner {
   0% {
     -webkit-transform: rotate(0deg);
@@ -745,6 +868,7 @@ td div > a:hover {
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
@@ -753,6 +877,7 @@ td div > a:hover {
     transform: rotate(360deg);
   }
 }
+
 @-o-keyframes spinner {
   0% {
     -webkit-transform: rotate(0deg);
@@ -761,6 +886,7 @@ td div > a:hover {
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
@@ -778,6 +904,7 @@ td div > a:hover {
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);

@@ -280,7 +280,6 @@ class CategoryPage extends Component {
             let labels = []
             let series = []
             let colors = ['#FA4443', 'rgba(15,113,9,1)']
-            let formatedLables = []
             let heading = type
             labels.push(filterVal + "_start_" + type)
             labels.push(filterVal + "_current_" + type)
@@ -290,17 +289,12 @@ class CategoryPage extends Component {
             heading = heading.charAt(0).toUpperCase() + heading.substr(1).toLowerCase()
             let number = heading.match(/[\d\.]+/g)
             heading = heading.replace(/\d+/g, '') + number.join("-")
-            let str1 = labels[0].replace(/_/g, ' ')
-            str1 = str1.charAt(0).toUpperCase() + str1.substr(1).toLowerCase()
-            let str2 = labels[1].replace(/_/g, ' ')
-            str2 = str2.charAt(0).toUpperCase() + str2.substr(1).toLowerCase()
-            formatedLables.push(str1, str2)
             if (series[0] > series[1]) {
                 colors = colors.reverse()
             }
             return {
                 options: {
-                    labels: formatedLables,
+                    labels: ["Starting position","Current position"],
                     legend: {
                         show: true,
                         showForSingleSeries: false,
@@ -311,9 +305,7 @@ class CategoryPage extends Component {
                         fontSize: '14px',
                         fontFamily: 'Helvetica, Arial',
                         formatter: function (seriesName, opts) {
-                            let numbers = seriesName.match(/[\d\.]+/g)
-                            seriesName = seriesName.replace(/\d+/g, '') + numbers.join("-")
-                            return [seriesName + ": " + opts.w.globals.series[opts.seriesIndex]]
+                            return [seriesName + " ("+opts.w.globals.series[opts.seriesIndex]+")"]
                         }
                     },
                     colors: colors,
@@ -339,13 +331,11 @@ class CategoryPage extends Component {
                         floating: false,
                         style: {
                             fontSize: '25px',
-                            color: '#263238',
-                            fontWeight: 'bolder'
+                            color: '#263238'
                         },
                     }
                 },
                 series: series
-
             }
         }
     }

@@ -125,6 +125,7 @@ class CategoryPage extends Component {
 
     getCategoryData() {
         let _self = this
+        let formatCatogory_name = _self.formatCatogory_name(_self.state.category_name) || ''
         return new Promise(function (resolve) {
             axios.get(host() + "/category/" + _self.state.category_name).then(function (json) {
                 let individual_categories = []
@@ -174,14 +175,15 @@ class CategoryPage extends Component {
                         k["google_rank_history"] = k["google_rank_history"].toString()
                         individual_categories.push(k)
                     })
-                    _self.setState({ category_data: individual_categories, page_loading: false })
+                    _self.setState({ category_data: individual_categories, page_loading: false,formated_cat_name:formatCatogory_name })
                     _self.generatexcelJsonObj(individual_categories)
                 } else {
                     _self.setState({
                         page_loading: false,
                         load_txt: 'No data present please add it',
                         category_data: [],
-                        excelJsonObj: []
+                        excelJsonObj: [],
+                        formated_cat_name:formatCatogory_name
                     })
                 }
 
@@ -480,7 +482,7 @@ class CategoryPage extends Component {
                     <div className={page_loading ? "loading" : ""}></div>
                     {category_data.length > 0 ?
                         <BootstrapTable data={category_data} pagination search options={options} keyField="keyword" >
-                            <TableHeaderColumn row='0' dataField='keyword' rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"
+                            <TableHeaderColumn row='0' dataField='keyword'  headerAlign='center' rowSpan="2" columnTitle filter={{ type: 'TextFilter', placeholder: 'search by keyword' }} width="250"
                             >Keyword</TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center' width="110">Current rank(Starting rank)</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank" dataAlign='center' width="85" dataSort={true} sortFunc={this.revertSortFunc} sortFuncExtraData={'mobile'}

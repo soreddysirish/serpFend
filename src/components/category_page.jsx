@@ -428,7 +428,7 @@ class CategoryPage extends Component {
                         </ul>
                     </div> : ''}
                 <div className="ctbot-top">
-                    <div className="common-title">Showing list of keywords in <b><span className="categoryName">{formated_cat_name}</span></b> category</div>
+                    <div className="common-title">List of keywords in <b><span className="categoryName">{formated_cat_name}</span></b></div>
                     <button type="button" className="bckBtn"><a href="/" className="bckAncorTag">Back</a></button>
                     <div className="clearfix"></div>
                 </div>

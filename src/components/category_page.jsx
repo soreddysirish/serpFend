@@ -161,8 +161,8 @@ class CategoryPage extends Component {
                         k["cmRank"] = k["current_date_ranks"]["mobile_rank"] || k["start_date_ranks"]["mobile_rank"] || 'N/A'
                         k["tdRank"] = k["current_date_ranks"]["desktop_target_position"] || k["start_date_ranks"]["desktop_target_position"] || 'N/A'
                         k["tmRank"] = k["current_date_ranks"]["mobile_target_position"] || k["start_date_ranks"]["mobile_target_position"] || 'N/A'
-                        k["dPersentage"] = k["percentage"]["desktop_rank_percentage"] || 'N/A'
-                        k["mPersentage"] = k["percentage"]["mobile_rank_percentage"] || 'N/A'
+                        k["dPersentage"] = k["percentage"]["desktop_rank_percentage"]
+                        k["mPersentage"] = k["percentage"]["mobile_rank_percentage"]
                         k["search_volume"] = k["search_volume"] || "N/A"
                         if (k["types"]["desktop_type"] && k["types"]["mobile_type"]) {
                             k["type"] = "Mobile and Desktop"
@@ -254,7 +254,10 @@ class CategoryPage extends Component {
         let category_formatted = cat_name_key.charAt(0).toUpperCase() + cat_name_key.slice(1);
         return category_formatted
     }
-    percentArcheived(cell, row) {
+    percentArcheived(cell, row, enumObject) {
+        if (typeof(cell) === 'undefined' || cell === null) {
+            return cell = "N/A"
+        }
         if (cell > 0 || cell == 0) {
             cell = "<span class='archived'>Achieved</span>"
         } else {
@@ -484,7 +487,7 @@ class CategoryPage extends Component {
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center' width="110">Current rank(Starting rank)</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='smRank' dataFormat={this.cellFormatter} formatExtraData="smRank" dataAlign='center' width="85" dataSort={true} sortFunc={this.revertSortFunc} sortFuncExtraData={'mobile'}
                             ><i className="fa fa-mobile" aria-hidden="true"></i></TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank" dataAlign='center' width="85"  dataSort={true} sortFunc={this.revertSortFunc} sortFuncExtraData={'desktop'}><i className="fa fa-desktop" aria-hidden="true"></i></TableHeaderColumn>
+                            <TableHeaderColumn row='1' dataField='sdRank' dataFormat={this.cellFormatter} formatExtraData="sdRank" dataAlign='center' width="85" dataSort={true} sortFunc={this.revertSortFunc} sortFuncExtraData={'desktop'}><i className="fa fa-desktop" aria-hidden="true"></i></TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Target rank</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='tmRank' dataFormat={this.cellFormatter} formatExtraData="tmRank" headerAlign='center' dataAlign='center' width="75"><i className="fa fa-mobile" aria-hidden="true"></i>
                             </TableHeaderColumn>
@@ -500,9 +503,9 @@ class CategoryPage extends Component {
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[5]}>{week_ranks[5]} </TableHeaderColumn>
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[6]}>{week_ranks[6]} </TableHeaderColumn>
                             <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.percentArcheived} dataAlign='left' width="90" headerAlign="center"><i className="fa fa-mobile" aria-hidden="true"></i>
+                            <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.percentArcheived} dataAlign='left' width="90" headerAlign="center" formatExtraData="mPersentage" ><i className="fa fa-mobile" aria-hidden="true"></i>
                             </TableHeaderColumn>
-                            <TableHeaderColumn row='1' dataField='dPersentage' dataFormat={this.percentArcheived} dataAlign='left' headerAlign="center" width="90"><i className="fa fa-desktop" aria-hidden="true"></i>
+                            <TableHeaderColumn row='1' dataField='dPersentage' dataFormat={this.percentArcheived} dataAlign='left' headerAlign="center" width="90" formatExtraData="dPersentage"><i className="fa fa-desktop" aria-hidden="true" ></i>
                             </TableHeaderColumn>
                             <TableHeaderColumn row='0' dataField='search_volume' dataFormat={this.convertFixNum} rowSpan="2" width="100" columnTitle dataSort={true}>Search Volume </TableHeaderColumn>
                         </BootstrapTable> : <div>{load_txt}</div>}

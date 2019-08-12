@@ -153,6 +153,7 @@ class CategoryPage extends Component {
             let series = []
             let colors = ['#FA4443', 'rgba(15,113,9,1)']
             let heading = type
+            let total_text =''
             labels.push(filterVal + "_start_" + type)
             labels.push(filterVal + "_current_" + type)
             series.push(obj[0][labels[0]])
@@ -164,6 +165,7 @@ class CategoryPage extends Component {
             if (series[0] > series[1]) {
                 colors = colors.reverse()
             }
+            total_text = "Total: "+series.reduce((a,b) => a+b,0) 
             return {
                 options: {
                     labels: ["Starting position", "Current position"],
@@ -179,6 +181,18 @@ class CategoryPage extends Component {
                         formatter: function (seriesName, opts) {
                             return [seriesName + " (" + opts.w.globals.series[opts.seriesIndex] + ")"]
                         }
+                    },
+                    subtitle: {
+                        text: total_text,
+                        align: 'left',
+                        margin: 10,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                          fontSize:  '16px',
+                          color: '#4c4c4c'
+                        },
                     },
                     colors: colors,
                     animations: {
@@ -536,12 +550,12 @@ class CategoryPage extends Component {
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[4]}>{week_ranks[4]} </TableHeaderColumn>
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[5]}>{week_ranks[5]} </TableHeaderColumn>
                             <TableHeaderColumn row='1' width="60" dataField={week_ranks[6]}>{week_ranks[6]} </TableHeaderColumn>
-                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>%</TableHeaderColumn>
+                            <TableHeaderColumn row='0' colSpan='2' headerAlign='center'>Target %</TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='mPersentage' dataFormat={this.percentArcheived} dataAlign='left' width="90" headerAlign="center" formatExtraData="mPersentage" ><i className="fa fa-mobile" aria-hidden="true"></i>
                             </TableHeaderColumn>
                             <TableHeaderColumn row='1' dataField='dPersentage' dataFormat={this.percentArcheived} dataAlign='left' headerAlign="center" width="90" formatExtraData="dPersentage"><i className="fa fa-desktop" aria-hidden="true" ></i>
                             </TableHeaderColumn>
-                            <TableHeaderColumn row='0' dataField='search_volume' dataFormat={this.convertFixNum} rowSpan="2" width="100" columnTitle dataSort={true}>Search Volume </TableHeaderColumn>
+                            <TableHeaderColumn row='0' dataField='search_volume' dataFormat={this.convertFixNum} rowSpan="2" width="80" columnTitle dataSort={true}>Search volume </TableHeaderColumn>
                         </BootstrapTable> : <div>{load_txt}</div>}
                 </div>
             </div>
@@ -549,3 +563,5 @@ class CategoryPage extends Component {
     }
 }
 export default CategoryPage;
+
+

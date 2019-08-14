@@ -31,13 +31,13 @@ class DashBoard extends Component {
         isLogin: true
       });
     }
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       axios
         .get(host() + "/overall_categories")
-        .then(function(json) {
+        .then(function (json) {
           let customizedRowData = [];
           if (json.data && json.data.length > 0) {
-            json.data.map(function(category, i) {
+            json.data.map(function (category, i) {
               let tableHeaderAndValues = {};
               tableHeaderAndValues["category"] = category["category_name"];
               tableHeaderAndValues["count"] = category["count"];
@@ -102,7 +102,7 @@ class DashBoard extends Component {
           }
           return resolve(json);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           _self.setState({ page_loading: false });
           console.log(err);
         });
@@ -142,26 +142,14 @@ class DashBoard extends Component {
   }
 
   cellFormatter(cell, row) {
-    let cat_name_key = cell
-      .replace(/[_-\s]/g, " ")
-      .replace("  ", "")
-      .toLowerCase();
-    let category_formatted =
-      cat_name_key.charAt(0).toUpperCase() + cat_name_key.slice(1);
-    let cat_name =
-      "<a href=" +
-      window.location.origin +
-      "/category_page/?name=" +
-      cell.replace(/[^A-Z0-9]/gi, "_").replace("__", "") +
-      ">" +
-      category_formatted +
-      "</a>";
+    let cat_name_key = cell.replace(/[_-\s]/g, " ").replace("  ", "")
+    let category_formatted =  cat_name_key.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1)});
+    let cat_name = "<a href=" + window.location.origin + "/category_page/?name=" + cell.replace(/[^A-Z0-9]/gi, "_").replace("__", "") + ">" + category_formatted + "</a>";
     return cat_name;
   }
   customExcelRows = options => {
     if (options.length > 0) {
       return options.map((opt, idx) => {
-        let columns;
         Object.keys(opt).map((v, k) => {
           return <ExcelColumn label={opt[v]} value={opt[v]} />;
         });
@@ -230,13 +218,13 @@ class DashBoard extends Component {
           <ul className="color-boxes">
             <li className="color-info">
               <span className="border-box-green" />
-              current position is greater
+              Current position is greater
             </li>
             <li className="color-info">
               <span className="border-box-red" />
-              starting position is greater
+              Starting position is greater
             </li>
-            <li> current-position (start-position) of keyword</li>
+            <li> *Current position(*Start position) of keyword</li>
           </ul>
           <BootstrapTable data={catData} pagination options={options}>
             <TableHeaderColumn

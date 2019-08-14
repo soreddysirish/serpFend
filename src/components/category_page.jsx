@@ -367,8 +367,9 @@ class CategoryPage extends Component {
         return num;
     }
     formatCatogory_name(cat) {
-        let cat_name_key = cat.replace(/[_-\s]/g, " ").replace("  ", "").toLowerCase();
-        let category_formatted = cat_name_key.charAt(0).toUpperCase() + cat_name_key.slice(1);
+        let cat_name_key = cat.replace(/[_-\s]/g, " ").replace("  ", "")
+        //  category_formatted = cat_name_key.charAt(0).toUpperCase() + cat_name_key.slice(1);
+         let category_formatted =  cat_name_key.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1)});
         return category_formatted
     }
     percentArcheived(cell, row, enumObject) {
